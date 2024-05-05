@@ -225,7 +225,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
 void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
     std::string file_name = "/nodes.csv";
 
-    std::string full_path = path+ '/' + file_name;
+    std::string full_path = path + file_name;
 
     std::ifstream file(full_path);
     if (!file.is_open()) {
@@ -266,40 +266,40 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
 
     switch (graph) {
         case 0:
-            file_name = "/graph1/edges25.csv";
+            file_name = "edges_25.csv";
             break;
         case 1:
-            file_name = "/graph2/edges50.csv";
+            file_name = "edges_50.csv";
             break;
         case 2:
-            file_name = "/graph3/edges75.csv";
+            file_name = "edges_75.csv";
             break;
         case 3:
-            file_name = "/graph3/edges100.csv";
+            file_name = "edges_100.csv";
             break;
         case 4:
-            file_name = "/graph3/edges200.csv";
+            file_name = "edges_200.csv";
             break;
         case 5:
-            file_name = "/graph3/edges300.csv";
+            file_name = "edges_300.csv";
             break;
         case 6:
-            file_name = "/graph3/edges400.csv";
+            file_name = "edges_400.csv";
             break;
         case 7:
-            file_name = "/graph3/edges500.csv";
+            file_name = "edges_500.csv";
             break;
         case 8:
-            file_name = "/graph3/edges600.csv";
+            file_name = "edges_600.csv";
             break;
         case 9:
-            file_name = "/graph3/edges700.csv";
+            file_name = "edges_700.csv";
             break;
         case 10:
-            file_name = "/graph3/edges800.csv";
+            file_name = "edges_800.csv";
             break;
         case 11:
-            file_name = "/graph3/edges900.csv";
+            file_name = "edges_900.csv";
             break;
         default:
             std::cerr << "Choose a valid graph";
