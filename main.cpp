@@ -1,6 +1,8 @@
 #include <iostream>
+#include "Interface/UI.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    UI ui;
+    ui.loading_stuff(ui);
     return 0;
 }

@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(Projeto2 main.cpp
         Graph.h
-        Vertex.h
-        Edge.h
+        Logic/LoadingFunctions.cpp
+        Interface/UI.h
+        Interface/UI.cpp
+        Logic/Algorithms.cpp
+        Logic/Logic.cpp
+        Logic/Algorithms.h
 )

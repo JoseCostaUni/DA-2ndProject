@@ -3,7 +3,7 @@
 
 #include "../Logic/LoadingFunctions.h"
 #include "../stdafx.h"
-#include "../Logic/Algorithms.h"
+#include "../Graph.h"
 
 /**
  * @brief User Interface class for managing interaction with the water distribution system.
@@ -28,6 +28,8 @@ public:
      * @param ui Reference to the UI object.
      */
     void loading_stuff(UI &ui);
+
+    void changeDataSet();
      /**
     * @brief Validates user input within a specified range.
     *
@@ -46,9 +48,9 @@ public:
      */
     void back_menu();
 
-    Graph<DeliverySite> getGraph() const;
+    Graph getGraph() const;
 private:
-
+    Graph g;
 };
 
 

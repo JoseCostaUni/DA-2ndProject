@@ -53,41 +53,258 @@ bool UI::validate_input(char &op, const char lower_bound, const char upper_bound
  * @note Time complexity: Depends on the loading process, including file I/O and graph creation.
  */
 void UI::loading_stuff(UI &ui) {
-    char op;
+    char op , secondOp;
     std::string path;
     std::cout << "Which data set do you wish to use during the analysis?" << std::endl
-      << "A. Small Data Set" << std::endl
-      << "B. Large Data Set" << std::endl
+      << "A. Toy Data Sets" << std::endl
+      << "B. Medium Data Sets" << std::endl
+      << "C. Real World Data Sets" << std::endl
       << "Insert the letter: " ;
-    validate_input(op,'A','B');
+    validate_input(op,'A','C');
 
-    if(op == 'A'){
-        path = "SmallDataSet";
-    }else{
-        path = "LargeDataSet";
+    switch (op) {
+        case 'A':
+            path = "../Graphs/Toy-Graphs/Toy-Graphs";
+            std::cout << "Which Data Set do you wish to use?" << std::endl
+                << "A. shipping.csv" << std::endl
+                << "B. stadiums.csv" << std::endl
+                << "C. tourism.csv" << std::endl
+                << "Insert the letter: " ;
+            validate_input(secondOp,'A','C');
+            switch (secondOp) {
+                case 'A':
+                    LoadToyGraphs(&g , path , 0);
+                    break;
+                case 'B':
+                    LoadToyGraphs(&g , path , 1);
+                    break;
+                case 'C':
+                    LoadToyGraphs(&g , path , 2);
+                    break;
+                default:
+                    std::cerr << "Invalid Input";
+                    return;
+            }
+            break;
+        case 'B':
+            path = "../Graphs/Extra_Fully_Connected_Graphs/Extra_Fully_Connected_Graphs";
+            std::cout << "Which Data Set do you wish to use?" << std::endl
+                      << "A. edges25.csv" << std::endl
+                      << "B. edges50.csv" << std::endl
+                      << "C. edges75.csv" << std::endl
+                      << "D. edges100.csv" << std::endl
+                      << "E. edges200.csv" << std::endl
+                      << "F. edges300.csv" << std::endl
+                      << "G. edges400.csv" << std::endl
+                      << "H. edges500.csv" << std::endl
+                      << "I. edges600.csv" << std::endl
+                      << "J. edges700.csv" << std::endl
+                      << "K. edges800.csv" << std::endl
+                      << "L. edges900.csv" << std::endl
+                      << "Insert the letter: " ;
+            validate_input(secondOp,'A','L');
+            switch (secondOp) {
+                case 'A':
+                    LoadMediumGraphs(&g , path , 0);
+                    break;
+                case 'B':
+                    LoadMediumGraphs(&g , path , 1);
+                    break;
+                case 'C':
+                    LoadMediumGraphs(&g , path , 2);
+                    break;
+                case 'D':
+                    LoadMediumGraphs(&g , path , 3);
+                    break;
+                case 'E':
+                    LoadMediumGraphs(&g , path , 4);
+                    break;
+                case 'F':
+                    LoadMediumGraphs(&g , path , 5);
+                    break;
+                case 'G':
+                    LoadMediumGraphs(&g , path , 6);
+                    break;
+                case 'H':
+                    LoadMediumGraphs(&g , path , 7);
+                    break;
+                case 'I':
+                    LoadMediumGraphs(&g , path , 8);
+                    break;
+                case 'J':
+                    LoadMediumGraphs(&g , path , 9);
+                    break;
+                case 'K':
+                    LoadMediumGraphs(&g , path , 10);
+                    break;
+                case 'L':
+                    LoadMediumGraphs(&g , path , 11);
+                    break;
+                default:
+                    std::cerr << "Invalid Input";
+                    return;
+            }
+
+            break;
+        case 'C':
+            path = "../Graphs/Real-world Graphs/Real-world Graphs";
+            std::cout << "Which Data Set do you wish to use?" << std::endl
+                      << "A. Graph1" << std::endl
+                      << "B. Graph2" << std::endl
+                      << "C. Graph3" << std::endl
+                      << "Insert the letter: " ;
+            validate_input(secondOp,'A','C');
+            switch (secondOp) {
+                case 'A':
+                    LoadRealWorldGraphs(&g , path , 0);
+                    break;
+                case 'B':
+                    LoadToyGraphs(&g , path , 1);
+                    break;
+                case 'C':
+                    LoadToyGraphs(&g , path , 2);
+                    break;
+                default:
+                    std::cerr << "Invalid Input";
+                    return;
+            }
+            break;
+        default:
+            std::cerr << "Invalid input";
+            return;
     }
 
-    LoadFireStations(path);
-    LoadWaterReservoirs(path);
-    LoadPipes(path);
-    LoadCities(path);
-    createGraph(&g);
 
-    DeliverySite supersource = DeliverySite("SuperSource");
-    DeliverySite supersink = DeliverySite("SuperSink");
-    DeliverySite dummy = DeliverySite("Empty");
-    createSuperSourceSink(&g,supersource,supersink);
-    inital_max_flow = edmondsKarp(&g,supersource,supersink, dummy);
-    removeSuperSourceSink(&g,supersource,supersink);
+    std::cout << "Load Finished" << std::endl;
+    std::cout << "Press A to start the program: ";
+    op;
+    validate_input(op,'A','A');
+    menu_start();
+}
 
-    for(Vertex<DeliverySite>* v: g.getVertexSet()){
+void UI::changeDataSet(){
 
-        int sumFlow = calculate_incoming_flow(v);
-        v->setIncomingFlow(sumFlow);
+    this->g.clear();
 
-        if(v->getInfo().getNodeType() == CITY){
-            codeToFlow[v->getInfo().getCode()] = sumFlow;
-        }
+    char op , secondOp;
+    std::string path;
+    std::cout << "Which data set do you wish to switch to?" << std::endl
+              << "A. Toy Data Sets" << std::endl
+              << "B. Medium Data Sets" << std::endl
+              << "C. Real World Data Sets" << std::endl
+              << "Insert the letter: " ;
+    validate_input(op,'A','C');
+
+    switch (op) {
+        case 'A':
+            path = "../Graphs/Toy-Graphs/Toy-Graphs";
+            std::cout << "Which Data Set do you wish to use?" << std::endl
+                      << "A. shipping.csv" << std::endl
+                      << "B. stadiums.csv" << std::endl
+                      << "C. tourism.csv" << std::endl
+                      << "Insert the letter: " ;
+            validate_input(secondOp,'A','C');
+            switch (secondOp) {
+                case 'A':
+                    LoadToyGraphs(&g , path , 0);
+                    break;
+                case 'B':
+                    LoadToyGraphs(&g , path , 1);
+                    break;
+                case 'C':
+                    LoadToyGraphs(&g , path , 2);
+                    break;
+                default:
+                    std::cerr << "Invalid Input";
+                    return;
+            }
+            break;
+        case 'B':
+            path = "../Graphs/Extra_Fully_Connected_Graphs/Extra_Fully_Connected_Graphs";
+            std::cout << "Which Data Set do you wish to use?" << std::endl
+                      << "A. edges25.csv" << std::endl
+                      << "B. edges50.csv" << std::endl
+                      << "C. edges75.csv" << std::endl
+                      << "D. edges100.csv" << std::endl
+                      << "E. edges200.csv" << std::endl
+                      << "F. edges300.csv" << std::endl
+                      << "G. edges400.csv" << std::endl
+                      << "H. edges500.csv" << std::endl
+                      << "I. edges600.csv" << std::endl
+                      << "J. edges700.csv" << std::endl
+                      << "K. edges800.csv" << std::endl
+                      << "L. edges900.csv" << std::endl
+                      << "Insert the letter: " ;
+            validate_input(secondOp,'A','L');
+            switch (secondOp) {
+                case 'A':
+                    LoadMediumGraphs(&g , path , 0);
+                    break;
+                case 'B':
+                    LoadMediumGraphs(&g , path , 1);
+                    break;
+                case 'C':
+                    LoadMediumGraphs(&g , path , 2);
+                    break;
+                case 'D':
+                    LoadMediumGraphs(&g , path , 3);
+                    break;
+                case 'E':
+                    LoadMediumGraphs(&g , path , 4);
+                    break;
+                case 'F':
+                    LoadMediumGraphs(&g , path , 5);
+                    break;
+                case 'G':
+                    LoadMediumGraphs(&g , path , 6);
+                    break;
+                case 'H':
+                    LoadMediumGraphs(&g , path , 7);
+                    break;
+                case 'I':
+                    LoadMediumGraphs(&g , path , 8);
+                    break;
+                case 'J':
+                    LoadMediumGraphs(&g , path , 9);
+                    break;
+                case 'K':
+                    LoadMediumGraphs(&g , path , 10);
+                    break;
+                case 'L':
+                    LoadMediumGraphs(&g , path , 11);
+                    break;
+                default:
+                    std::cerr << "Invalid Input";
+                    return;
+            }
+
+            break;
+        case 'C':
+            path = "../Graphs/Real-world Graphs/Real-world Graphs";
+            std::cout << "Which Data Set do you wish to use?" << std::endl
+                      << "A. Graph1" << std::endl
+                      << "B. Graph2" << std::endl
+                      << "C. Graph3" << std::endl
+                      << "Insert the letter: " ;
+            validate_input(secondOp,'A','C');
+            switch (secondOp) {
+                case 'A':
+                    LoadRealWorldGraphs(&g , path , 0);
+                    break;
+                case 'B':
+                    LoadToyGraphs(&g , path , 1);
+                    break;
+                case 'C':
+                    LoadToyGraphs(&g , path , 2);
+                    break;
+                default:
+                    std::cerr << "Invalid Input";
+                    return;
+            }
+            break;
+        default:
+            std::cerr << "Invalid input";
+            return;
     }
 
 
@@ -114,14 +331,18 @@ void UI::menu_start() {
          << "######################################################################" << std::endl << '\n'
          << "Welcome to the Analysis Tool for Water Supply Management, what would you like to do?" << std::endl
          << "A. Proceed to the application" << std::endl
-         << "B. Close the application" << std::endl
+         << "B. Print all Graph information" << std::endl
+         << "C. Close the application" << std::endl
          << "Insert the letter: " ;
-    validate_input(op,'A','B');
+    validate_input(op,'A','C');
     switch(op){
         case 'A':
             main_menu();
             break;
         case 'B':
+            g.printNodesContente();
+            break;
+        case 'C':
             std::cout << "Thanks for using our analysis tool for water supply management!" << std::endl << "\n"
                  << "Made by: " << std::endl
                  << "Ângelo Oliveira || 202207798" << std::endl
@@ -141,29 +362,17 @@ void UI::menu_start() {
 void UI::main_menu(){
     clear_screen();
     char op;
-   std::cout << "What would you like to know?" <<std::endl;
-   std::cout << "A. Run Max Flow algorithm" <<std::endl
-             << "B. Check if every city meets it's water demand" <<std::endl
-             << "C. Check heuristic stats of the max flow" <<std::endl
-             << "D. Evaluate network's resiliency" <<std::endl
-             << "E. Exit the program" << std::endl
+    std::cout << "What would you like to know?" <<std::endl;
+    std::cout << "A. Switch Data Set" <<std::endl
+             << "B. Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'E');
+    validate_input(op, 'A', 'B');
     switch(op){
         case 'A':
-            max_flow();
+            changeDataSet();
             break;
         case 'B':
-            check_demand();
-            break;
-        case 'C':
-            check_heuristic();
-            break;
-        case 'D':
-            evaluate_resiliency();
-            break;
-        case 'E':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl
@@ -183,472 +392,13 @@ void UI::main_menu(){
  *
  * @note Time complexity: O(1)
  */
-Graph<DeliverySite> UI::getGraph() const {
+Graph UI::getGraph() const {
     return g;
 }
 
-/**
- * @brief Executes the max flow algorithm based on user input.
- *
- * @note Time complexity: Depends on the execution of the max flow algorithm, including graph traversal and flow calculations.
- */
-void UI::max_flow(){
-    char op;
-    std::cout << "What would you like to do?" << std::endl
-              << "A. Calculate max flow for the entire network" << std::endl
-              << "B. Calculate max flow for a specific city" << std::endl
-              << "Insert your choice:";
-
-    validate_input(op, 'A', 'B');
-    switch (op) {
-        case 'A': {
-            char op1;
-            std:: cout << "Would you like to only get the max flow result or the listing of max flows of the cities" << std::endl
-                       << "A. Only the result" << std::endl
-                       << "B. Listing for all cities" << std::endl
-                       << "Insert your choice:" << std::endl;
-            validate_input(op1, 'A', 'B');
-
-            DeliverySite supersource = DeliverySite("SuperSource");
-            DeliverySite supersink = DeliverySite("SuperSink");
-            DeliverySite dummy = DeliverySite("Empty");
-            createSuperSourceSink(&g,supersource,supersink);
-            double max_flow = edmondsKarp(&g,supersource,supersink, dummy);
-            removeSuperSourceSink(&g,supersource,supersink);
-
-            switch (op1) {
-                case 'A': {
-                    std::cout << "The max flow for the entire network is: " << max_flow << std::endl;
-                    break;
-                }
-                case 'B': {
-                    std::cout << std::left << std::setw(20) << "City Name"
-                              << std::setw(20) << "City Code"
-                              << std::setw(20) << "Flow" << std::endl;
-
-                    for(auto v : g.getVertexSet()){
-                        if(v->getInfo().getNodeType() == CITY){
-                            std::cout << std::left << std::setw(20) << v->getInfo().getName()
-                                      << std::setw(20) << v->getInfo().getCode()
-                                      << std::setw(20) << v->calculateIncomingFlow() << std::endl;
-                        }
-
-                    }
-                    std::cout << "The max flow for the entire network is: " << max_flow << std::endl;
-
-                    break;
-                }
-            }
-            break;
-        }
-        case 'B':{
-            std::string code;
-            bool foundVertex = false;
-            DeliverySite supersource = DeliverySite("SuperSource");
-
-            while (!foundVertex) {
-                std::cout << "Insert the code of the city: " << std::endl;
-                std::cin >> code;
-
-                DeliverySite sink = DeliverySite(code);
-
-                if (!g.findVertex(sink)) {
-                    std::cout << "Error: City with code '" << code << "' not found. Please try again." << std::endl;
-                } else {
-                    foundVertex = true;
-                }
-            }
-            DeliverySite sink = DeliverySite(code);
-
-            createSuperSource(&g,supersource);
-            DeliverySite dummy = DeliverySite("Empty");
-            double max_flow = edmondsKarp(&g,supersource,sink,dummy);
-            removeSuperSource(&g,supersource);
-
-            std::cout << "The max flow for the city " << code << " is: " << max_flow << std::endl;
-
-            break;
-        }
-    }
-    back_menu();
-};
-
-/**
- * @brief Checks if every city meets its water demand.
- *
- * @note Time complexity: Depends on the graph traversal and demand checking process.
- */
-void UI::check_demand(){
-
-    DeliverySite supersource = DeliverySite("SuperSource");
-    DeliverySite supersink = DeliverySite("SuperSink");
-    DeliverySite dummy = DeliverySite("Empty");
-    createSuperSourceSink(&g,supersource,supersink);
-    edmondsKarp(&g,supersource,supersink,dummy);
-    removeSuperSourceSink(&g,supersource,supersink);
-
-    std::cout << "The following cities don't receive enough water : " << std::endl;
-
-    std::cout << std::left << std::left << std::setw(20) << "City Name"
-              << std::setw(20) << "City Code"
-              << std::setw(20) << "Demand"
-              << std::setw(20) << "Flow"
-              << std::setw(20) << "Defecit" << std::endl;
-
-    for(Vertex<DeliverySite>* ds: g.getVertexSet()){
-        int sumFlow = calculate_incoming_flow(ds);
-        ds->setIncomingFlow(sumFlow);
-
-        int difference = ds->getInfo().getDemand() - ds->getIncomingFlow();
-
-        if(ds->getInfo().getNodeType() == CITY && difference > 0 ){
-            std::cout << std::left << std::setw(20) << ds->getInfo().getName()
-                      << std::setw(20) << ds->getInfo().getCode()
-                      << std::setw(20) << ds->getInfo().getDemand()
-                      << std::setw(20) << ds->getIncomingFlow()
-                      << std::setw(20) << abs(difference) << std::endl;
-        }
-    }
-    std::cout << std::endl;
-    back_menu();
-}
-
-/**
- * @brief Calculates and displays heuristic stats of the max flow.
- *
- * @note Time complexity: Depends on the execution of the heuristic algorithm.
- */
-void UI::check_heuristic(){
-    DeliverySite supersource = DeliverySite("SuperSource");
-    DeliverySite supersink = DeliverySite("SuperSink");
-    DeliverySite dummy = DeliverySite("Empty");
-
-    createSuperSourceSink(&g,supersource,supersink);
-    edmondsKarp(&g,supersource,supersink,dummy);
-    removeSuperSourceSink(&g,supersource,supersink);
-
-    heuristic(&g);
-    std::cout << std::endl;
-    back_menu();
-}
-
-/**
- * @brief Redirects the user back to the main menu.
- *
- * @note Time complexity: O(1)
- */
 void UI::back_menu(){
     char op;
     std::cout << "Press A to go back to the menu: ";
     validate_input(op,'A','A');
     main_menu();
-}
-
-/**
- * @brief Displays the menu to evaluate the network's resiliency and performs the chosen evaluation.
- *
- * @note Time complexity: Depends on the chosen evaluation method and associated computations.
- */
-void UI::evaluate_resiliency() {
-    char op;
-    std:: cout << "How would you like to evaluate the resiliency?" << std::endl
-               << "A. Water Reservoir out of comission" << std::endl
-               << "B. Pumping Station out of comission /in maintenance" << std::endl
-               << "C. Pipeline/s out of comission / ruptured" << std::endl
-               << "Insert your choice:" << std::endl;
-    validate_input(op, 'A', 'C');
-    switch(op){
-        case 'A':{
-            std::string code;
-            bool foundVertex = false;
-
-            while (!foundVertex) {
-                std::cout << "Insert the code of the water reservoir: " << std::endl;
-                std::cin >> code;
-
-                DeliverySite water_reservoir = DeliverySite(code);
-
-                if (!g.findVertex(water_reservoir)) {
-                    std::cout << "Error: Water Reservoir with code '" << code << "' not found. Please try again." << std::endl;
-                } else {
-                    foundVertex = true;
-                }
-            }
-
-            std::cout << "Would you like to try the balancing algorithm without the whole network?" << std::endl
-                      << "A. Yes" << std::endl
-                      << "B. No" << std::endl
-                      << "Insert your choice:" << std::endl;
-            validate_input(op, 'A', 'B');
-
-            switch(op){
-                case 'A':
-                    redistributeWithoutMaxFlowVersion2(code);
-                    break;
-                case 'B':
-                    redistributeWithoutMaxFlow(code);
-                    break;
-
-            }
-            break;
-        }
-        case 'B':{
-            std::string code;
-            bool foundVertex = false;
-
-            while (!foundVertex) {
-                std::cout << "Insert the code of the pumping station: " << std::endl;
-                std::cin >> code;
-
-                DeliverySite pump_station = DeliverySite(code);
-
-                if (!g.findVertex(pump_station)) {
-                    std::cout << "Error: Pumping Station with code '" << code << "' not found. Please try again." << std::endl;
-                } else {
-                    foundVertex = true;
-                }
-            }
-
-            DeliverySite supersource = DeliverySite("SuperSource");
-            DeliverySite supersink = DeliverySite("SuperSink");
-            DeliverySite pump_station = DeliverySite(code);
-            createSuperSourceSink(&g,supersource,supersink);
-            double max_flow = edmondsKarp(&g,supersource,supersink,pump_station);
-            removeSuperSourceSink(&g,supersource,supersink);
-
-            std::cout << "The max flow of the network removing " << code << " is: " << max_flow << std::endl;
-
-            std::cout << std::left << std::setw(20) << "City Name"
-                      << std::setw(20) << "City Code"
-                      << std::setw(20) << "New Units"
-                      << std::setw(20) << "New Flow"
-                      << std::setw(20) << "Old Flow" << std::endl;
-
-            for(Vertex<DeliverySite>* v: g.getVertexSet()){
-                if(v->getInfo().getNodeType() == CITY){
-
-                    int sumFlow = calculate_incoming_flow(v);
-
-                    v->setIncomingFlow(sumFlow);
-                    int result = v->getIncomingFlow() - codeToFlow[v->getInfo().getCode()];
-                    if(result < 0){
-                        std::cout << std::left << std::setw(20) << v->getInfo().getName()
-                                  << std::setw(20) << v->getInfo().getCode()
-                                  << std::setw(20) << abs(result)
-                                  << std::setw(20) << v->getIncomingFlow()
-                                  << std::setw(20) << codeToFlow[v->getInfo().getCode()] << std::endl;
-                    }
-                }
-            }
-
-            break;
-        }
-        case 'C':{
-            std::string code1;
-            std::string code2;
-            bool foundEdge = false;
-            std::vector<Edge<DeliverySite>*> pointerVector;
-
-            while (!foundEdge) {
-                Edge<DeliverySite>* edgeFound = nullptr;
-                std::cout << "Insert the code of the first delivery site: " << std::endl;
-                std::cin >> code1;
-
-                std::cout << "Insert the code of the second delivery site: " << std::endl;
-                std::cin >> code2;
-
-                DeliverySite ds1 = DeliverySite(code1);
-
-                DeliverySite ds2 = DeliverySite(code2);
-
-                if (!g.findVertex(ds1) && !g.findVertex(ds2)) {
-                    std::cout << "Error: Delivery Sites not found. Please try again." << std::endl;
-                }
-
-                for(auto edge: g.getEdges()){
-                    if(edge->getOrig()->getInfo().getCode() == ds1.getCode() && edge->getDest()->getInfo().getCode() == ds2.getCode()){
-                        foundEdge = true;
-                        edgeFound = edge;
-                        break;
-                    }
-                }
-
-                if(!foundEdge){
-                    std::cout << "Error: Pipe not found. Please try again." << std::endl;
-                }else{
-                    if(edgeFound->getReverse() != nullptr){
-                        pointerVector.push_back(edgeFound->getReverse());
-                    }
-                    pointerVector.push_back(edgeFound);
-                    std::cout << "Do you want to add another pipeline to the out of comission/ruptured list ?" << std::endl
-                              << "A. Yes" << std::endl
-                              << "B. No" << std::endl;
-                    char op1;
-                    validate_input(op1,'A','B');
-                    if(op1 == 'A'){
-                        foundEdge = false;
-                    }
-                }
-            }
-
-            DeliverySite supersource = DeliverySite("SuperSource");
-            DeliverySite supersink = DeliverySite("SuperSink");
-            createSuperSourceSink(&g,supersource,supersink);
-            double max_flow = edmondsKarpPipe(&g,supersource,supersink,pointerVector);
-            removeSuperSourceSink(&g,supersource,supersink);
-
-            std::cout << "The max flow of the network is " << max_flow << " removing the pipes: " << std::endl;
-            for(auto pipe: pointerVector){
-                std::cout << pipe->getOrig()->getInfo().getCode() << "-" << pipe->getDest()->getInfo().getCode() << std::endl;
-            }
-            std::cout << std::endl;
-
-            std::cout << std::left << std::setw(20) << "City Name"
-                      << std::setw(20) << "City Code"
-                      << std::setw(20) << "Required Units"
-                      << std::setw(20) << "New Flow"
-                      << std::setw(20) << "Old Flow" << std::endl;
-
-
-            for(Vertex<DeliverySite>* v: g.getVertexSet()){
-                if(v->getInfo().getNodeType() == CITY){
-
-                    int sumFlow = calculate_incoming_flow(v);
-
-                    v->setIncomingFlow(sumFlow);
-                    int result = v->getIncomingFlow() - codeToFlow[v->getInfo().getCode()];
-                    if(result < 0){
-                        std::cout << std::left << std::setw(20) << v->getInfo().getName()
-                                  << std::setw(20) << v->getInfo().getCode()
-                                  << std::setw(20) << abs(result)
-                                  << std::setw(20) << v->getIncomingFlow()
-                                  << std::setw(20) << codeToFlow[v->getInfo().getCode()] << std::endl;
-                    }
-                }
-            }
-            std::cout << std::endl;
-        }
-
-        break;
-    }
-
-    back_menu();
-}
-
-
-/**
- * @brief Redistributes water without calculating the max flow.
- *
- * @param wr Code of the water reservoir to be removed.
- *
- * @note Time complexity: Depends on the graph traversal and redistribution process.
- */
-void UI::redistributeWithoutMaxFlow(std::string wr) {
-
-    DeliverySite reservoir_ds = DeliverySite(wr);
-    Vertex<DeliverySite>* ds = g.findVertex(reservoir_ds);
-    DeliverySite supersource = DeliverySite("SuperSource");
-    DeliverySite supersink = DeliverySite("SuperSink");
-
-    createSuperSourceSink(&g,supersource,supersink);
-    inital_max_flow = edmondsKarp(&g,supersource,supersink, reservoir_ds);
-    removeSuperSourceSink(&g,supersource,supersink);
-
-    std::cout << "The max flow of the network removing " << ds->getInfo().getCode() << " is: " << inital_max_flow << std::endl;
-
-    std::cout << std::left << std::setw(20) << "City Name"
-              << std::setw(20) << "City Code"
-              << std::setw(20) << "Required Units"
-              << std::setw(20) << "New Flow"
-              << std::setw(20) << "Old Flow" << std::endl;
-
-    for (Vertex<DeliverySite> *v: g.getVertexSet()) {
-        if (v->getInfo().getNodeType() == CITY) {
-            int sumFlow = 0;
-            for(auto e : v->getIncoming()){
-                sumFlow += e->getFlow();
-            }
-            v->setIncomingFlow(sumFlow);
-
-            int result = v->getIncomingFlow() - codeToFlow[v->getInfo().getCode()];
-            if (result < 0) {
-                std::cout << std::left << std::setw(20) << v->getInfo().getName()
-                          << std::setw(20) << v->getInfo().getCode()
-                          << std::setw(20) << abs(result)
-                          << std::setw(20) << v->getIncomingFlow()
-                          << std::setw(20) << codeToFlow[v->getInfo().getCode()] << std::endl;
-            }
-        }
-    }
-
-}
-
-/**
- * @brief Redistributes water without calculating the max flow (version 2).
- *
- * @param wr_code Code of the water reservoir to be removed.
- *
- * @note Time complexity: Depends on the graph traversal and redistribution process.
- */
-void UI::redistributeWithoutMaxFlowVersion2(std::string& wr_code){
-    DeliverySite reservoir_ds = DeliverySite(wr_code);
-
-    std::vector<std::vector<Edge<DeliverySite>*>> paths;
-
-    Vertex<DeliverySite>* ds = g.findVertex(reservoir_ds);
-    std::vector<Edge<DeliverySite>*> path;
-
-    for(auto ver: g.getVertexSet()){
-        ver->setVisited(false);
-    }
-
-    findAllPathsRedistribute(&g,ds,path,paths);
-
-    double maxflow = redistributeWaterWithoutMaxFlow2(&g,paths);
-
-    std::cout << "The max flow of the network removing " << ds->getInfo().getCode() << " is: " << maxflow << std::endl;
-
-    std::cout << std::left << std::setw(20) << "City Name"
-              << std::setw(20) << "City Code"
-              << std::setw(20) << "Required Units"
-              << std::setw(20) << "New Flow"
-              << std::setw(20) << "Old Flow" << std::endl;
-
-    for (Vertex<DeliverySite> *v: g.getVertexSet()) {
-        if (v->getInfo().getNodeType() == CITY) {
-            int sumFlow = 0;
-            for(auto e : v->getIncoming()){
-                sumFlow += e->getFlow();
-            }
-            v->setIncomingFlow(sumFlow);
-
-            int result = v->getIncomingFlow() - codeToFlow[v->getInfo().getCode()];
-            if (result < 0) {
-                std::cout << std::left << std::setw(20) << v->getInfo().getName()
-                          << std::setw(20) << v->getInfo().getCode()
-                          << std::setw(20) << abs(result)
-                          << std::setw(20) << v->getIncomingFlow()
-                          << std::setw(20) << codeToFlow[v->getInfo().getCode()] << std::endl;
-            }
-        }
-    }
-
-}
-
-/**
- * @brief Calculates the total incoming flow for a given vertex.
- *
- * @param v Pointer to the vertex for which incoming flow needs to be calculated.
- * @return The total incoming flow for the vertex.
- *
- * @note Time complexity: O(E), where E is the number of edges incident to the vertex.
- */
-int UI::calculate_incoming_flow(Vertex<DeliverySite>* v){
-    int sumFlow = 0;
-    for(Edge<DeliverySite>* p : v->getIncoming()){
-        if(!p->isSelected()) {
-            sumFlow += p->getFlow();
-        }
-    }
-    return sumFlow;
 }

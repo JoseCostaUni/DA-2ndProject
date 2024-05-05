@@ -32,12 +32,16 @@ class Vertex {
 public:
 
     Vertex(long id, double longitude, double latitude);
+    Vertex(long id);
     long getId() const;
     double getLongitude() const;
     double getLatitude() const;
     std::unordered_set<Edge*> getAdj() const;
+    std::unordered_set<Edge*> getInc() const;
     void addAdjEdge(Edge* edge);
-    void deleteEdge(Edge* edge);
+    void addIncEdge(Edge* edge);
+    void deleteIncEdge(Edge* edge);
+    void deleteAdjEdge(Edge* edge);
 
     void setId(long newId);
     void setLongitude(double newLongitude);
@@ -46,7 +50,8 @@ protected:
     long id;
     double longitude;
     double latitude;
-    std::unordered_set<Edge*> adj;
+    std::unordered_set<Edge*> incomingEdges;
+    std::unordered_set<Edge*> adjacentEdges;
     bool visited = false;
     bool processing = false;
     unsigned int indegree = 0;
@@ -54,42 +59,56 @@ protected:
 
 };
 
-Vertex::Vertex(long id, double longitude, double latitude)
+inline Vertex::Vertex(long id, double longitude, double latitude)
         : id(id), longitude(longitude), latitude(latitude) {}
 
-long Vertex::getId() const {
+inline Vertex::Vertex(long id) : id(id) {}
+
+inline long Vertex::getId() const {
     return id;
 }
 
-double Vertex::getLongitude() const {
+inline double Vertex::getLongitude() const {
     return longitude;
 }
 
-double Vertex::getLatitude() const {
+inline double Vertex::getLatitude() const {
     return latitude;
 }
 
-std::unordered_set<Edge*> Vertex::getAdj() const {
-    return adj;
+inline std::unordered_set<Edge*> Vertex::getAdj() const {
+    return adjacentEdges;
 }
 
-void Vertex::addAdjEdge(Edge* edge) {
-    adj.insert(edge);
+inline std::unordered_set<Edge*> Vertex::getInc() const {
+    return incomingEdges;
 }
 
-void Vertex::deleteEdge(Edge* edge) {
-    adj.erase(edge);
+inline void Vertex::addAdjEdge(Edge* edge) {
+    adjacentEdges.insert(edge);
 }
 
-void Vertex::setId(long newId) {
+inline void Vertex::addIncEdge(Edge* edge) {
+    incomingEdges.insert(edge);
+}
+
+inline void Vertex::deleteIncEdge(Edge* edge) {
+    incomingEdges.erase(edge);
+}
+
+inline void Vertex::deleteAdjEdge(Edge* edge) {
+    adjacentEdges.erase(edge);
+}
+
+inline void Vertex::setId(long newId) {
     id = newId;
 }
 
-void Vertex::setLongitude(double newLongitude) {
+inline void Vertex::setLongitude(double newLongitude) {
     longitude = newLongitude;
 }
 
-void Vertex::setLatitude(double newLatitude) {
+inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
 }
 
@@ -121,7 +140,7 @@ class Graph {
 public:
     ~Graph();
     Vertex* findVertex(long id) const;
-    bool addVertex(long id, double longitude, double latitude);
+    bool addVertex(Vertex& vertex);
     bool removeVertex(long id);
     bool addEdge(long sourceId, long destId, double weight);
     bool removeEdge(long sourceId, long destId);
@@ -129,6 +148,8 @@ public:
     int getNumVertex() const;
     std::unordered_set<Vertex*> getVertexSet() const;
 
+    void clear();
+    void printNodesContente() const;
 private:
     std::unordered_set<Edge*> edgeSet;
     std::unordered_set<Vertex*> vertexSet;
@@ -137,30 +158,30 @@ private:
 /********************** Edge  ****************************/
 
 
-Edge::Edge(Vertex* source, Vertex* destination, double weight)
+inline Edge::Edge(Vertex* source, Vertex* destination, double weight)
         : source(source), destination(destination), weight(weight) {}
 
-Vertex* Edge::getSource() const {
+inline Vertex* Edge::getSource() const {
     return source;
 }
 
-Vertex* Edge::getDestination() const {
+inline Vertex* Edge::getDestination() const {
     return destination;
 }
 
-double Edge::getWeight() const {
+inline double Edge::getWeight() const {
     return weight;
 }
 
-void Edge::setSource(Vertex* newSource) {
+inline void Edge::setSource(Vertex* newSource) {
     source = newSource;
 }
 
-void Edge::setDestination(Vertex* newDestination) {
+inline void Edge::setDestination(Vertex* newDestination) {
     destination = newDestination;
 }
 
-void Edge::setWeight(double newWeight) {
+inline void Edge::setWeight(double newWeight) {
     weight = newWeight;
 }
 
@@ -169,13 +190,13 @@ void Edge::setWeight(double newWeight) {
 class Vertex;
 class Edge;
 
-Graph::~Graph() {
+inline Graph::~Graph() {
     for (Vertex* v : vertexSet) {
         delete v;
     }
 }
 
-Vertex* Graph::findVertex(long id) const {
+inline Vertex* Graph::findVertex(long id) const {
     for (Vertex* v : vertexSet) {
         if (v->getId() == id) {
             return v;
@@ -184,15 +205,15 @@ Vertex* Graph::findVertex(long id) const {
     return nullptr;
 }
 
-bool Graph::addVertex(long id, double longitude, double latitude) {
-    if (findVertex(id) != nullptr) {
+inline bool Graph::addVertex(Vertex& vertex) {
+    if (findVertex(vertex.getId()) != nullptr) {
         return false;  // Vertex with given id already exists
     }
-    vertexSet.insert(new Vertex(id, longitude, latitude));
+    vertexSet.insert(&vertex);
     return true;
 }
 
-bool Graph::removeVertex(long id) {
+inline bool Graph::removeVertex(long id) {
     auto it = vertexSet.begin();
     while (it != vertexSet.end()) {
         if ((*it)->getId() == id) {
@@ -206,7 +227,7 @@ bool Graph::removeVertex(long id) {
     return false;  // Vertex with given id not found
 }
 
-bool Graph::addEdge(long sourceId, long destId, double weight) {
+inline bool Graph::addEdge(long sourceId, long destId, double weight) {
     Vertex* source = findVertex(sourceId);
     Vertex* dest = findVertex(destId);
     if (source == nullptr || dest == nullptr) {
@@ -216,7 +237,7 @@ bool Graph::addEdge(long sourceId, long destId, double weight) {
     return true;
 }
 
-bool Graph::removeEdge(long sourceId, long destId) {
+inline bool Graph::removeEdge(long sourceId, long destId) {
     Vertex* source = findVertex(sourceId);
     Vertex* dest = findVertex(destId);
     if (source == nullptr || dest == nullptr) {
@@ -224,7 +245,7 @@ bool Graph::removeEdge(long sourceId, long destId) {
     }
     for (Edge* e : source->getAdj()) {
         if (e->getDestination() == dest) {
-            source->deleteEdge(e);
+            source->deleteAdjEdge(e);
             delete e;
             return true;
         }
@@ -232,16 +253,35 @@ bool Graph::removeEdge(long sourceId, long destId) {
     return false;  // Edge not found
 }
 
-bool Graph::addBidirectionalEdge(long sourceId, long destId, double weight) {
+inline bool Graph::addBidirectionalEdge(long sourceId, long destId, double weight) {
     return addEdge(sourceId, destId, weight) && addEdge(destId, sourceId, weight);
 }
 
-int Graph::getNumVertex() const {
+inline int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-std::unordered_set<Vertex*> Graph::getVertexSet() const {
+inline std::unordered_set<Vertex*> Graph::getVertexSet() const {
     return vertexSet;
+}
+
+inline void Graph::clear() {
+    this->vertexSet.clear();
+    this->edgeSet.clear();
+}
+
+inline void Graph::printNodesContente() const {
+    for (const auto& vertex : vertexSet) {
+        std::cout << "Vertex ID: " << vertex->getId() << std::endl;
+        std::cout << "Longitude: " << vertex->getLongitude() << std::endl;
+        std::cout << "Latitude: " << vertex->getLatitude() << std::endl;
+        std::cout << "Adjacent Edges:" << std::endl;
+        for (const auto& edge : vertex->getAdj()) {
+            std::cout << "    Destination ID: " << edge->getDestination()->getId() << std::endl;
+            std::cout << "    Weight: " << edge->getWeight() << std::endl;
+        }
+        std::cout << std::endl;
+    }
 }
 
 /****************** DFS ********************/

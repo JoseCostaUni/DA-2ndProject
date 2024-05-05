@@ -7,25 +7,14 @@
  * @brief Implementation of all loading Functions used during the Project.
  */
 
-std::unordered_set<DeliverySite> nodesToAdd;
-std::vector<PumpingStations> edges;
+std::vector<Vertex> Vertexes;
+std::vector<Edge> Edges;
 
-void NormaliseString(std::string& str1 , std::string& str2){
-    std::string temp;
-    Remove_terminations(str1);
-    Remove_terminations(str2);
 
-    for(auto char_ : str1) {
-        if (isdigit(char_)){
-            temp += char_;
-        }
-    }
-    for(auto char_ : str2) {
-        if (isdigit(char_)){
-            temp += char_;
-        }
-    }
-    str1 = temp;
+constexpr double kEarthRadiusKm = 6371.0;
+
+double ToRadians(double degrees) {
+    return degrees * M_PI / 180.0;
 }
 
 /**
@@ -49,20 +38,29 @@ void Remove_terminations(std::string& str)
     }
 }
 
-/**
- * @brief Loads cities data from a CSV file.
- * @complexity O(n*p), where n is the number of lines in the CSV file and p is the length of each line.
- */
-void LoadCities(const std::string& path) {
 
-    std::string tempPath ;
-    if(path == "SmallDataSet"){
-        tempPath = "SmallDataSet/Cities.csv";
-    }else{
-        tempPath = "LargeDataSet/Cities.csv";
+void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
+
+    std::string file_name;
+
+    switch (graph) {
+        case 0:
+            file_name = "shipping.csv";
+            break;
+        case 1:
+            file_name = "stadiums.csv";
+            break;
+        case 2:
+            file_name = "tourism.csv";
+            break;
+        default:
+            std::cerr << "Choose a valid graph";
+            return;
     }
 
-    std::ifstream file(tempPath);
+    std::string full_path = path +'/' + file_name;
+
+    std::ifstream file(full_path);
     if (!file.is_open()) {
         std::cerr << "Failed to open the CSV file." << std::endl;
     }
@@ -82,49 +80,53 @@ void LoadCities(const std::string& path) {
             tokens.push_back(token);
         }
 
-        std::string name = tokens[0];
-        std::string municipality;
-        std::string code = tokens[2];
-        int id = stoi(tokens[1]);
+        std::string id_v1 = tokens[0];
+        std::string id_v2 = tokens[1];
+        std::string distance = tokens[2];
 
-        int maxDelivery = 0;
-        int demand = std::stoi(tokens[3]);
+        Remove_terminations(distance);
 
-        int population = 0;
+        long id_V1 = stoi(id_v1);
+        long id_V2 = stoi(id_v2);
+        double v_distances = stoi(distance);
 
-        if(path == "SmallDataSet"){
-            NormaliseString(tokens[4] , tokens[5]);
-            population = std::stoi(tokens[4]);
-        }else{
-            Remove_terminations(tokens[4]);
-            population = std::stoi(tokens[4]);
-        }
+        Vertex v1 = Vertex(id_V1 , 0 , 0);
+        Vertex v2 = Vertex(id_V2 , 0 , 0);
 
+        Edge edge = Edge(&v1 , &v2 , v_distances);
 
+        g->addVertex(v1);
+        g->addVertex(v2);
 
-        DeliverySite deliverySite(name, municipality, code, id, maxDelivery , demand , population , CITY);
-
-        nodesToAdd.insert(deliverySite);
+        v1.addAdjEdge(&edge);
+        v2.addIncEdge(&edge);
     }
 
     file.close();
-
 }
 
-/**
- * @brief Loads pipes data from a CSV file.
- * @complexity O(n*p), where n is the number of lines in the CSV file and p is the length of each line.
- */
-void LoadPipes(const std::string& path) {
 
-    std::string tempPath ;
-    if(path == "SmallDataSet"){
-        tempPath = "SmallDataSet/Pipes.csv";
-    }else{
-        tempPath = "LargeDataSet/Pipes.csv";
+void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph){
+    std::string file_name;
+
+    switch (graph) {
+        case 0:
+            file_name = "/graph1/nodes.csv";
+            break;
+        case 1:
+            file_name = "/graph2/nodes.csv";
+            break;
+        case 2:
+            file_name = "/graph3/nodes.csv";
+            break;
+        default:
+            std::cerr << "Choose a valid graph";
+            return;
     }
 
-    std::ifstream file(tempPath);
+    std::string full_path = path + file_name;
+
+    std::ifstream file(full_path);
     if (!file.is_open()) {
         std::cerr << "Failed to open the CSV file." << std::endl;
     }
@@ -144,35 +146,92 @@ void LoadPipes(const std::string& path) {
             tokens.push_back(token);
         }
 
-        std::string servicePointA = tokens[0];
-        std::string servicePointB = tokens[1];
-        int capacity = stoi(tokens[2]);
-        Remove_terminations(tokens[3]);
-        bool direction = stoi(tokens[3]);
+        std::string id = tokens[0];
+        std::string longitude = tokens[1];
+        std::string latitude = tokens[2];
 
-        PumpingStations pumpingStation(servicePointA, servicePointB, capacity,direction);
+        Remove_terminations(latitude);
 
-        edges.push_back(pumpingStation);
+        long id_V1 = stoi(id);
+        double longitude_ = stoi(longitude);
+        double latitude_ = stoi(latitude);
+
+        Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
+
+        g->addVertex(v1);
     }
 
     file.close();
 
-}
-
-/**
- * @brief Loads water reservoirs data from a CSV file.
- * @complexity O(n*p), where n is the number of lines in the CSV file and p is the length of each line.
- */
-void LoadWaterReservoirs(const std::string& path) {
-
-    std::string tempPath ;
-    if(path == "SmallDataSet"){
-        tempPath = "SmallDataSet/Reservoir.csv";
-    }else{
-        tempPath = "LargeDataSet/Reservoir.csv";
+    switch (graph) {
+        case 0:
+            file_name = "/graph1/edges.csv";
+            break;
+        case 1:
+            file_name = "/graph2/edges.csv";
+            break;
+        case 2:
+            file_name = "/graph3/edges.csv";
+            break;
+        default:
+            std::cerr << "Choose a valid graph";
+            return;
     }
 
-    std::ifstream file(tempPath);
+    full_path = path + file_name;
+
+    std::ifstream file2(full_path);
+    if (!file2.is_open()) {
+        std::cerr << "Failed to open the CSV file." << std::endl;
+    }
+
+    std::string line2;
+    getline(file2, line2);
+
+    while (getline(file2, line2)) {
+
+        line2.erase(std::remove(line2.begin(), line2.end(), '\r'), line2.end());
+
+        std::istringstream lineStream(line2);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (getline(lineStream, token, ',')) {
+            tokens.push_back(token);
+        }
+
+        std::string id_v1 = tokens[0];
+        std::string id_v2 = tokens[1];
+        std::string distance = tokens[2];
+
+        Remove_terminations(distance);
+
+        long id_V1 = stoi(id_v1);
+        long id_V2 = stoi(id_v2);
+        double v_distances = stoi(distance);
+
+        Vertex v1 = Vertex(id_V1 , 0 , 0);
+        Vertex v2 = Vertex(id_V2 , 0 , 0);
+
+        Edge edge = Edge(&v1 , &v2 , v_distances);
+
+        v1.addAdjEdge(&edge);
+        v1.addIncEdge(&edge);
+
+        v2.addAdjEdge(&edge);
+        v2.addIncEdge(&edge);
+    }
+
+    file2.close();
+
+}
+
+void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
+    std::string file_name = "/nodes.csv";
+
+    std::string full_path = path + file_name;
+
+    std::ifstream file(full_path);
     if (!file.is_open()) {
         std::cerr << "Failed to open the CSV file." << std::endl;
     }
@@ -182,7 +241,7 @@ void LoadWaterReservoirs(const std::string& path) {
 
     while (getline(file, line)) {
 
-        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
 
         std::istringstream lineStream(line);
         std::vector<std::string> tokens;
@@ -192,118 +251,107 @@ void LoadWaterReservoirs(const std::string& path) {
             tokens.push_back(token);
         }
 
-        Remove_terminations(tokens[4]);
-        std::string name = tokens[0];
-        std::string municipality = tokens[1];
-        std::string code = tokens[3];
-        int id = stoi(tokens[2]);
+        std::string id = tokens[0];
+        std::string longitude = tokens[1];
+        std::string latitude = tokens[2];
 
-        int maxDelivery = stoi(tokens[4]);
-        int demand = 0;
-        int population = 0;
-        //mandatory
+        Remove_terminations(latitude);
 
-        DeliverySite deliverySite(name, municipality, code, id, maxDelivery , demand , population , WATER_RESERVOIR);
+        long id_V1 = stoi(id);
+        double longitude_ = stoi(longitude);
+        double latitude_ = stoi(latitude);
 
-        nodesToAdd.insert(deliverySite);
+        Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
+
+        g->addVertex(v1);
     }
 
     file.close();
 
-    //
-}
-
-/**
- * @brief Loads fire stations data from a CSV file.
- * @complexity O(n*p), where n is the number of lines in the CSV file and p is the length of each line.
- */
-void LoadFireStations(const std::string& path)
-{
-
-    std::string tempPath ;
-    if(path == "SmallDataSet"){
-        tempPath = "SmallDataSet/Stations.csv";
-    }else{
-        tempPath = "LargeDataSet/Stations.csv";
+    switch (graph) {
+        case 0:
+            file_name = "/graph1/edges25.csv";
+            break;
+        case 1:
+            file_name = "/graph2/edges50.csv";
+            break;
+        case 2:
+            file_name = "/graph3/edges75.csv";
+            break;
+        case 3:
+            file_name = "/graph3/edges100.csv";
+            break;
+        case 4:
+            file_name = "/graph3/edges200.csv";
+            break;
+        case 5:
+            file_name = "/graph3/edges300.csv";
+            break;
+        case 6:
+            file_name = "/graph3/edges400.csv";
+            break;
+        case 7:
+            file_name = "/graph3/edges500.csv";
+            break;
+        case 8:
+            file_name = "/graph3/edges600.csv";
+            break;
+        case 9:
+            file_name = "/graph3/edges700.csv";
+            break;
+        case 10:
+            file_name = "/graph3/edges800.csv";
+            break;
+        case 11:
+            file_name = "/graph3/edges900.csv";
+            break;
+        default:
+            std::cerr << "Choose a valid graph";
+            return;
     }
 
-    std::ifstream file(tempPath);
-    if (!file.is_open()) {
+    full_path = path + file_name;
+
+    std::ifstream file2(full_path);
+    if (!file2.is_open()) {
         std::cerr << "Failed to open the CSV file." << std::endl;
     }
 
-    std::string line;
-    getline(file, line);
+    std::string line2;
 
-    while (getline(file, line)) {
-        std::istringstream lineStream(line);
+    while (getline(file2, line2)) {
+
+        line2.erase(std::remove(line2.begin(), line2.end(), '\r'), line2.end());
+
+        std::istringstream lineStream(line2);
         std::vector<std::string> tokens;
         std::string token;
 
         while (getline(lineStream, token, ',')) {
-            if(!token.empty())
-                tokens.push_back(token);
+            tokens.push_back(token);
         }
 
-        if(!tokens.empty()){
+        std::string id_v1 = tokens[0];
+        std::string id_v2 = tokens[1];
+        std::string distance = tokens[2];
 
-            std::string name;
-            std::string municipality;
-            Remove_terminations(tokens[1]);
-            std::string code = tokens[1];
-            int id = stoi(tokens[0]);
+        Remove_terminations(distance);
 
-            int maxDelivery = 0;
-            int demand = 0;
-            int population = 0;
-            //mandatory
+        long id_V1 = stoi(id_v1);
+        long id_V2 = stoi(id_v2);
+        double v_distances = stoi(distance);
 
-            DeliverySite deliverySite(name, municipality, code, id, maxDelivery , demand , population , FIRE_STATION);
+        Vertex v1 = Vertex(id_V1 , 0 , 0);
+        Vertex v2 = Vertex(id_V2 , 0 , 0);
 
-            nodesToAdd.insert(deliverySite);
-        }
+        Edge edge = Edge(&v1 , &v2 , v_distances);
+
+        v1.addAdjEdge(&edge);
+        v1.addIncEdge(&edge);
+
+        v2.addAdjEdge(&edge);
+        v2.addIncEdge(&edge);
     }
 
-    file.close();
-    //std::this_thread::sleep_for(std::chrono::seconds(5));
-}
-
-/**
- * @brief Creates a graph based on the loaded data.
- * @param g Pointer to the graph to be created.
- * @return True if the graph creation is successful, false otherwise.
- * @complexity O(m + n), where m is the number of edges (pipes) and n is the number of vertices (delivery sites).
- */
-bool createGraph(Graph<DeliverySite>* g)
-{
-
-    for(const DeliverySite& deliverySite : nodesToAdd){
-        if(!g->addVertex(deliverySite)){
-            std::cerr << "Error adding vertex " << deliverySite.getCode();
-            return false;
-        }
-    }
-
-    auto a = edges.size();
-    auto b = 0;
-    for(const PumpingStations& pumpingStation : edges){
-        DeliverySite deliverySiteA = DeliverySite((std::string) pumpingStation.getServicePointA());
-        DeliverySite deliverySiteB = DeliverySite((std::string) pumpingStation.getServicePointB());
-
-        if(!pumpingStation.getDirection()){
-            if(!g->addBidirectionalEdge(deliverySiteA , deliverySiteB , pumpingStation.getCapacity())){
-                std::cerr << "Error adding vertex";
-                return false;
-            }
-            b++;
-        }else{
-            if(!g->addEdge(deliverySiteA , deliverySiteB , pumpingStation.getCapacity())){
-                std::cerr << "Error adding edge";
-                return false;
-            }
-        }
-
-    }
-
-    return true;
+    file2.close();
 }

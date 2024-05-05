@@ -13,9 +13,7 @@
 #include "thread"
 #include "cmath"
 
-#include "../data_structures/Graph.h"
-#include "DeliverySites.h"
-#include "PumpingStations.h"
+#include "Graph.h"
 
 #define UNIDIRECTIONAL 1;
 #define BIDIRECTIONAL 0;
