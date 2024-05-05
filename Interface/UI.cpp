@@ -331,18 +331,14 @@ void UI::menu_start() {
          << "######################################################################" << std::endl << '\n'
          << "Welcome to the Analysis Tool for Water Supply Management, what would you like to do?" << std::endl
          << "A. Proceed to the application" << std::endl
-         << "B. Print all Graph information" << std::endl
          << "C. Close the application" << std::endl
          << "Insert the letter: " ;
-    validate_input(op,'A','C');
+    validate_input(op,'A','B');
     switch(op){
         case 'A':
             main_menu();
             break;
         case 'B':
-            g.printNodesContente();
-            break;
-        case 'C':
             std::cout << "Thanks for using our analysis tool for water supply management!" << std::endl << "\n"
                  << "Made by: " << std::endl
                  << "Ângelo Oliveira || 202207798" << std::endl
@@ -364,15 +360,21 @@ void UI::main_menu(){
     char op;
     std::cout << "What would you like to know?" <<std::endl;
     std::cout << "A. Switch Data Set" <<std::endl
-             << "B. Exit the program" << std::endl
+              << "B. Print all Graph information" << std::endl
+             << "C. Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'B');
+    validate_input(op, 'A', 'C');
     switch(op){
         case 'A':
             changeDataSet();
+            main_menu();
             break;
         case 'B':
+            g.printNodesContente();
+            main_menu();
+            break;
+        case 'C':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

@@ -112,6 +112,22 @@ inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
 }
 
+
+struct VertexHash {
+    std::size_t operator()(const Vertex* v) const {
+        // Hash the vertex ID
+        return std::hash<long>{}(v->getId());
+    }
+};
+
+// Custom equality operator for Vertex
+struct VertexEqual {
+    bool operator()(const Vertex* lhs, const Vertex* rhs) const {
+        // Compare vertex IDs for equality
+        return lhs->getId() == rhs->getId();
+    }
+};
+
 /********************** Edge  ****************************/
 
 
@@ -140,19 +156,19 @@ class Graph {
 public:
     ~Graph();
     Vertex* findVertex(long id) const;
-    bool addVertex(Vertex& vertex);
+    bool addVertex(const Vertex* vertex);
     bool removeVertex(long id);
     bool addEdge(long sourceId, long destId, double weight);
     bool removeEdge(long sourceId, long destId);
     bool addBidirectionalEdge(long sourceId, long destId, double weight);
     int getNumVertex() const;
-    std::unordered_set<Vertex*> getVertexSet() const;
+    std::unordered_set<Vertex* , VertexHash, VertexEqual> getVertexSet() const;
 
     void clear();
     void printNodesContente() const;
 private:
     std::unordered_set<Edge*> edgeSet;
-    std::unordered_set<Vertex*> vertexSet;
+    std::unordered_set<Vertex* , VertexHash, VertexEqual> vertexSet;
 };
 
 /********************** Edge  ****************************/
@@ -197,19 +213,21 @@ inline Graph::~Graph() {
 }
 
 inline Vertex* Graph::findVertex(long id) const {
-    for (Vertex* v : vertexSet) {
-        if (v->getId() == id) {
-            return v;
-        }
+    Vertex * v = new Vertex(id);
+    auto it = vertexSet.find(v);
+
+    if(it != vertexSet.end()){
+        return *it;
     }
+
     return nullptr;
 }
 
-inline bool Graph::addVertex(Vertex& vertex) {
-    if (findVertex(vertex.getId()) != nullptr) {
+inline bool Graph::addVertex(const Vertex* vertex) {
+    if (findVertex(vertex->getId()) != nullptr) {
         return false;  // Vertex with given id already exists
     }
-    vertexSet.insert(&vertex);
+    vertexSet.insert(new Vertex(vertex->getId() , vertex->getLongitude() , vertex->getLatitude()));
     return true;
 }
 
@@ -234,6 +252,7 @@ inline bool Graph::addEdge(long sourceId, long destId, double weight) {
         return false;  // Source or destination vertex not found
     }
     source->addAdjEdge(new Edge(source, dest, weight));
+    dest->addIncEdge(new Edge(source, dest, weight));
     return true;
 }
 
@@ -261,7 +280,7 @@ inline int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-inline std::unordered_set<Vertex*> Graph::getVertexSet() const {
+inline std::unordered_set<Vertex* , VertexHash, VertexEqual> Graph::getVertexSet() const {
     return vertexSet;
 }
 

@@ -58,7 +58,7 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
             return;
     }
 
-    std::string full_path = path +'/' + file_name;
+    std::string full_path = path + '/' + file_name;
 
     std::ifstream file(full_path);
     if (!file.is_open()) {
@@ -88,18 +88,17 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
 
         long id_V1 = stoi(id_v1);
         long id_V2 = stoi(id_v2);
-        double v_distances = stoi(distance);
+        double v_distances = stod(distance);
 
-        Vertex v1 = Vertex(id_V1 , 0 , 0);
-        Vertex v2 = Vertex(id_V2 , 0 , 0);
+        Vertex * v1 = new Vertex(id_V1 , 0 , 0);
+        Vertex * v2 = new Vertex(id_V2 , 0 , 0);
 
-        Edge edge = Edge(&v1 , &v2 , v_distances);
+        Edge edge = Edge(v1 , v2 , v_distances);
 
         g->addVertex(v1);
         g->addVertex(v2);
+        g->addEdge(v1->getId() , v2->getId() , edge.getWeight());
 
-        v1.addAdjEdge(&edge);
-        v2.addIncEdge(&edge);
     }
 
     file.close();
@@ -124,7 +123,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
             return;
     }
 
-    std::string full_path = path + file_name;
+    std::string full_path = path+ '/' + file_name;
 
     std::ifstream file(full_path);
     if (!file.is_open()) {
@@ -153,12 +152,12 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
         Remove_terminations(latitude);
 
         long id_V1 = stoi(id);
-        double longitude_ = stoi(longitude);
-        double latitude_ = stoi(latitude);
+        double longitude_ = stod(longitude);
+        double latitude_ = stod(latitude);
 
         Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
 
-        g->addVertex(v1);
+        g->addVertex(&v1);
     }
 
     file.close();
@@ -178,7 +177,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
             return;
     }
 
-    full_path = path + file_name;
+    full_path = path+ '/' + file_name;
 
     std::ifstream file2(full_path);
     if (!file2.is_open()) {
@@ -208,18 +207,15 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
 
         long id_V1 = stoi(id_v1);
         long id_V2 = stoi(id_v2);
-        double v_distances = stoi(distance);
+        double v_distances = stod(distance);
 
         Vertex v1 = Vertex(id_V1 , 0 , 0);
         Vertex v2 = Vertex(id_V2 , 0 , 0);
 
         Edge edge = Edge(&v1 , &v2 , v_distances);
 
-        v1.addAdjEdge(&edge);
-        v1.addIncEdge(&edge);
+        g->addBidirectionalEdge(v1.getId() , v2.getId() , edge.getWeight());
 
-        v2.addAdjEdge(&edge);
-        v2.addIncEdge(&edge);
     }
 
     file2.close();
@@ -229,7 +225,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
 void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
     std::string file_name = "/nodes.csv";
 
-    std::string full_path = path + file_name;
+    std::string full_path = path+ '/' + file_name;
 
     std::ifstream file(full_path);
     if (!file.is_open()) {
@@ -258,12 +254,12 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
         Remove_terminations(latitude);
 
         long id_V1 = stoi(id);
-        double longitude_ = stoi(longitude);
-        double latitude_ = stoi(latitude);
+        double longitude_ = stod(longitude);
+        double latitude_ = stod(latitude);
 
         Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
 
-        g->addVertex(v1);
+        g->addVertex(&v1);
     }
 
     file.close();
@@ -310,7 +306,7 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
             return;
     }
 
-    full_path = path + file_name;
+    full_path = path+ '/' + file_name;
 
     std::ifstream file2(full_path);
     if (!file2.is_open()) {
@@ -339,18 +335,14 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
 
         long id_V1 = stoi(id_v1);
         long id_V2 = stoi(id_v2);
-        double v_distances = stoi(distance);
+        double v_distances = stod(distance);
 
         Vertex v1 = Vertex(id_V1 , 0 , 0);
         Vertex v2 = Vertex(id_V2 , 0 , 0);
 
         Edge edge = Edge(&v1 , &v2 , v_distances);
 
-        v1.addAdjEdge(&edge);
-        v1.addIncEdge(&edge);
-
-        v2.addAdjEdge(&edge);
-        v2.addIncEdge(&edge);
+        g->addBidirectionalEdge(v1.getId() ,v2.getId() , edge.getWeight());
     }
 
     file2.close();
