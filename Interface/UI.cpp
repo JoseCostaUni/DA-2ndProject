@@ -385,7 +385,7 @@ void UI::main_menu(){
             break;
         case 'D':
 
-            TSP = TriangularApproximationHeuristic(&g , source , dest);
+//            TSP = TriangularApproximationHeuristic(&g , source , dest);
 
             for(auto e : TSP){
                 std::cout << e->getSource() << std::endl;

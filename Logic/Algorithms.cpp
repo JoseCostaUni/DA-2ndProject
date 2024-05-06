@@ -1,6 +1,6 @@
 #include "Algorithms.h"
 
-
+/*
 std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex* startVertex) {
     int numVertices = graph->getNumVertex();
 
@@ -8,7 +8,7 @@ std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex* startVertex) {
     Vertex* currentVertex = startVertex;
 
     // Initialize a set to keep track of visited vertices
-    std::unordered_set<Vertex*, VertexHash, VertexEqual> visited;
+    std::unordered_set<Vertex * > visited;
     visited.insert(startVertex);
 
     std::vector<Vertex*> path;
@@ -45,7 +45,7 @@ std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex* startVertex) {
 }
 
 
-Vertex* minKey(const Graph* graph ,  const std::vector<double>& key, const std::unordered_set<Vertex*, VertexHash, VertexEqual>& mstSet) {
+Vertex* minKey(const Graph* graph ,  const std::vector<double>& key, const std::unordered_set<Vertex*>& mstSet) {
     double min = std::numeric_limits<double>::max();
     Vertex* minVertex = nullptr;
 
@@ -106,7 +106,7 @@ std::vector<Vertex*> PrimMst(const Graph* graph){
    1. Algorithm: select a root vertex
    2. Find a minimum spanning tree
    3. Do preorder walk of T. and return Hamilton Cycle
- * */
+ *
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest){
 
     std::vector<Vertex*> parent = PrimMst(graph);
@@ -143,3 +143,4 @@ std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * so
 }
 
 
+*/

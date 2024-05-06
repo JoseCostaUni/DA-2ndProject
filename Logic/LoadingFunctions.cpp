@@ -53,6 +53,8 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
 
     std::string file_name;
 
+    int edgeId = 0;
+
     switch (graph) {
         case 0:
             file_name = "shipping.csv";
@@ -81,34 +83,28 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
     while (getline(file, line)) {
 
         line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
-
         std::istringstream lineStream(line);
-        std::vector<std::string> tokens;
-        std::string token;
 
-        while (getline(lineStream, token, ',')) {
-            tokens.push_back(token);
-        }
+        std::string id_v1 , id_v2 , distance;
 
-        std::string id_v1 = tokens[0];
-        std::string id_v2 = tokens[1];
-        std::string distance = tokens[2];
+        getline(lineStream , id_v1 , ',');
+        getline(lineStream , id_v2 , ',');
+        getline(lineStream , distance , ',');
 
-        Remove_terminations(distance);
-
-        long id_V1 = stoi(id_v1);
-        long id_V2 = stoi(id_v2);
+        int id_V1 = stoi(id_v1);
+        int id_V2 = stoi(id_v2);
         double v_distances = stod(distance);
 
         Vertex * v1 = new Vertex(id_V1 , 0 , 0);
         Vertex * v2 = new Vertex(id_V2 , 0 , 0);
 
-        Edge edge = Edge(v1 , v2 , v_distances);
+        Edge edge = Edge(v1 , v2 , edgeId , v_distances);
 
         g->addVertex(v1);
         g->addVertex(v2);
-        g->addEdge(v1->getId() , v2->getId() , edge.getWeight());
+        g->addEdge(v1->getId() , v2->getId() ,edge.getId(), edge.getWeight());
 
+        edgeId++;
     }
 
     file.close();
@@ -117,6 +113,7 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
 
 void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph){
     std::string file_name;
+    int edgeId = 0;
 
     switch (graph) {
         case 0:
@@ -146,26 +143,19 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
     while (getline(file, line)) {
 
         line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
-
         std::istringstream lineStream(line);
-        std::vector<std::string> tokens;
-        std::string token;
 
-        while (getline(lineStream, token, ',')) {
-            tokens.push_back(token);
-        }
+        std::string id , intitude , latitude;
 
-        std::string id = tokens[0];
-        std::string longitude = tokens[1];
-        std::string latitude = tokens[2];
+        getline(lineStream , id , ',');
+        getline(lineStream , intitude , ',');
+        getline(lineStream , latitude , ',');
 
-        Remove_terminations(latitude);
-
-        long id_V1 = stoi(id);
-        double longitude_ = stod(longitude);
+        int id_V1 = stoi(id);
+        double intitude_ = stod(intitude);
         double latitude_ = stod(latitude);
 
-        Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
+        Vertex v1 = Vertex(id_V1 , intitude_ , latitude_);
 
         g->addVertex(&v1);
     }
@@ -202,29 +192,25 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
         line2.erase(std::remove(line2.begin(), line2.end(), '\r'), line2.end());
 
         std::istringstream lineStream(line2);
-        std::vector<std::string> tokens;
-        std::string token;
 
-        while (getline(lineStream, token, ',')) {
-            tokens.push_back(token);
-        }
+        std::string id_v1 , id_v2 , distance;
 
-        std::string id_v1 = tokens[0];
-        std::string id_v2 = tokens[1];
-        std::string distance = tokens[2];
+        std::getline(lineStream , id_v1 , ',');
+        std::getline(lineStream , id_v2 , ',');
+        std::getline(lineStream , distance , ',');
 
-        Remove_terminations(distance);
-
-        long id_V1 = stoi(id_v1);
-        long id_V2 = stoi(id_v2);
+        int id_V1 = stoi(id_v1);
+        int id_V2 = stoi(id_v2);
         double v_distances = stod(distance);
 
         Vertex v1 = Vertex(id_V1 , 0 , 0);
         Vertex v2 = Vertex(id_V2 , 0 , 0);
 
-        Edge edge = Edge(&v1 , &v2 , v_distances);
+        Edge edge = Edge(&v1 , &v2 ,edgeId, v_distances);
 
-        g->addBidirectionalEdge(v1.getId() , v2.getId() , edge.getWeight());
+        g->addBidirectionalEdge(v1.getId() , v2.getId() , edge.getId() , edge.getWeight());
+
+        edgeId += 2;
     }
 
     file2.close();
@@ -237,6 +223,9 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
     std::string full_path = path + file_name2;
 
     std::string  file_name;
+
+    int edgeId = 0;
+
     switch (graph) {
         case 0:
             file_name = "edges_25.csv";
@@ -303,16 +292,16 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
         }
 
         std::string id = tokens[0];
-        std::string longitude = tokens[1];
+        std::string intitude = tokens[1];
         std::string latitude = tokens[2];
 
         Remove_terminations(latitude);
 
-        long id_V1 = stoi(id);
-        double longitude_ = stod(longitude);
+        int id_V1 = stoi(id);
+        double intitude_ = stod(intitude);
         double latitude_ = stod(latitude);
 
-        Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
+        Vertex v1 = Vertex(id_V1 , intitude_ , latitude_);
 
         g->addVertex(&v1);
         i--;
@@ -335,29 +324,25 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
         line2.erase(std::remove(line2.begin(), line2.end(), '\r'), line2.end());
 
         std::istringstream lineStream(line2);
-        std::vector<std::string> tokens;
-        std::string token;
 
-        while (getline(lineStream, token, ',')) {
-            tokens.push_back(token);
-        }
+        std::string id_v1 , id_v2 , distance;
 
-        std::string id_v1 = tokens[0];
-        std::string id_v2 = tokens[1];
-        std::string distance = tokens[2];
+        std::getline(lineStream , id_v1 , ',');
+        std::getline(lineStream , id_v2 , ',');
+        std::getline(lineStream , distance , ',');
 
-        Remove_terminations(distance);
-
-        long id_V1 = stoi(id_v1);
-        long id_V2 = stoi(id_v2);
+        int id_V1 = stoi(id_v1);
+        int id_V2 = stoi(id_v2);
         double v_distances = stod(distance);
 
         Vertex v1 = Vertex(id_V1 , 0 , 0);
         Vertex v2 = Vertex(id_V2 , 0 , 0);
 
-        Edge edge = Edge(&v1 , &v2 , v_distances);
+        Edge edge = Edge(&v1 , &v2 , edgeId ,  v_distances);
 
-        g->addBidirectionalEdge(v1.getId() ,v2.getId() , edge.getWeight());
+        g->addBidirectionalEdge(v1.getId() ,v2.getId() ,edge.getId(), edge.getWeight());
+
+        edgeId += 2;
     }
 
     file2.close();
