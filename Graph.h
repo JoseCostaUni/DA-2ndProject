@@ -42,10 +42,12 @@ public:
     void addIncEdge(Edge* edge);
     void deleteIncEdge(Edge* edge);
     void deleteAdjEdge(Edge* edge);
+    bool isVisited() const;
 
     void setId(long newId);
     void setLongitude(double newLongitude);
     void setLatitude(double newLatitude);
+    void setVisited(bool visited);
 protected:
     long id;
     double longitude;
@@ -111,6 +113,14 @@ inline void Vertex::setLongitude(double newLongitude) {
 
 inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
+}
+
+inline void Vertex::setVisited(bool visited) {
+    this->visited = visited;
+}
+
+inline bool Vertex::isVisited() const {
+    return visited;
 }
 
 
