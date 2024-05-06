@@ -12,6 +12,7 @@
 #include <cfloat>
 #include <cstdint>
 #include <unordered_set>
+#include "Logic/Clock.h"
 
 
 struct Metrics{
@@ -182,12 +183,17 @@ public:
     bool removeEdge(long sourceId, long destId);
     bool addBidirectionalEdge(long sourceId, long destId, double weight);
     int getNumVertex() const;
+    Clock getClock();
+
     std::unordered_set<Vertex* , VertexHash, VertexEqual> getVertexSet() const;
 
     void clear();
     void printNodesContente() const;
     void printGraphInfo() const;
 private:
+
+    Clock clock;
+
     std::unordered_set<Edge*> edgeSet;
     std::unordered_set<Vertex* , VertexHash, VertexEqual> vertexSet;
 };
@@ -336,6 +342,10 @@ inline void Graph::printNodesContente() const {
         }
         std::cout << std::endl;
     }
+}
+
+Clock Graph::getClock() {
+    return this->clock;
 }
 
 /****************** DFS ********************/
