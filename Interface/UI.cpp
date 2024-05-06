@@ -46,6 +46,35 @@ bool UI::validate_input(char &op, const char lower_bound, const char upper_bound
     return true;
 }
 
+
+bool UI::validate_int_input(int &index) {
+    std::string tempValue;
+    char op;
+
+    while (true) {
+        std::cin >> tempValue;
+        std::cout << "\n";
+
+        // Check if the input contains only digits
+        bool isNumber = true;
+        for (char c : tempValue) {
+            if (!std::isdigit(c)) {
+                isNumber = false;
+                break;
+            }
+        }
+
+        if (!isNumber) {
+            std::cout << "Input should contain only numbers. Please try again: ";
+        } else {
+            // Convert the string to an integer
+            index = std::stoi(tempValue);
+            break;
+        }
+    }
+
+    return true;
+}
 /**
  * @brief Loads data and initializes the program.
  *
@@ -368,8 +397,10 @@ void UI::main_menu(){
              << "Insert your choice:";
 
     validate_input(op, 'A', 'D');
-    Vertex * source = g.findVertex(10);
-    Vertex * dest =  g.findVertex(70);
+
+    int index = 0;
+    Vertex * source;
+    Vertex * dest;
     switch(op){
         case 'A':
             changeDataSet();
@@ -385,10 +416,21 @@ void UI::main_menu(){
             break;
         case 'D':
 
-//            TSP = TriangularApproximationHeuristic(&g , source , dest);
+            std::cout << "What is the index of the node where you want to start? " << std::endl;
 
-            for(auto e : TSP){
-                std::cout << e->getSource() << std::endl;
+            validate_int_input(index);
+
+            source = g.findVertex(index);
+
+            if(source != nullptr){
+                TSP = TriangularApproximationHeuristic(&g , source , nullptr);
+                /*
+                for(Edge * e : TSP){
+                    std::cout << e->getDestination()->getId() << std::endl;
+                }*/
+
+            }else{
+                std::cout << "Invalid Node index!" << std::endl;
             }
 
             main_menu();
@@ -423,3 +465,5 @@ void UI::back_menu(){
     validate_input(op,'A','A');
     main_menu();
 }
+
+

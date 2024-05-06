@@ -14,6 +14,8 @@
 #include <unordered_map>
 #include "Logic/Clock.h"
 
+#include "data_structures/MutablePriorityQueue.h"
+
 struct Metrics{
     double avg;
     double variance;
@@ -36,6 +38,7 @@ public:
     double getintitude() const;
     double getLatitude() const;
     double getDist() const;
+    bool isVisited() const;
 
     std::unordered_map<int, Edge*> getAdj() const;
     std::unordered_map<int, Edge*> getInc() const;
@@ -48,8 +51,13 @@ public:
     void setId(int newId);
     void setintitude(double newintitude);
     void setLatitude(double newLatitude);
+    void setVisited(bool visited);
 
     double HaversineDistance(double intitude1 , double latitude1,double intitude2 , double latitude2);
+
+    bool operator<(Vertex & vertex) const;
+    friend class MutablePriorityQueue<Vertex>;
+
 protected:
     int id;
     double intitude;
@@ -61,6 +69,7 @@ protected:
     unsigned int indegree = 0;
     double dist = 0;
 
+    int queueIndex = 0;
 };
 
 inline Vertex::Vertex(int id, double intitude, double latitude)
@@ -140,6 +149,18 @@ inline double Vertex::getDist() const {
 
 inline void Vertex::setDist(double newDist) {
     this->dist = newDist;
+}
+
+inline bool Vertex::isVisited() const {
+    return this->visited;
+}
+
+inline void Vertex::setVisited(bool visited) {
+    this->visited = visited;
+}
+
+inline bool Vertex::operator<(Vertex &vertex) const {
+    return this->dist < vertex.dist;
 }
 
 /********************** Edge  ****************************/

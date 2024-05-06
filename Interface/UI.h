@@ -39,6 +39,8 @@ public:
     * @return True if input is valid, False otherwise.
     */
     static bool validate_input(char &op, const char lower_bound, const char upper_bound);
+
+    static bool validate_int_input(int &index);
      /**
      * @brief Displays the main menu options.
      */

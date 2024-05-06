@@ -1,7 +1,8 @@
 #include "Algorithms.h"
 
+#include "../data_structures/MutablePriorityQueue.h"
 /*
-std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex* startVertex) {
+std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex * startVertex) {
     int numVertices = graph->getNumVertex();
 
     // Start with any vertex as the initial vertex
@@ -44,46 +45,56 @@ std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex* startVertex) {
     return path;
 }
 
+*/
 
-Vertex* minKey(const Graph* graph ,  const std::vector<double>& key, const std::unordered_set<Vertex*>& mstSet) {
-    double min = std::numeric_limits<double>::max();
-    Vertex* minVertex = nullptr;
+std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex){
 
-    for (Vertex* v : graph->getVertexSet()) {
-        if (!mstSet.count(v) && key[v->getId()] < min) {
-            min = key[v->getId()];
-            minVertex = v;
-        }
+    Clock clock1;
+
+    clock1.start();
+
+    std::vector<Vertex *> path;
+
+    std::unordered_map<int, Vertex *> vertexSet = graph->getVertexSet();
+
+    for(std::pair<int , Vertex *> pair : vertexSet){
+        Vertex * v = pair.second;
+        v->setDist(INF);
+        v->setVisited(false);
     }
 
-    return minVertex;
-}
+    MutablePriorityQueue<Vertex> vertexQueue;
 
-std::vector<Vertex*> PrimMst(const Graph* graph){
-    std::unordered_set<Vertex*, VertexHash, VertexEqual> mstSet;
-    std::vector<double> key(graph->getVertexSet().size(), std::numeric_limits<double>::max());
-    std::vector<Vertex*> parent(graph->getVertexSet().size(), nullptr);
+    for(std::pair<int , Vertex *> pair : vertexSet){
+        Vertex * v = pair.second;
+        vertexQueue.insert(v);
+    }
 
-    key[0] = 0;
+    sourceVertex->setDist(0);
 
-    // Loop through all vertices
-    for (int count = 0; count < graph->getNumVertex() - 1; ++count) {
-        // Get the vertex with the minimum key value from the set of vertices
-        Vertex * u = minKey(graph , key, mstSet);
+    while (!vertexQueue.empty()){
+        Vertex * curr = vertexQueue.extractMin();
+        if (curr->isVisited()) continue;
+        curr->setVisited(true);
+        path.push_back(curr);
+        // Update distances and paths to adjacent vertices
+        std::unordered_map<int , Edge *> edgeSet = curr->getAdj();
+        for(std::pair<int , Edge *> edgePair : edgeSet){
+            Edge * e = edgePair.second;
 
-        // Add the selected vertex to the MST set
-        mstSet.insert(u);
+            Vertex * neighbor = e->getDestination();
 
-        // Update key value and parent index of the adjacent vertices of the picked vertex
-        for (Edge* edge : u->getAdj()) {
-            Vertex* v = edge->getDestination();
-            if (!mstSet.count(v) && edge->getWeight() < key[v->getId()]) {
-                parent[v->getId()] = u;
-                key[v->getId()] = edge->getWeight();
+            if (neighbor->getDist() > e->getWeight() && !neighbor->isVisited()) {
+                neighbor->setDist(e->getWeight());
+                vertexQueue.decreaseKey(neighbor);
             }
         }
     }
-    return parent;
+
+    double time = clock1.elapsed();
+
+    std::cout << "Prim took " << time << "second" << std::endl;
+    return path;
 }
 
 
@@ -107,40 +118,39 @@ std::vector<Vertex*> PrimMst(const Graph* graph){
    2. Find a minimum spanning tree
    3. Do preorder walk of T. and return Hamilton Cycle
  *
+ *
+*/
+
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest){
 
-    std::vector<Vertex*> parent = PrimMst(graph);
+    std::vector<Vertex * > path = PrimMst(graph , source);
 
     std::vector<Edge*> optimalRoute;
+    std::stack<Vertex *> stack;
 
-    std::unordered_set<Vertex*, VertexHash, VertexEqual> visited;
-    std::vector<Vertex*> stack;
-    stack.push_back(source);
+    stack.push(path[0]);
 
     while (!stack.empty()) {
-        Vertex* current = stack.back();
-        stack.pop_back();
-        visited.insert(current);
+        Vertex *current = stack.top();
+        stack.pop();
 
-        for (Edge* edge : current->getAdj()) {
-            Vertex* next = edge->getDestination();
-            if (next != parent[current->getId()]) {
-                stack.push_back(next);
-                optimalRoute.push_back(edge);
+        // Visit the current vertex if it hasn't been visited before
+        if (!current->isVisited()) {
+            current->setVisited(true);
+
+            // Add outgoing edges of the current vertex to the optimal route
+            std::unordered_map<int , Edge *> edgeSet = current->getAdj();
+            for(std::pair<int , Edge *> edgePair : edgeSet){
+                Edge *edge = edgePair.second;
+
+                if (!edge->getDestination()->isVisited()) {
+                    optimalRoute.push_back(edge);
+                    stack.push(edge->getDestination());
+                }
             }
-        }
-    }
-
-    // Add the last edge to the source to complete the cycle
-    for (Edge* edge : source->getAdj()) {
-        if (edge->getDestination() == dest) {
-            optimalRoute.push_back(edge);
-            break;
         }
     }
 
     return optimalRoute;
 }
 
-
-*/
