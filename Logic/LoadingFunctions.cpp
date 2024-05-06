@@ -38,6 +38,16 @@ void Remove_terminations(std::string& str)
     }
 }
 
+std::string extractLetters(const std::string filename) {
+    size_t start = filename.find('_');
+    size_t end = filename.find('.');
+    if (start != std::string::npos && end != std::string::npos && start < end) {
+        return filename.substr(start + 1, end - start - 1);
+    } else {
+        return "";
+    }
+}
+
 
 void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
 
@@ -215,7 +225,6 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
         Edge edge = Edge(&v1 , &v2 , v_distances);
 
         g->addBidirectionalEdge(v1.getId() , v2.getId() , edge.getWeight());
-
     }
 
     file2.close();
@@ -223,47 +232,11 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
 }
 
 void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
-    std::string file_name = "/nodes.csv";
+    std::string file_name2 = "/nodes.csv";
 
-    std::string full_path = path + file_name;
+    std::string full_path = path + file_name2;
 
-    std::ifstream file(full_path);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open the CSV file." << std::endl;
-    }
-
-    std::string line;
-    getline(file, line);
-
-    while (getline(file, line)) {
-
-        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
-
-        std::istringstream lineStream(line);
-        std::vector<std::string> tokens;
-        std::string token;
-
-        while (getline(lineStream, token, ',')) {
-            tokens.push_back(token);
-        }
-
-        std::string id = tokens[0];
-        std::string longitude = tokens[1];
-        std::string latitude = tokens[2];
-
-        Remove_terminations(latitude);
-
-        long id_V1 = stoi(id);
-        double longitude_ = stod(longitude);
-        double latitude_ = stod(latitude);
-
-        Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
-
-        g->addVertex(&v1);
-    }
-
-    file.close();
-
+    std::string  file_name;
     switch (graph) {
         case 0:
             file_name = "edges_25.csv";
@@ -305,6 +278,48 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
             std::cerr << "Choose a valid graph";
             return;
     }
+
+    std::string numbers = extractLetters(file_name);
+    int i = std::stoi(numbers);
+
+    std::ifstream file(full_path);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the CSV file." << std::endl;
+    }
+
+    std::string line;
+    getline(file, line);
+
+    while (getline(file, line) && i > 0) {
+
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
+
+        std::istringstream lineStream(line);
+        std::vector<std::string> tokens;
+        std::string token;
+
+        while (getline(lineStream, token, ',')) {
+            tokens.push_back(token);
+        }
+
+        std::string id = tokens[0];
+        std::string longitude = tokens[1];
+        std::string latitude = tokens[2];
+
+        Remove_terminations(latitude);
+
+        long id_V1 = stoi(id);
+        double longitude_ = stod(longitude);
+        double latitude_ = stod(latitude);
+
+        Vertex v1 = Vertex(id_V1 , longitude_ , latitude_);
+
+        g->addVertex(&v1);
+        i--;
+    }
+
+    file.close();
+
 
     full_path = path+ '/' + file_name;
 

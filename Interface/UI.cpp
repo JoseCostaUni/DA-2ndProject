@@ -312,7 +312,7 @@ void UI::changeDataSet(){
     std::cout << "Press A to start the program: ";
     op;
     validate_input(op,'A','A');
-    menu_start();
+    main_menu();
 }
 
 /**
@@ -360,11 +360,12 @@ void UI::main_menu(){
     char op;
     std::cout << "What would you like to know?" <<std::endl;
     std::cout << "A. Switch Data Set" <<std::endl
-              << "B. Print all Graph information" << std::endl
-             << "C. Exit the program" << std::endl
+              << "B. Print all Nodes information" << std::endl
+              << "C. Print Graph information" << std::endl
+             << "D. Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'C');
+    validate_input(op, 'A', 'D');
     switch(op){
         case 'A':
             changeDataSet();
@@ -375,6 +376,10 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'C':
+            g.printGraphInfo();
+            main_menu();
+            break;
+        case 'D':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

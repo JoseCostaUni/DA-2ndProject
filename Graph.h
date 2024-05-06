@@ -90,6 +90,7 @@ inline void Vertex::addAdjEdge(Edge* edge) {
 
 inline void Vertex::addIncEdge(Edge* edge) {
     incomingEdges.insert(edge);
+
 }
 
 inline void Vertex::deleteIncEdge(Edge* edge) {
@@ -166,6 +167,7 @@ public:
 
     void clear();
     void printNodesContente() const;
+    void printGraphInfo() const;
 private:
     std::unordered_set<Edge*> edgeSet;
     std::unordered_set<Vertex* , VertexHash, VertexEqual> vertexSet;
@@ -253,6 +255,7 @@ inline bool Graph::addEdge(long sourceId, long destId, double weight) {
     }
     source->addAdjEdge(new Edge(source, dest, weight));
     dest->addIncEdge(new Edge(source, dest, weight));
+    edgeSet.insert(new Edge(source, dest, weight));
     return true;
 }
 
@@ -287,6 +290,19 @@ inline std::unordered_set<Vertex* , VertexHash, VertexEqual> Graph::getVertexSet
 inline void Graph::clear() {
     this->vertexSet.clear();
     this->edgeSet.clear();
+}
+
+inline void Graph::printGraphInfo() const{
+
+
+
+    std::cout << "Number of nodes: " << vertexSet.size() << std::endl;
+
+    for(auto v : vertexSet){
+        std::cout << "Vertex Id: " << v->getId() << std::endl;
+    }
+
+    std::cout <<"Number of Edges: " << edgeSet.size() << std::endl;
 }
 
 inline void Graph::printNodesContente() const {
