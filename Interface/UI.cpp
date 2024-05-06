@@ -159,10 +159,10 @@ void UI::loading_stuff(UI &ui) {
                     LoadRealWorldGraphs(&g , path , 0);
                     break;
                 case 'B':
-                    LoadToyGraphs(&g , path , 1);
+                    LoadRealWorldGraphs(&g , path , 1);
                     break;
                 case 'C':
-                    LoadToyGraphs(&g , path , 2);
+                    LoadRealWorldGraphs(&g , path , 2);
                     break;
                 default:
                     std::cerr << "Invalid Input";

@@ -46,6 +46,8 @@ public:
     void setId(long newId);
     void setLongitude(double newLongitude);
     void setLatitude(double newLatitude);
+
+    double HaversineDistance(double longitude1 , double latitude1,double longitude2 , double latitude2);
 protected:
     long id;
     double longitude;
@@ -111,6 +113,23 @@ inline void Vertex::setLongitude(double newLongitude) {
 
 inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
+}
+
+inline double Vertex::HaversineDistance(double longitude1, double latitude1, double longitude2, double latitude2) {
+    double lon1_rad = longitude1 * M_PI / 180.0;
+    double lat1_rad = latitude1 * M_PI / 180.0;
+    double lon2_rad = longitude2 * M_PI / 180.0;
+    double lat2_rad = latitude2 * M_PI / 180.0;
+
+    double dlon = lon2_rad - lon1_rad;
+    double dlat = lat2_rad - lat1_rad;
+    double a = pow(sin(dlat / 2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    const double earth_radius_km = 6371.0;
+
+    double distance = earth_radius_km * c;
+    return distance;
 }
 
 

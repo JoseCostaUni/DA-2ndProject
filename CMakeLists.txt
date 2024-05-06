@@ -11,4 +11,5 @@ add_executable(Projeto2 main.cpp
         Logic/Algorithms.cpp
         Logic/Logic.cpp
         Logic/Algorithms.h
+        Logic/Clock.h
 )
