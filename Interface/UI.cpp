@@ -1,5 +1,6 @@
 #include "UI.h"
 #include "../Logic/Logic.h"
+#include "../Logic/Algorithms.h"
 #include <thread>
 #include <chrono>
 #include <iomanip>
@@ -362,10 +363,13 @@ void UI::main_menu(){
     std::cout << "A. Switch Data Set" <<std::endl
               << "B. Print all Nodes information" << std::endl
               << "C. Print Graph information" << std::endl
-             << "D. Exit the program" << std::endl
+              << "D. Calculate TSP with Triangular Aprox" << std::endl
+             << "E. Exit the program" << std::endl
              << "Insert your choice:";
 
     validate_input(op, 'A', 'D');
+    Vertex * source = g.findVertex(10);
+    Vertex * dest =  g.findVertex(70);
     switch(op){
         case 'A':
             changeDataSet();
@@ -380,6 +384,16 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
+
+            TSP = TriangularApproximationHeuristic(&g , source , dest);
+
+            for(auto e : TSP){
+                std::cout << e->getSource() << std::endl;
+            }
+
+            main_menu();
+
+        case 'E':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

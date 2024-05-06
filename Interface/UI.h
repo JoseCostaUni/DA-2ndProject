@@ -51,6 +51,7 @@ public:
     Graph getGraph() const;
 private:
     Graph g;
+    std::vector<Edge *> TSP;
 };
 
 

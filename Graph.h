@@ -37,6 +37,8 @@ public:
     long getId() const;
     double getLongitude() const;
     double getLatitude() const;
+    double getDist() const;
+
     std::unordered_set<Edge*> getAdj() const;
     std::unordered_set<Edge*> getInc() const;
     void addAdjEdge(Edge* edge);
@@ -44,6 +46,7 @@ public:
     void deleteIncEdge(Edge* edge);
     void deleteAdjEdge(Edge* edge);
 
+    void setDist(double newDist);
     void setId(long newId);
     void setLongitude(double newLongitude);
     void setLatitude(double newLatitude);
@@ -131,6 +134,14 @@ inline double Vertex::HaversineDistance(double longitude1, double latitude1, dou
 
     double distance = earth_radius_km * c;
     return distance;
+}
+
+inline double Vertex::getDist() const {
+    return this->dist;
+}
+
+inline void Vertex::setDist(double newDist) {
+    this->dist = newDist;
 }
 
 
@@ -323,10 +334,6 @@ inline void Graph::printGraphInfo() const{
 
     std::cout << "Number of nodes: " << vertexSet.size() << std::endl;
 
-    for(auto v : vertexSet){
-        std::cout << "Vertex Id: " << v->getId() << std::endl;
-    }
-
     std::cout <<"Number of Edges: " << edgeSet.size() << std::endl;
 }
 
@@ -344,7 +351,7 @@ inline void Graph::printNodesContente() const {
     }
 }
 
-Clock Graph::getClock() {
+inline Clock Graph::getClock() {
     return this->clock;
 }
 

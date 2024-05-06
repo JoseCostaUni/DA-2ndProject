@@ -1,7 +1,7 @@
 #include "Algorithms.h"
 
 
-std::vector<Vertex*> findTour(Graph * graph , Vertex* startVertex) {
+std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex* startVertex) {
     int numVertices = graph->getNumVertex();
 
     // Start with any vertex as the initial vertex
@@ -64,7 +64,6 @@ std::vector<Vertex*> PrimMst(const Graph* graph){
     std::vector<double> key(graph->getVertexSet().size(), std::numeric_limits<double>::max());
     std::vector<Vertex*> parent(graph->getVertexSet().size(), nullptr);
 
-    // Choose first vertex as the starting point
     key[0] = 0;
 
     // Loop through all vertices
@@ -99,7 +98,6 @@ std::vector<Vertex*> PrimMst(const Graph* graph){
     b. Adicione esse vizinho ao caminho.
     c. Marque o vizinho como visitado e faça dele o nó atual.
     Retorne ao nó inicial para completar o ciclo.
-
  */
 
 /*Triangulolar inequality : the least distance path to reach a vertex j from i is always to reach j directly from i
@@ -107,14 +105,41 @@ std::vector<Vertex*> PrimMst(const Graph* graph){
    dist(i, j ) <= dist(i,k) + dist(k , j)
    1. Algorithm: select a root vertex
    2. Find a minimum spanning tree
-   3. Do preorder wack of T. and return Hamilton Cycle
+   3. Do preorder walk of T. and return Hamilton Cycle
  * */
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest){
 
-    std::vector<Edge *> optimalRoute;
+    std::vector<Vertex*> parent = PrimMst(graph);
 
+    std::vector<Edge*> optimalRoute;
 
-    return  optimalRoute;
+    std::unordered_set<Vertex*, VertexHash, VertexEqual> visited;
+    std::vector<Vertex*> stack;
+    stack.push_back(source);
+
+    while (!stack.empty()) {
+        Vertex* current = stack.back();
+        stack.pop_back();
+        visited.insert(current);
+
+        for (Edge* edge : current->getAdj()) {
+            Vertex* next = edge->getDestination();
+            if (next != parent[current->getId()]) {
+                stack.push_back(next);
+                optimalRoute.push_back(edge);
+            }
+        }
+    }
+
+    // Add the last edge to the source to complete the cycle
+    for (Edge* edge : source->getAdj()) {
+        if (edge->getDestination() == dest) {
+            optimalRoute.push_back(edge);
+            break;
+        }
+    }
+
+    return optimalRoute;
 }
 
 
