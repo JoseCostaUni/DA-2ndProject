@@ -193,7 +193,7 @@ class Graph {
 public:
     ~Graph();
     Vertex* findVertex(int id) const;
-    bool addVertex(Vertex* vertex);
+    bool addVertex(int id , double longitude , double latitude);
     bool removeVertex(int id);
     bool addEdge(int sourceId, int destId,int edgeId, double weight);
     bool removeEdge(int sourceId, int destId) const;
@@ -272,7 +272,8 @@ inline Vertex* Graph::findVertex(int id) const {
     return nullptr;
 }
 
-inline bool Graph::addVertex(Vertex* vertex) {
+inline bool Graph::addVertex(int id , double longitude , double latitude) {
+    Vertex * vertex = new Vertex(id , longitude , latitude);
     if (findVertex(vertex->getId()) != nullptr) {
         return false;  // Vertex with given id already exists
     }

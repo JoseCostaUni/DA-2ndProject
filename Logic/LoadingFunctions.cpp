@@ -95,14 +95,9 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
         int id_V2 = stoi(id_v2);
         double v_distances = stod(distance);
 
-        Vertex * v1 = new Vertex(id_V1 , 0 , 0);
-        Vertex * v2 = new Vertex(id_V2 , 0 , 0);
-
-        Edge edge = Edge(v1 , v2 , edgeId , v_distances);
-
-        g->addVertex(v1);
-        g->addVertex(v2);
-        g->addEdge(v1->getId() , v2->getId() ,edge.getId(), edge.getWeight());
+        g->addVertex(id_V1 , 0 , 0);
+        g->addVertex(id_V2 , 0 , 0);
+        g->addEdge(id_V1 , id_V2 ,edgeId, v_distances);
 
         edgeId++;
     }
@@ -155,9 +150,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
         double intitude_ = stod(intitude);
         double latitude_ = stod(latitude);
 
-        Vertex v1 = Vertex(id_V1 , intitude_ , latitude_);
-
-        g->addVertex(&v1);
+        g->addVertex(id_V1 , intitude_ , latitude_);
     }
 
     file.close();
@@ -292,18 +285,16 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
         }
 
         std::string id = tokens[0];
-        std::string intitude = tokens[1];
+        std::string longitude_ = tokens[1];
         std::string latitude = tokens[2];
 
         Remove_terminations(latitude);
 
         int id_V1 = stoi(id);
-        double intitude_ = stod(intitude);
+        double longitude = stod(longitude_);
         double latitude_ = stod(latitude);
 
-        Vertex v1 = Vertex(id_V1 , intitude_ , latitude_);
-
-        g->addVertex(&v1);
+        g->addVertex(id_V1 ,longitude, latitude_ );
         i--;
     }
 

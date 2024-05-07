@@ -399,6 +399,7 @@ void UI::main_menu(){
     validate_input(op, 'A', 'D');
 
     int index = 0;
+    double weight = 0;
     Vertex * source;
     Vertex * dest;
     switch(op){
@@ -416,19 +417,21 @@ void UI::main_menu(){
             break;
         case 'D':
 
-            std::cout << "What is the index of the node where you want to start? " << std::endl;
+            //std::cout << "What is the index of the node where you want to start? " << std::endl;
 
-            validate_int_input(index);
+            //validate_int_input(index);
 
-            source = g.findVertex(index);
+            source = g.findVertex(0);
 
             if(source != nullptr){
                 TSP = TriangularApproximationHeuristic(&g , source , nullptr);
-                /*
+                std::cout << source->getId() << std::endl;
                 for(Edge * e : TSP){
+                    weight += e->getWeight();
                     std::cout << e->getDestination()->getId() << std::endl;
-                }*/
+                }
 
+                std::cout << "Weight :" << weight << std::endl;
             }else{
                 std::cout << "Invalid Node index!" << std::endl;
             }

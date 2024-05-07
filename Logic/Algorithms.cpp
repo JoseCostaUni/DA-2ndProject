@@ -125,29 +125,45 @@ std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * so
 
     std::vector<Vertex * > path = PrimMst(graph , source);
 
-    std::vector<Edge*> optimalRoute;
+    std::vector<Vertex *> preorderWalk;
+    std::unordered_set<Vertex *> visited;
     std::stack<Vertex *> stack;
-
-    stack.push(path[0]);
+    stack.push(source);
 
     while (!stack.empty()) {
         Vertex *current = stack.top();
         stack.pop();
 
-        // Visit the current vertex if it hasn't been visited before
-        if (!current->isVisited()) {
-            current->setVisited(true);
+        if (visited.find(current) == visited.end()) {
+            preorderWalk.push_back(current);
+            visited.insert(current);
+            std::unordered_map<int, Edge *> map = current->getAdj();
+            for (std::pair<int , Edge *> pair_ : current->getAdj()) {
+                Edge * edge = pair_.second;
+                stack.push(edge->getDestination());
+            }
+        }
+    }
 
-            // Add outgoing edges of the current vertex to the optimal route
-            std::unordered_map<int , Edge *> edgeSet = current->getAdj();
-            for(std::pair<int , Edge *> edgePair : edgeSet){
-                Edge *edge = edgePair.second;
+    // Step 3: Define a tour that visits all vertices in the graph using the order obtained in step 2
+    std::unordered_set<Vertex *> visitedNodes;
+    std::vector<Edge *> optimalRoute;
+    for (size_t i = 0; i < preorderWalk.size(); ++i) {
+        Vertex *current = preorderWalk[i];
+        Vertex *next = (i + 1 < preorderWalk.size()) ? preorderWalk[i + 1] : preorderWalk[0];
 
-                if (!edge->getDestination()->isVisited()) {
+        // Check if the next vertex is already visited
+        if (visitedNodes.find(next) == visitedNodes.end()) {
+            // Find the edge connecting current and next vertices
+            std::unordered_map<int, Edge *> map = current->getAdj();
+            for (std::pair<int , Edge *> pair_ : current->getAdj()) {
+                Edge * edge = pair_.second;
+                if (edge->getDestination() == next) {
                     optimalRoute.push_back(edge);
-                    stack.push(edge->getDestination());
+                    break;
                 }
             }
+            visitedNodes.insert(current);
         }
     }
 
