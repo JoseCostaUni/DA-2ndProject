@@ -38,6 +38,7 @@ public:
     double getintitude() const;
     double getLatitude() const;
     double getDist() const;
+    Edge* getPath() const;
     bool isVisited() const;
 
     std::unordered_map<int, Edge*> getAdj() const;
@@ -52,6 +53,7 @@ public:
     void setintitude(double newintitude);
     void setLatitude(double newLatitude);
     void setVisited(bool visited);
+    void setPath(Edge* newPath);
 
     double HaversineDistance(double intitude1 , double latitude1,double intitude2 , double latitude2);
 
@@ -68,6 +70,7 @@ protected:
     bool processing = false;
     unsigned int indegree = 0;
     double dist = 0;
+    Edge* path = nullptr;
 
     int queueIndex = 0;
 };
@@ -126,6 +129,10 @@ inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
 }
 
+inline void Vertex::setPath(Edge* newPath) {
+    this->path = newPath;
+}
+
 inline double Vertex::HaversineDistance(double intitude1, double latitude1, double intitude2, double latitude2) {
     double lon1_rad = intitude1 * M_PI / 180.0;
     double lat1_rad = latitude1 * M_PI / 180.0;
@@ -145,6 +152,10 @@ inline double Vertex::HaversineDistance(double intitude1, double latitude1, doub
 
 inline double Vertex::getDist() const {
     return this->dist;
+}
+
+inline Edge* Vertex::getPath() const {
+    return this->path;
 }
 
 inline void Vertex::setDist(double newDist) {

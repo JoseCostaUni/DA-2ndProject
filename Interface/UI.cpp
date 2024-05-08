@@ -392,11 +392,12 @@ void UI::main_menu(){
     std::cout << "A. Switch Data Set" <<std::endl
               << "B. Print all Nodes information" << std::endl
               << "C. Print Graph information" << std::endl
-              << "D. Calculate TSP with Triangular Aprox" << std::endl
-             << "E. Exit the program" << std::endl
+              << "D. Calculate TSP with Backtracking Brute Force" << std::endl
+              << "E. Calculate TSP with Triangular Aprox" << std::endl
+             << "F. Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'D');
+    validate_input(op, 'A', 'F');
 
     int index = 0;
     double weight = 0;
@@ -416,6 +417,10 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
+            tspBruteForce(&g);
+            main_menu();
+            break;
+        case 'E':
 
             //std::cout << "What is the index of the node where you want to start? " << std::endl;
 
@@ -438,7 +443,7 @@ void UI::main_menu(){
 
             main_menu();
 
-        case 'E':
+        case 'F':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

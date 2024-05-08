@@ -1,4 +1,5 @@
 #include "Algorithms.h"
+#include <chrono>
 
 #include "../data_structures/MutablePriorityQueue.h"
 /*
@@ -168,5 +169,84 @@ std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * so
     }
 
     return optimalRoute;
+}
+
+
+void tspBruteForce(Graph* g){
+    auto start_time = std::chrono::steady_clock::now();
+
+    std::vector<Vertex *> path;
+
+    for(std::pair<int , Vertex *> pair: g->getVertexSet()){
+        Vertex * v = pair.second;
+        v->setVisited(false);
+        v->setPath(nullptr);
+    }
+
+    Vertex* start = g->findVertex(0);
+
+    start->setVisited(true);
+
+    double cost = INT32_MAX;
+
+    tspBacktrackingBruteForce(g,start,0,1,cost,path);
+
+    std::cout << "The minimum cost obtained with backtracking was: " << cost << std::endl;
+
+    auto end_time = std::chrono::steady_clock::now();
+
+    std::cout << "The path chosen was: " << std::endl;
+
+    for(auto ver: path){
+        std::cout << ver->getId() << " - ";
+    }
+
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+
+    std::cout << std::endl <<  "The execution time was: " << duration.count() << " seconds" <<  std::endl;
+}
+
+void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visited,double&min_cost,std::vector<Vertex*> &path){
+
+    bool vi = false;
+
+    double costt = 0;
+    if (n_visited == g->getNumVertex()) {
+        for (std::pair<int, Edge*> pair : curr->getAdj()) {
+            Edge* e = pair.second;
+            Vertex* ver = e->getDestination();
+            if(ver == g->findVertex(0)){
+                costt = e->getWeight();
+                vi = true;
+            }
+        }
+
+        if(!vi) return;
+
+        double cost = curr_cost + costt;
+        if (cost < min_cost) {
+            min_cost = cost;
+            path.clear();
+            path.push_back(curr);
+            for (Edge* edge = curr->getPath(); edge->getSource() != g->findVertex(0); edge = edge->getSource()->getPath()) {
+                path.push_back(edge->getSource());
+            }
+
+            std::reverse(path.begin(),path.end());
+        }
+        return;
+    }
+
+    for(std::pair<int, Edge *> pair: curr->getAdj()){
+        Edge* e = pair.second;
+        Vertex* ver = e->getDestination();
+        if(!ver->isVisited()){
+            ver->setVisited(true);
+            ver->setPath(e);
+            tspBacktrackingBruteForce(g,ver,curr_cost+e->getWeight(),n_visited+1,min_cost,path);
+            ver->setVisited(false);
+            ver->setPath(nullptr);
+        }
+    }
 }
 
