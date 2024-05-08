@@ -1,56 +1,129 @@
+#include <random>
 #include "Algorithms.h"
+#include "algorithm"
 
 #include "../data_structures/MutablePriorityQueue.h"
-/*
-std::vector<Vertex*> NearestNeighbour(Graph * graph , Vertex * startVertex) {
-    int numVertices = graph->getNumVertex();
 
-    // Start with any vertex as the initial vertex
-    Vertex* currentVertex = startVertex;
 
-    // Initialize a set to keep track of visited vertices
-    std::unordered_set<Vertex * > visited;
-    visited.insert(startVertex);
+std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
+    std::unordered_map<int, Vertex *> vertexSet = graph->getVertexSet();
 
-    std::vector<Vertex*> path;
-    path.push_back(startVertex);
+    std::vector<Edge * > optimalPath;
 
-    // Repeat until all vertices are visited
-    for (int i = 0; i < numVertices - 1; ++i) {
-        double minDistance = std::numeric_limits<double>::max();
-        Vertex* nextVertex = nullptr;
-
-        // Find the nearest unvisited neighbor
-        for (Edge* edge : currentVertex->getAdj()) {
-            Vertex* neighbor = edge->getDestination();
-            if (!visited.count(neighbor) && edge->getWeight() < minDistance) {
-                minDistance = edge->getWeight();
-                nextVertex = neighbor;
-            }
-        }
-
-        // Move to the nearest unvisited neighbor
-        if (nextVertex != nullptr) {
-            visited.insert(nextVertex);
-            currentVertex = nextVertex;
-            path.push_back(currentVertex);
+    for(std::pair<int , Vertex *> pair : vertexSet){
+        Vertex * v = pair.second;
+        v->setDist(DBL_MAX);
+        v->setVisited(false);
+        v->setPath(nullptr);
+        for (auto& pair_ : v->getAdj()){
+            pair_.second->setSelected(false);
         }
     }
 
-    // Return to the starting vertex to complete the tour
-    std::unordered_set<Edge *> ajdEdjes = currentVertex->getAdj();
+    Vertex * curr = startVertex;
+    curr->setVisited(true);
 
-    path.push_back(startVertex);
+    while (true){
+        std::vector<Edge *> edgesV;
+        for(auto& pair : curr->getAdj()){
+            edgesV.push_back(pair.second);
+        }
 
-    return path;
+        std::sort(edgesV.begin(), edgesV.end(), [](const Edge * e1, const Edge* e2)
+        {
+            return e1->getWeight() < e2->getWeight();
+        });
+
+        bool found = false;
+
+        for(Edge * e : edgesV){
+            if(!e->getDestination()->isVisited()){
+                optimalPath.push_back(e);
+                e->getDestination()->setVisited(true);
+                curr = e->getDestination();
+                found = true;
+                break;
+            }
+        }
+
+        if(!found){
+            break;
+        }
+    }
+
+    if(!optimalPath.empty()){
+        Edge * last = findEdgeTo(optimalPath.back()->getDestination() , startVertex);
+
+        optimalPath.push_back(last);
+    }
+
+    if(optimalPath.size() != graph->getVertexSet().size()){
+        std::cout << "No hamiltion path";
+        return {};
+    }
+
+    return optimalPath;
 }
 
-*/
 
-std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex){
+double Harverstein(double longitude1, double latitude1, double longitude2, double latitude2) {
+    double lon1_rad = longitude1 * M_PI / 180.0;
+    double lat1_rad = latitude1 * M_PI / 180.0;
+    double lon2_rad = longitude2 * M_PI / 180.0;
+    double lat2_rad = latitude2 * M_PI / 180.0;
+
+    double dlon = lon2_rad - lon1_rad;
+    double dlat = lat2_rad - lat1_rad;
+    double a = pow(sin(dlat / 2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    const double earth_radius_km = 6371000.0;
+
+    double distance = earth_radius_km * c;
+    return distance;
+}
+
+Edge * findEdgeTo(Vertex * source , Vertex * dest){
+    for(auto pair : source->getAdj()){
+        Edge * e = pair.second;
+
+        if(e->getDestination() == dest){
+            return e;
+        }
+    }
+    return nullptr;
+}
+
+void preOrderDFSAux(const Graph * graph , Vertex * current , std::vector<Vertex *> &path){
+
+    path.push_back(current);
+    current->setVisited(true);
+
+    for(auto pair : current->getAdj()){
+        Edge * e = pair.second;
+
+        if(!e->getDestination()->isVisited() && e->isSelected()){
+            Vertex *nextVertex = e->getDestination();
+            preOrderDFSAux(graph, nextVertex, path);
+        }
+    }
+
+    //current->setVisited(false); dont know if i have to put
+}
+
+void preOrder(const Graph * graph , Vertex * source , std::vector<Vertex *>& path){
+    std::unordered_map<int, Vertex *> vertexSet = graph->getVertexSet();
+    for(std::pair<int , Vertex *> pair : vertexSet){
+        Vertex * v = pair.second;
+        v->setVisited(false);
+    }
+
+    preOrderDFSAux(graph , source , path);
+}
+
+std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
 
     Clock clock1;
-
     clock1.start();
 
     std::vector<Vertex *> path;
@@ -59,18 +132,18 @@ std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex){
 
     for(std::pair<int , Vertex *> pair : vertexSet){
         Vertex * v = pair.second;
-        v->setDist(INF);
+        v->setDist(DBL_MAX);
         v->setVisited(false);
+        v->setPath(nullptr);
+        for (auto& pair_ : v->getAdj()){
+            pair_.second->setSelected(false);
+        }
     }
 
     MutablePriorityQueue<Vertex> vertexQueue;
 
-    for(std::pair<int , Vertex *> pair : vertexSet){
-        Vertex * v = pair.second;
-        vertexQueue.insert(v);
-    }
-
     sourceVertex->setDist(0);
+    vertexQueue.insert(sourceVertex);
 
     while (!vertexQueue.empty()){
         Vertex * curr = vertexQueue.extractMin();
@@ -79,12 +152,23 @@ std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex){
         path.push_back(curr);
         // Update distances and paths to adjacent vertices
         std::unordered_map<int , Edge *> edgeSet = curr->getAdj();
+
         for(std::pair<int , Edge *> edgePair : edgeSet){
             Edge * e = edgePair.second;
 
             Vertex * neighbor = e->getDestination();
 
-            if (neighbor->getDist() > e->getWeight() && !neighbor->isVisited()) {
+            if(neighbor->isVisited()){
+                continue;
+            }else if(neighbor->getDist() == DBL_MAX){
+                e->setSelected(true);
+                neighbor->setPath(e);
+                neighbor->setDist(e->getWeight());
+                vertexQueue.insert(neighbor);
+            } else if(e->getWeight() < neighbor->getDist()){
+                e->setSelected(true);
+                neighbor->getPath()->setSelected(false);
+                neighbor->setPath(e);
                 neighbor->setDist(e->getWeight());
                 vertexQueue.decreaseKey(neighbor);
             }
@@ -96,6 +180,7 @@ std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex){
     std::cout << "Prim took " << time << "second" << std::endl;
     return path;
 }
+
 
 
 /* A heurística de "Vizinho Mais Próximo" (N.N - Nearest Neighbor) é
@@ -123,50 +208,199 @@ std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex){
 
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest){
 
+    graph->makeFullyConnected();
+
     std::vector<Vertex * > path = PrimMst(graph , source);
 
-    std::vector<Vertex *> preorderWalk;
-    std::unordered_set<Vertex *> visited;
-    std::stack<Vertex *> stack;
-    stack.push(source);
+    std::vector<Vertex *> optimalRoute;
+    std::vector<Edge *> bestPath;
 
-    while (!stack.empty()) {
-        Vertex *current = stack.top();
-        stack.pop();
 
-        if (visited.find(current) == visited.end()) {
-            preorderWalk.push_back(current);
-            visited.insert(current);
-            std::unordered_map<int, Edge *> map = current->getAdj();
-            for (std::pair<int , Edge *> pair_ : current->getAdj()) {
-                Edge * edge = pair_.second;
-                stack.push(edge->getDestination());
-            }
-        }
+    if(path.size() != graph->getVertexSet().size()){
+        std::cout << "Not all nodes visited. There is no Hamilton";
+        return {};
     }
 
-    // Step 3: Define a tour that visits all vertices in the graph using the order obtained in step 2
-    std::unordered_set<Vertex *> visitedNodes;
-    std::vector<Edge *> optimalRoute;
-    for (size_t i = 0; i < preorderWalk.size(); ++i) {
-        Vertex *current = preorderWalk[i];
-        Vertex *next = (i + 1 < preorderWalk.size()) ? preorderWalk[i + 1] : preorderWalk[0];
+   preOrder( graph , source, optimalRoute );
 
-        // Check if the next vertex is already visited
-        if (visitedNodes.find(next) == visitedNodes.end()) {
-            // Find the edge connecting current and next vertices
-            std::unordered_map<int, Edge *> map = current->getAdj();
-            for (std::pair<int , Edge *> pair_ : current->getAdj()) {
-                Edge * edge = pair_.second;
-                if (edge->getDestination() == next) {
-                    optimalRoute.push_back(edge);
-                    break;
-                }
-            }
-            visitedNodes.insert(current);
+    for(int i = 0 ; i < optimalRoute.size() -1 ; i++){
+        Vertex * v = optimalRoute[i];
+        Vertex * nextV = optimalRoute[i+1];
+
+        Edge * e = findEdgeTo(v , nextV);
+
+        if(e == nullptr){
+            if(v->getLatitude() == DBL_MAX || v->getLongitude() == DBL_MAX)
+                return {};
+
+            double distance = Harverstein(v->getLongitude() , v->getLatitude() , nextV->getLongitude() , nextV->getLatitude());
+            e = new Edge(v , nextV , -1 , distance);
         }
+        bestPath.push_back(e);
+
+
+    }
+    Vertex * lastV = optimalRoute.back();
+    Edge * returnEdge = findEdgeTo(lastV , source);
+
+    if(returnEdge == nullptr){
+        if(lastV->getLatitude() == DBL_MAX || lastV->getLongitude() == DBL_MAX)
+            return {};
+
+        double distance = Harverstein(lastV->getLongitude() , lastV->getLatitude() , source->getLongitude() , source->getLatitude());
+        returnEdge = new Edge(lastV , source , -1 , distance);
     }
 
-    return optimalRoute;
+    bestPath.push_back(returnEdge);
+
+    return bestPath;
 }
 
+/*
+
+    Initialization: We start by placing the ants on the starting point.
+    Movement: Each ant selects a point to move to based on a probabilistic function that takes into account the pheromone level and the heuristic information. The heuristic information can be thought of as a measure of how good a particular point is.
+    Updating pheromone trails: The pheromone trail on each edge is updated based on the quality of the solution found by the ant that traversed that edge.
+    Termination: We stop the algorithm after a certain number of iterations or when a satisfactory solution is found.
+*/
+
+std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, double evaporationRate, double alpha, double beta, int maxIterations , double Q) {
+    std::vector<Edge *> bestTour;
+
+    double bestTourLength = std::numeric_limits<double>::max();
+    std::unordered_map<Edge * , double> probabilityTable;
+
+    for (auto &pair : graph->getVertexSet()) {
+        pair.second->setVisited(false);
+        pair.second->setDist(DBL_MAX);
+
+        for (auto &e : pair.second->getAdj()) {
+            e.second->setPheromones(1.0);
+            probabilityTable[e.second] =  1.0;
+        }
+    }
+
+    for (int iter = 0; iter < maxIterations; ++iter) {
+        for (int antIndex = 0; antIndex < numAnts; ++antIndex) {
+            Vertex *currentVertex = startVertex;
+            std::vector<Edge *> tour;
+            double tourLength = 0.0;
+
+            // Move ant to the next city
+            while (tour.size() < graph->getVertexSet().size()) {
+                std::unordered_map<int, Edge *> adjacentEdges = currentVertex->getAdj();
+
+                // Calculate probabilities for adjacent cities
+                double sumOfPheromoneLevels = 0.0;
+
+                for(auto edge : graph->getEdgeSet()){
+                    sumOfPheromoneLevels += edge.second->getPheromones();
+                }
+
+                for (auto &edgePair : adjacentEdges) {
+                    Edge * e = edgePair.second;
+                    Vertex *nextVertex = e->getDestination();
+                    if (!nextVertex->isVisited()) {
+                        double pheromoneLevel = edgePair.second->getPheromones();
+                        double visibility = 1.0 / e->getWeight(); // Inverse of distance
+                        double probability = pow(pheromoneLevel, alpha) * pow(visibility, beta);
+
+                        probability /= sumOfPheromoneLevels;
+
+                        probabilityTable[edgePair.second] = probability;
+                    }
+                }
+            }
+
+            for (auto &pair : graph->getVertexSet()) {
+                pair.second->setVisited(false);
+            }
+
+            if (tourLength < bestTourLength) {
+                bestTour = tour;
+                bestTourLength = tourLength;
+            }
+
+            // Update pheromone trails
+            for (int i = 0; i < tour.size() - 1; ++i) {
+                Edge *edge = tour[i];
+                double newPheromoneLevel = (1.0 - evaporationRate) * edge->getPheromones() + (1.0 / tourLength);
+                edge->setPheromones(newPheromoneLevel);
+            }
+        }
+    }
+
+    return bestTour;
+}
+
+
+std::vector<Edge*> larkeWrightSavings(Graph * graph , Vertex * sourceVertex) {
+    std::vector<Edge*> tourEdges;
+
+    // Step 1: Choose a random city as the hub
+    int hubId = sourceVertex->getId(); // Assuming the first vertex as hub
+    std::unordered_map<int, Vertex *> vset = graph->getVertexSet();
+    // Step 2: Compute savings for all non-hub city pairs
+    std::vector<std::pair<double, std::pair<Vertex*, Vertex*>>> savings;
+    for (auto it1 = vset.begin(); it1 != vset.end(); ++it1) {
+        for (auto it2 = std::next(it1); it2 != vset.end(); ++it2) {
+            Vertex* v1 = it1->second;
+            Vertex* v2 = it2->second;
+
+            double saving = Harverstein(v1->getLongitude(), v1->getLatitude(), v2->getLongitude(), v2->getLatitude()) -
+                            (Harverstein(v1->getLongitude(), v1->getLatitude(), vset[hubId]->getLongitude(), vset[hubId]->getLatitude()) +
+                             Harverstein(v2->getLongitude(), v2->getLatitude(), vset[hubId]->getLongitude(), vset[hubId]->getLatitude()));
+
+            savings.push_back({saving, {v1, v2}});
+        }
+    }
+
+    // Step 3: Order savings in non-increasing order
+    std::sort(savings.rbegin(), savings.rend());
+
+    // Step 4: Apply savings in non-increasing order
+    std::unordered_set<Vertex*> visited;
+    vset[hubId]->setVisited(true);
+
+    for (const auto& s : savings) {
+        Vertex* v1 = s.second.first;
+        Vertex* v2 = s.second.second;
+
+        if (v1->isVisited() && v2->isVisited()) // Both already visited, skip
+            continue;
+
+        if (!v1->isVisited()) { // v1 visited, add v2 to tour
+            tourEdges.push_back(v1->getAdj()[v2->getId()]);
+            v2->setVisited(true);
+            visited.insert(v2);
+        } else if (! v2->isVisited()) {
+            tourEdges.push_back(v2->getAdj()[v1->getId()]);
+            v1->setVisited(true);
+            visited.insert(v1);
+        } else {
+            Edge* edge1 = v1->getAdj()[hubId];
+            Edge* edge2 = v2->getAdj()[hubId];
+            if (!edge1 || !edge2)
+                continue;
+
+            tourEdges.push_back(edge1);
+            tourEdges.push_back(edge2);
+            v1->setVisited(true);
+            v2->setVisited(true);
+            visited.insert(v1);
+            visited.insert(v2);
+        }
+    }
+
+    while (visited.size() > 2) {
+        for (auto it = visited.begin(); it != visited.end();) {
+            if ((*it)->getId() != hubId) {
+                it = visited.erase(it);
+            } else {
+                ++it;
+            }
+        }
+    }
+
+    return tourEdges;
+}

@@ -393,12 +393,17 @@ void UI::main_menu(){
               << "B. Print all Nodes information" << std::endl
               << "C. Print Graph information" << std::endl
               << "D. Calculate TSP with Triangular Aprox" << std::endl
-             << "E. Exit the program" << std::endl
+              << "E. Calculate Distance between two nodes" << std::endl
+              << "F. Try N.N algo" << std::endl
+              << "G. Try real World graphs algo" << std::endl
+             << "H. Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'D');
+    validate_input(op, 'A', 'H');
 
-    int index = 0;
+    int index = 0 , index2 = 0;
+    Vertex * testV1 ;
+    Vertex * testeV2;
     double weight = 0;
     Vertex * source;
     Vertex * dest;
@@ -420,25 +425,77 @@ void UI::main_menu(){
             //std::cout << "What is the index of the node where you want to start? " << std::endl;
 
             //validate_int_input(index);
-
             source = g.findVertex(0);
 
             if(source != nullptr){
                 TSP = TriangularApproximationHeuristic(&g , source , nullptr);
                 std::cout << source->getId() << std::endl;
+                std::cout << "-------> ";
                 for(Edge * e : TSP){
                     weight += e->getWeight();
-                    std::cout << e->getDestination()->getId() << std::endl;
+                    std::cout << e->getDestination()->getId() << "-------> " ;
                 }
-
+                std::cout << std::endl;
+                std::cout << std::fixed;
+                std::cout << std::setprecision(2);
                 std::cout << "Weight :" << weight << std::endl;
             }else{
                 std::cout << "Invalid Node index!" << std::endl;
             }
 
             main_menu();
-
         case 'E':
+            std::cout << "Introduce the id of the first node\n";
+
+            std::cin >> index;
+
+            std::cout << "Introduce the id of the second node\n";
+
+            std::cin >> index2;
+
+            testV1=  g.findVertex(index);
+            testeV2 =  g.findVertex(index2);
+
+            std::cout << "Distance = " << Harverstein(testV1->getLongitude() , testV1->getLatitude() , testeV2->getLongitude() , testeV2->getLatitude()) << std::endl;
+
+            main_menu();
+        case 'F':
+
+            source = g.findVertex(0);
+
+            TSP = NearestNeighbour(&g , source);
+
+            std::cout << source->getId() << std::endl;
+            std::cout << "-------> ";
+            for(Edge * e : TSP){
+                weight += e->getWeight();
+                std::cout << e->getDestination()->getId() << "-------> " ;
+            }
+            std::cout << std::endl;
+            std::cout << "Weight :" << weight << std::endl;
+
+            main_menu();
+        case 'G':
+
+            std::cout << "Introduce the id of the starting node\n";
+
+            std::cin >> index;
+
+            source = g.findVertex(index);
+
+            TSP = larkeWrightSavings(&g , source);
+
+            std::cout << source->getId() << std::endl;
+            std::cout << "-------> ";
+            for(Edge * e : TSP){
+                weight += e->getWeight();
+                std::cout << e->getDestination()->getId() << "-------> " ;
+            }
+            std::cout << std::endl;
+            std::cout << "Weight :" << weight << std::endl;
+
+            main_menu();
+        case 'H':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

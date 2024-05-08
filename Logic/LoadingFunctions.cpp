@@ -160,7 +160,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
             file_name = "/graph1/edges.csv";
             break;
         case 1:
-            file_name = "/graph2/edges.csv";
+            file_name = "graph2/edges.csv";
             break;
         case 2:
             file_name = "/graph3/edges.csv";
@@ -289,12 +289,18 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
         std::string latitude = tokens[2];
 
         Remove_terminations(latitude);
+        try {
+            int id_V1 = stoi(id);
+            double longitude = stod(longitude_);
+            double latitude_ = stod(latitude);
+            g->addVertex(id_V1 ,longitude, latitude_ );
+        } catch (const std::exception &e) {
+            continue;
 
-        int id_V1 = stoi(id);
-        double longitude = stod(longitude_);
-        double latitude_ = stod(latitude);
+        }
 
-        g->addVertex(id_V1 ,longitude, latitude_ );
+
+
         i--;
     }
 
@@ -322,16 +328,21 @@ void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){
         std::getline(lineStream , id_v2 , ',');
         std::getline(lineStream , distance , ',');
 
-        int id_V1 = stoi(id_v1);
-        int id_V2 = stoi(id_v2);
-        double v_distances = stod(distance);
+        try{
+            int id_V1 = stoi(id_v1);
+            int id_V2 = stoi(id_v2);
+            double v_distances = stod(distance);
+            Vertex v1 = Vertex(id_V1 , 0 , 0);
+            Vertex v2 = Vertex(id_V2 , 0 , 0);
 
-        Vertex v1 = Vertex(id_V1 , 0 , 0);
-        Vertex v2 = Vertex(id_V2 , 0 , 0);
+            Edge edge = Edge(&v1 , &v2 , edgeId ,  v_distances);
 
-        Edge edge = Edge(&v1 , &v2 , edgeId ,  v_distances);
+            g->addBidirectionalEdge(v1.getId() ,v2.getId() ,edge.getId(), edge.getWeight());
+        } catch (std::exception& e){
+            continue;
+        }
 
-        g->addBidirectionalEdge(v1.getId() ,v2.getId() ,edge.getId(), edge.getWeight());
+
 
         edgeId += 2;
     }

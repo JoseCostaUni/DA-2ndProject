@@ -35,10 +35,12 @@ public:
     Vertex(int id, double intitude, double latitude);
     Vertex(int id);
     int getId() const;
-    double getintitude() const;
+    double getLongitude() const;
     double getLatitude() const;
     double getDist() const;
     bool isVisited() const;
+    Edge * getPath() const;
+
 
     std::unordered_map<int, Edge*> getAdj() const;
     std::unordered_map<int, Edge*> getInc() const;
@@ -52,10 +54,10 @@ public:
     void setintitude(double newintitude);
     void setLatitude(double newLatitude);
     void setVisited(bool visited);
-
-    double HaversineDistance(double intitude1 , double latitude1,double intitude2 , double latitude2);
+    void setPath(Edge * e);
 
     bool operator<(Vertex & vertex) const;
+    bool operator==(Vertex & vertex) const;
     friend class MutablePriorityQueue<Vertex>;
 
 protected:
@@ -69,6 +71,7 @@ protected:
     unsigned int indegree = 0;
     double dist = 0;
 
+    Edge * path;
     int queueIndex = 0;
 };
 
@@ -81,7 +84,7 @@ inline int Vertex::getId() const {
     return id;
 }
 
-inline double Vertex::getintitude() const {
+inline double Vertex::getLongitude() const {
     return intitude;
 }
 
@@ -126,23 +129,6 @@ inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
 }
 
-inline double Vertex::HaversineDistance(double intitude1, double latitude1, double intitude2, double latitude2) {
-    double lon1_rad = intitude1 * M_PI / 180.0;
-    double lat1_rad = latitude1 * M_PI / 180.0;
-    double lon2_rad = intitude2 * M_PI / 180.0;
-    double lat2_rad = latitude2 * M_PI / 180.0;
-
-    double dlon = lon2_rad - lon1_rad;
-    double dlat = lat2_rad - lat1_rad;
-    double a = pow(sin(dlat / 2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon / 2), 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-    const double earth_radius_km = 6371.0;
-
-    double distance = earth_radius_km * c;
-    return distance;
-}
-
 inline double Vertex::getDist() const {
     return this->dist;
 }
@@ -163,6 +149,19 @@ inline bool Vertex::operator<(Vertex &vertex) const {
     return this->dist < vertex.dist;
 }
 
+inline Edge *Vertex::getPath() const {
+    return this->path;
+}
+
+inline void Vertex::setPath(Edge *e) {
+    this->path = e;
+}
+
+inline bool Vertex::operator==(Vertex &vertex) const {
+    return this->id == vertex.getId();
+}
+
+
 /********************** Edge  ****************************/
 
 
@@ -172,18 +171,23 @@ public:
     [[nodiscard]] Vertex* getSource() const;
     [[nodiscard]] Vertex* getDestination() const;
     [[nodiscard]] double getWeight() const;
+    [[nodiscard]] double getPheromones() const;
     [[nodiscard]] int getId() const;
+    bool isSelected() const;
 
     void setSource(Vertex* newSource);
     void setDestination(Vertex* newDestination);
     void setWeight(double newWeight);
     void setId(int newId);
-
+    void setSelected(bool selected);
+    void setPheromones(double pheromones);
 private:
     Vertex* source;
     Vertex* destination;
     double weight;
     int id;
+    bool selected;
+    double pheromones;
 };
 
 /********************** Graph  ****************************/
@@ -195,16 +199,19 @@ public:
     Vertex* findVertex(int id) const;
     bool addVertex(int id , double longitude , double latitude);
     bool removeVertex(int id);
-    bool addEdge(int sourceId, int destId,int edgeId, double weight);
+    bool addEdge(int sourceId, int destId,int edgeId, double weight) ;
     bool removeEdge(int sourceId, int destId) const;
-    bool addBidirectionalEdge(int sourceId, int destId,int edgeId, double weight);
+    bool addBidirectionalEdge(int sourceId, int destId,int edgeId, double weight) ;
     int getNumVertex() const;
     Clock getClock();
     std::unordered_map<int, Vertex*> getVertexSet() const;
+    std::unordered_map<int, Edge*> getEdgeSet() const;
 
+    double Harverstein(double longitude1, double latitude1, double longitude2, double latitude2) const;
     void clear();
     void printNodesContente() const;
     void printGraphInfo() const;
+    void makeFullyConnected() ;
 private:
 
     Clock clock;
@@ -251,6 +258,22 @@ inline void Edge::setId(int newId) {
     id = newId;
 }
 
+inline bool Edge::isSelected() const {
+    return selected;
+}
+
+inline void Edge::setSelected(bool newSelected){
+    this->selected = newSelected;
+}
+
+inline double Edge::getPheromones() const {
+    return pheromones;
+}
+
+inline void Edge::setPheromones(double pheromones) {
+    this->pheromones = pheromones;
+}
+
 /********************** Graph  ****************************/
 
 inline Graph::~Graph() {
@@ -291,7 +314,7 @@ inline bool Graph::removeVertex(int id) {
     return false;  // Vertex with given id not found
 }
 
-inline bool Graph::addEdge(int sourceId, int destId, int edgeId , double weight) {
+inline bool Graph::addEdge(int sourceId, int destId, int edgeId , double weight)  {
     Vertex* source = findVertex(sourceId);
     Vertex* dest = findVertex(destId);
     if (source == nullptr || dest == nullptr) {
@@ -325,7 +348,7 @@ inline bool Graph::removeEdge(int sourceId, int destId) const {
     return false;  // Edge not found
 }
 
-inline bool Graph::addBidirectionalEdge(int sourceId, int destId, int edgeId , double weight) {
+inline bool Graph::addBidirectionalEdge(int sourceId, int destId, int edgeId , double weight)  {
 
     Vertex* source = findVertex(sourceId);
     Vertex* dest = findVertex(destId);
@@ -357,6 +380,8 @@ inline std::unordered_map<int, Vertex*> Graph::getVertexSet() const {
     return vertexSet;
 }
 
+
+
 inline void Graph::clear() {
     for (auto& pair : vertexSet) {
         delete pair.second;
@@ -377,7 +402,7 @@ inline void Graph::printNodesContente() const {
     for (const auto& pair : vertexSet) {
         Vertex* vertex = pair.second;
         std::cout << "Vertex ID: " << vertex->getId() << std::endl;
-        std::cout << "intitude: " << vertex->getintitude() << std::endl;
+        std::cout << "intitude: " << vertex->getLongitude() << std::endl;
         std::cout << "Latitude: " << vertex->getLatitude() << std::endl;
         std::cout << "Adjacent Edges:" << std::endl;
         for (const auto& adjPair : vertex->getAdj()) {
@@ -391,5 +416,55 @@ inline void Graph::printNodesContente() const {
 inline Clock Graph::getClock() {
     return this->clock;
 }
+
+inline void Graph::makeFullyConnected() {
+    std::unordered_map<int, Vertex*> vertices = getVertexSet();
+
+    // Iterate through all pairs of vertices
+    for (auto it1 = vertices.begin(); it1 != vertices.end(); ++it1) {
+        for (auto it2 = std::next(it1); it2 != vertices.end(); ++it2) {
+            int sourceId = it1->first;
+            int destId = it2->first;
+
+            Vertex * v1 = findVertex(sourceId);
+            Vertex * v2 = findVertex(destId);
+            Edge * e = nullptr;
+
+            for(auto pair : v1->getAdj()){
+                Edge * tempE = pair.second;
+                if(tempE->getDestination() == v2){
+                    e = tempE;
+                    continue;
+                }
+            }
+
+            if(e == nullptr){
+                addBidirectionalEdge(sourceId, destId, edgeSet.size() + 1, Harverstein(v1->getLongitude() , v1->getLatitude() , v2->getLongitude() , v2->getLatitude()));
+            }
+        }
+    }
+}
+
+inline double Graph::Harverstein(double longitude1, double latitude1, double longitude2, double latitude2) const{
+    double lon1_rad = longitude1 * M_PI / 180.0;
+    double lat1_rad = latitude1 * M_PI / 180.0;
+    double lon2_rad = longitude2 * M_PI / 180.0;
+    double lat2_rad = latitude2 * M_PI / 180.0;
+
+    double dlon = lon2_rad - lon1_rad;
+    double dlat = lat2_rad - lat1_rad;
+    double a = pow(sin(dlat / 2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    const double earth_radius_km = 6371000.0;
+
+    double distance = earth_radius_km * c;
+    return distance;
+}
+
+inline std::unordered_map<int, Edge *> Graph::getEdgeSet() const {
+    return edgeSet;
+}
+
 
 #endif /* DA_TP_CLASSES_GRAPH */
