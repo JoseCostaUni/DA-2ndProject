@@ -46,6 +46,35 @@ bool UI::validate_input(char &op, const char lower_bound, const char upper_bound
     return true;
 }
 
+
+bool UI::validate_int_input(int &index) {
+    std::string tempValue;
+    char op;
+
+    while (true) {
+        std::cin >> tempValue;
+        std::cout << "\n";
+
+        // Check if the input contains only digits
+        bool isNumber = true;
+        for (char c : tempValue) {
+            if (!std::isdigit(c)) {
+                isNumber = false;
+                break;
+            }
+        }
+
+        if (!isNumber) {
+            std::cout << "Input should contain only numbers. Please try again: ";
+        } else {
+            // Convert the string to an integer
+            index = std::stoi(tempValue);
+            break;
+        }
+    }
+
+    return true;
+}
 /**
  * @brief Loads data and initializes the program.
  *
@@ -160,10 +189,10 @@ void UI::loading_stuff(UI &ui) {
                     LoadRealWorldGraphs(&g , path , 0);
                     break;
                 case 'B':
-                    LoadToyGraphs(&g , path , 1);
+                    LoadRealWorldGraphs(&g , path , 1);
                     break;
                 case 'C':
-                    LoadToyGraphs(&g , path , 2);
+                    LoadRealWorldGraphs(&g , path , 2);
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -363,11 +392,16 @@ void UI::main_menu(){
     std::cout << "A. Switch Data Set" <<std::endl
               << "B. Print all Nodes information" << std::endl
               << "C. Print Graph information" << std::endl
-              << "D. Backtracking approach to TSP" << std::endl
+              << "D. Calculate TSP with Triangular Aprox" << std::endl
              << "E. Exit the program" << std::endl
              << "Insert your choice:";
 
     validate_input(op, 'A', 'D');
+
+    int index = 0;
+    double weight = 0;
+    Vertex * source;
+    Vertex * dest;
     switch(op){
         case 'A':
             changeDataSet();
@@ -382,9 +416,28 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
-            std::cout <<"The shortest possible route distance is:" << tsp(g) << std::endl;
+
+            //std::cout << "What is the index of the node where you want to start? " << std::endl;
+
+            //validate_int_input(index);
+
+            source = g.findVertex(0);
+
+            if(source != nullptr){
+                TSP = TriangularApproximationHeuristic(&g , source , nullptr);
+                std::cout << source->getId() << std::endl;
+                for(Edge * e : TSP){
+                    weight += e->getWeight();
+                    std::cout << e->getDestination()->getId() << std::endl;
+                }
+
+                std::cout << "Weight :" << weight << std::endl;
+            }else{
+                std::cout << "Invalid Node index!" << std::endl;
+            }
+
             main_menu();
-            break;
+
         case 'E':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
@@ -415,3 +468,5 @@ void UI::back_menu(){
     validate_input(op,'A','A');
     main_menu();
 }
+
+

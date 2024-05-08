@@ -1,13 +1,9 @@
-#ifndef ALGORITHMS_H
-#define ALGORITHMS_H
 
-#include "../Graph.h"
-#include <vector>
-#include <iostream>
-#include <algorithm>
-#include <limits>
+#include "../stdafx.h"
 
-void tsp(int start, int currPos, int n, double cost, double& minCost, Graph& graph);
-double tsp(Graph& graph);
+std::vector<Vertex * > NearestNeighbour(Graph * graph , Vertex* startVertex);
 
-#endif /* ALGORITHMS_H */
+Vertex * minKey(const Graph * graph ,  const std::vector<double>& key, const std::unordered_set<Vertex *>& mstSet);
+std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex);
+
+std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest);
