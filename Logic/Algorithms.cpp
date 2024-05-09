@@ -206,16 +206,16 @@ void tspBruteForce(Graph* g){
     std::cout << std::endl <<  "The execution time was: " << duration.count() << " seconds" <<  std::endl;
 }
 
-void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visited,double&min_cost,std::vector<Vertex*> &path){
+void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visited,double &min_cost,std::vector<Vertex*> &path){
 
     bool vi = false;
-
     double costt = 0;
+
     if (n_visited == g->getNumVertex()) {
         for (std::pair<int, Edge*> pair : curr->getAdj()) {
             Edge* e = pair.second;
             Vertex* ver = e->getDestination();
-            if(ver == g->findVertex(0)){
+            if(ver->getId() == g->findVertex(0)->getId()){
                 costt = e->getWeight();
                 vi = true;
             }
@@ -224,15 +224,31 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
         if(!vi) return;
 
         double cost = curr_cost + costt;
+
         if (cost < min_cost) {
             min_cost = cost;
             path.clear();
             path.push_back(curr);
-            for (Edge* edge = curr->getPath(); edge->getSource() != g->findVertex(0); edge = edge->getSource()->getPath()) {
+            for (Edge* edge = curr->getPath(); edge->getSource()->getId() != g->findVertex(0)->getId(); edge = edge->getSource()->getPath()) {
                 path.push_back(edge->getSource());
             }
 
+            path.push_back(g->findVertex(0));
             std::reverse(path.begin(),path.end());
+            bool done = false;
+            for(auto found_path: path[path.size()-1]->getAdj()){
+                if(found_path.second->getDestination()->getId() == 0){
+                    min_cost += found_path.second->getWeight();
+                    path.push_back(g->findVertex(0));
+                    done = true;
+                    break;
+                }
+            }
+
+            if(!done){
+                path.clear();
+                min_cost = INT32_MAX;
+            }
         }
         return;
     }
