@@ -70,8 +70,7 @@ protected:
     bool processing = false;
     unsigned int indegree = 0;
     double dist = 0;
-
-    Edge * path;
+    Edge * path = nullptr;
     int queueIndex = 0;
 };
 

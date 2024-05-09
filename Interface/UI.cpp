@@ -392,16 +392,17 @@ void UI::main_menu(){
     std::cout << "A. Switch Data Set" <<std::endl
               << "B. Print all Nodes information" << std::endl
               << "C. Print Graph information" << std::endl
-              << "D. Calculate TSP with Triangular Aprox" << std::endl
-              << "E. Calculate Distance between two nodes" << std::endl
-              << "F. Try N.N algo" << std::endl
-              << "G. Try larkeWright Savings algo" << std::endl
-              << "H. Try real World graphs Ant Colony Algo" << std::endl
-             << "I. Exit the program" << std::endl
+              << "D. Calculate TSP with Backtracking Brute Force" << std::endl
+              << "E. Calculate TSP with Triangular Aprox" << std::endl
+              << "F. Calculate Distance between two nodes" << std::endl
+              << "G. Try N.N algo" << std::endl
+              << "H. Try larkeWright Savings algo" << std::endl
+              << "I. Try real World graphs Ant Colony Algo" << std::endl
              << "J. Try cristofides algo" << std::endl
+            << "K. Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'J');
+    validate_input(op, 'A', 'K');
 
     int index = 0 , index2 = 0;
     Vertex * testV1 ;
@@ -425,6 +426,10 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
+            tspBruteForce(&g);
+            main_menu();
+            break;
+        case 'E':
 
             //std::cout << "What is the index of the node where you want to start? " << std::endl;
 
@@ -448,7 +453,7 @@ void UI::main_menu(){
             }
 
             main_menu();
-        case 'E':
+        case 'F':
             std::cout << "Introduce the id of the first node\n";
 
             std::cin >> index;
@@ -463,7 +468,7 @@ void UI::main_menu(){
             std::cout << "Distance = " << Harverstein(testV1->getLongitude() , testV1->getLatitude() , testeV2->getLongitude() , testeV2->getLatitude()) << std::endl;
 
             main_menu();
-        case 'F':
+        case 'G':
 
             source = g.findVertex(0);
 
@@ -479,7 +484,7 @@ void UI::main_menu(){
             std::cout << "Weight :" << weight << std::endl;
 
             main_menu();
-        case 'G':
+        case 'H':
 
             std::cout << "Introduce the id of the starting node\n";
 
@@ -499,7 +504,7 @@ void UI::main_menu(){
             std::cout << "Weight :" << weight << std::endl;
 
             main_menu();
-        case 'H':
+        case 'I':
             source = g.findVertex(0);
 
             TSP = ACO_TSP(&g , source , 5 , 0.3 , 2, 1.5 , 100 , 4 , 0.2);
@@ -530,7 +535,7 @@ void UI::main_menu(){
 
             main_menu();
 
-        case 'I':
+        case 'K':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

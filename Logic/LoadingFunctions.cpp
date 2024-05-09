@@ -98,7 +98,8 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
         g->addVertex(id_V1 , 0 , 0);
         g->addVertex(id_V2 , 0 , 0);
         g->addEdge(id_V1 , id_V2 ,edgeId, v_distances);
-
+        edgeId++;
+        g->addEdge(id_V2 , id_V1 ,edgeId, v_distances);
         edgeId++;
     }
 

@@ -17,3 +17,7 @@ Edge * findEdgeTo(Vertex * source , Vertex * dest);
 std::vector<Edge*> larkeWrightSavings(Graph * graph , Vertex * sourceVertex);
 
 std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source);
+
+void tspBruteForce(Graph* g);
+
+void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visited,double&min_cost,std::vector<Vertex*> &path);
