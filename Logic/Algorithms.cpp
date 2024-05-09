@@ -191,6 +191,13 @@ void tspBruteForce(Graph* g){
 
     tspBacktrackingBruteForce(g,start,0,1,cost,path);
 
+    for(auto found_path: path[path.size()-2]->getAdj()){
+        if(found_path.second->getDestination()->getId() == 0){
+            cost -= found_path.second->getWeight();
+            break;
+        }
+    }
+
     std::cout << "The minimum cost obtained with backtracking was: " << cost << std::endl;
 
     auto end_time = std::chrono::steady_clock::now();
