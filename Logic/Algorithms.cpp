@@ -368,8 +368,7 @@ void computeMWPM(Graph *g) {
         Vertex* v = pair.second;
         if((v->getIndegree() + v->getOutdegree()) % 2 != 0){
             for(std::pair<int,Edge*> pair_edge: v->getAdj()){
-                Edge* e = pair_edge.second;
-                matching.push_back(e);
+                matching.push_back(pair_edge.second);
             }
         }
     }
@@ -416,7 +415,6 @@ void findEulerianCircuit(Graph* g, std::vector<Vertex*> visited_vertices) {
 
 std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
     std::vector<Vertex *> mstPath = PrimMst(g , source);
-    Graph mst;
     std::vector<Edge *> result;
 
     if(mstPath.size() != g->getVertexSet().size()){
@@ -436,9 +434,15 @@ std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
 
     findEulerianCircuit(g,path);
 
-    std::sort(path.begin(), path.end());
-    auto last = std::unique(path.begin(), path.end());
-    path.erase(last, path.end());
+    std::unordered_set<Vertex*> vertex_dup_set;
+    std::vector<Vertex*> result_path;
+
+    for(Vertex* v : path){
+        if(vertex_dup_set.find(v) == vertex_dup_set.end()){
+            result_path.push_back(v);
+            vertex_dup_set.insert(v);
+        }
+    }
 
     for(uint64_t i = 0; i < path.size() - 1 ;i++){
         Edge* e = findEdgeTo(path[i],path[i+1]);
