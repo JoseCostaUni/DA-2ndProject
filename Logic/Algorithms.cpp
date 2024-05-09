@@ -361,135 +361,92 @@ std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, doub
     return bestTour;
 }
 
-std::vector<Vertex*> findOddDegreeVertices(const Graph& mst) {
-    std::vector<Vertex*> oddVertices;
-    for (const auto& vertexPair : mst.getVertexSet()) {
-        Vertex* v = vertexPair.second;
-        if (v->getAdj().size() % 2 != 0) {
-            oddVertices.push_back(v);
-        }
-    }
-    return oddVertices;
-}
-
-std::vector<Edge*> computeMWPM(const Graph& mst, const std::vector<Vertex*>& oddVertices) {
+void computeMWPM(Graph *g) {
     std::vector<Edge*> matching;
 
-    // Brute-force approach
-    // Iterate through all pairs of odd-degree vertices
-    for (size_t i = 0; i < oddVertices.size(); ++i) {
-        Vertex* u = oddVertices[i];
-        double minWeight = DBL_MAX;
-        Edge* minEdge = nullptr;
+    for(std::pair<int,Vertex*> pair: g->getVertexSet()){
+        Vertex* v = pair.second;
+        if((v->getIndegree() + v->getOutdegree()) % 2 != 0){
+            for(std::pair<int,Edge*> pair_edge: v->getAdj()){
+                Edge* e = pair_edge.second;
+                matching.push_back(e);
+            }
+        }
+    }
 
-        for (size_t j = i + 1; j < oddVertices.size(); ++j) {
-            Vertex* v = oddVertices[j];
+    std::sort(matching.begin(),matching.end(),[](const Edge* edge1,const Edge* edge2) {return edge1->getWeight() < edge2->getWeight();});
 
-            // Find the edge with minimum weight between u and v
-            for (const auto& edgePair : u->getAdj()) {
-                Edge* edge = edgePair.second;
-                if (edge->getDestination() == v && edge->getWeight() < minWeight) {
-                    minWeight = edge->getWeight();
-                    minEdge = edge;
-                }
+    for(Edge* e : matching){
+        if(!e->getDestination()->isVisited() and !e->getSource()->isVisited()){
+            e->getDestination()->setVisited(true);
+            e->getSource()->setVisited(true);
+            e->setSelected(true);
+        }
+    }
+
+}
+
+void findEulerianCircuit(Graph* g, std::vector<Vertex*> visited_vertices) {
+    std::stack<Vertex*> vertex_stack;
+    Vertex* start = g->findVertex(0);
+    vertex_stack.push(start);
+
+    while(!vertex_stack.empty()){
+        Vertex* top_vertex = vertex_stack.top();
+        bool unexploredEdges = false;
+        for(std::pair<int,Edge*> pair : top_vertex->getAdj() ){
+            Edge* e = pair.second;
+            if(e->isSelected()){
+               e->setSelected(false);
+               vertex_stack.push(e->getDestination());
+               unexploredEdges = true;
+               break;
             }
         }
 
-        if (minEdge != nullptr) {
-            matching.push_back(minEdge);
+        if(!unexploredEdges){
+            visited_vertices.push_back(top_vertex);
+            vertex_stack.pop();
         }
     }
 
-    return matching;
+    std::reverse(visited_vertices.begin(),visited_vertices.end());
+
 }
-
-Graph combineMSTAndMWPM(const Graph& mst, const std::vector<Edge*>& mwpm) {
-    Graph combinedGraph = mst; // Start with the MST
-
-    // Add the edges from the minimum weight perfect matching
-    for (Edge* edge : mwpm) {
-        combinedGraph.addEdge(edge->getSource()->getId(), edge->getDestination()->getId(), edge->getId(), edge->getWeight());
-    }
-
-    return combinedGraph;
-}
-
-std::vector<Vertex*> findEulerianCircuit(Graph& graph, Vertex* startVertex) {
-    std::vector<Vertex*> circuit;
-    std::stack<Vertex*> stack;
-    stack.push(startVertex);
-
-    while (!stack.empty()) {
-        Vertex* u = stack.top();
-        if (u->getAdj().empty()) {
-            circuit.push_back(u);
-            stack.pop();
-        } else {
-            Edge* edge = u->getAdj().begin()->second; // Get any adjacent edge
-            stack.push(edge->getDestination());
-            u->deleteAdjEdge(edge->getId()); // Remove the edge from the graph
-            edge->getDestination()->deleteIncEdge(edge->getId());
-        }
-    }
-
-    return circuit;
-}
-
-std::vector<Vertex*> shortcutEulerianCircuit(const std::vector<Vertex*>& eulerianCircuit) {
-
-    std::vector<Vertex*> hamiltonianCircuit;
-
-    for (Vertex* v : eulerianCircuit) {
-        if (!v->isVisited()) {
-            hamiltonianCircuit.push_back(v);
-            v->setVisited(true);
-        }
-    }
-
-    return hamiltonianCircuit;
-}
-
 
 std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
-
-    std::vector<Vertex * > mstPath = PrimMst(g , source);
+    std::vector<Vertex *> mstPath = PrimMst(g , source);
     Graph mst;
-    for (Vertex* v : mstPath) {
-        mst.addVertex(v->getId(), v->getLongitude(), v->getLatitude());
-        for (const auto& edgePair : v->getAdj()) {
-            Edge* edge = edgePair.second;
-            if (!edge->isSelected()) // Consider only selected edges (part of the MST)
-                continue;
-            mst.addEdge(edge->getSource()->getId(), edge->getDestination()->getId(), edge->getId(), edge->getWeight());
-        }
+    std::vector<Edge *> result;
+
+    if(mstPath.size() != g->getVertexSet().size()){
+        return result;
     }
 
-    // Step 2: Find odd-degree vertices from the MST
-    std::vector<Vertex*> oddVertices = findOddDegreeVertices(mst);
-
-    // Step 3: Find a minimum weight perfect matching among the odd-degree vertices
-    std::vector<Edge*> mwpm = computeMWPM(mst, oddVertices);
-
-    // Step 4: Combine the MST and MWPM
-    Graph combinedGraph = combineMSTAndMWPM(mst, mwpm);
-
-    // Step 5: Find an Eulerian circuit in the combined graph
-    std::vector<Vertex*> eulerianCircuit = findEulerianCircuit(combinedGraph, source);
-
-    // Step 6: Shortcut the Eulerian circuit to obtain a Hamiltonian circuit
-    std::vector<Vertex*> hamiltonianCircuit = shortcutEulerianCircuit(eulerianCircuit);
-
-    // Step 7: Convert the Hamiltonian circuit to edges
-    std::vector<Edge*> hamiltonianEdges;
-    for (size_t i = 0; i < hamiltonianCircuit.size() - 1; ++i) {
-        Vertex* u = hamiltonianCircuit[i];
-        Vertex* v = hamiltonianCircuit[i + 1];
-        Edge* edge = u->getAdj().at(v->getId()); // Assuming there's an edge between u and v
-        hamiltonianEdges.push_back(edge);
+    for (auto& pair_ : g->getEdgeSet()){
+        pair_.second->setSelected(false);
+        pair_.second->getSource()->setVisited(false);
+        pair_.second->getDestination()->setVisited(false);
     }
 
-    // Step 8: Return the Hamiltonian circuit (list of edges)
-    return hamiltonianEdges;
+    g->populate_in_and_out_degree();
+    computeMWPM(g);
+
+    std::vector<Vertex*> path;
+
+    findEulerianCircuit(g,path);
+
+    std::sort(path.begin(), path.end());
+    auto last = std::unique(path.begin(), path.end());
+    path.erase(last, path.end());
+
+    for(uint64_t i = 0; i < path.size() - 1 ;i++){
+        Edge* e = findEdgeTo(path[i],path[i+1]);
+        result.push_back(e);
+    }
+
+    result.push_back(findEdgeTo(path.back(),source));
+    return result;
 }
 
 

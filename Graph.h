@@ -35,6 +35,8 @@ public:
     Vertex(int id, double intitude, double latitude);
     Vertex(int id);
     int getId() const;
+    int getIndegree() const;
+    int getOutdegree() const;
     double getLongitude() const;
     double getLatitude() const;
     double getDist() const;
@@ -55,9 +57,12 @@ public:
     void setLatitude(double newLatitude);
     void setVisited(bool visited);
     void setPath(Edge * e);
+    void setOutdegree(int outdegree);
+    void setIndegree(int indegree);
 
     bool operator<(Vertex & vertex) const;
     bool operator==(Vertex & vertex) const;
+    void updateDegrees();
     friend class MutablePriorityQueue<Vertex>;
 
 protected:
@@ -69,6 +74,7 @@ protected:
     bool visited = false;
     bool processing = false;
     unsigned int indegree = 0;
+    unsigned int outdegree = 0;
     double dist = 0;
     Edge * path = nullptr;
     int queueIndex = 0;
@@ -89,6 +95,14 @@ inline double Vertex::getLongitude() const {
 
 inline double Vertex::getLatitude() const {
     return latitude;
+}
+
+inline int Vertex::getIndegree() const {
+    return indegree;
+}
+
+inline int Vertex::getOutdegree() const {
+    return outdegree;
 }
 
 inline std::unordered_map<int, Edge*> Vertex::getAdj() const {
@@ -128,6 +142,14 @@ inline void Vertex::setLatitude(double newLatitude) {
     latitude = newLatitude;
 }
 
+inline void Vertex::setIndegree(int indegree) {
+   this->indegree = indegree;
+}
+
+inline void Vertex::setOutdegree(int outdegree) {
+    this->outdegree = outdegree;
+}
+
 inline double Vertex::getDist() const {
     return this->dist;
 }
@@ -158,6 +180,11 @@ inline void Vertex::setPath(Edge *e) {
 
 inline bool Vertex::operator==(Vertex &vertex) const {
     return this->id == vertex.getId();
+}
+
+inline void Vertex::updateDegrees() {
+    indegree = incomingEdges.size();
+    outdegree = adjacentEdges.size();
 }
 
 
@@ -210,6 +237,7 @@ public:
     void clear();
     void printNodesContente() const;
     void printGraphInfo() const;
+    void populate_in_and_out_degree();
     void makeFullyConnected() ;
 private:
 
@@ -463,6 +491,12 @@ inline double Graph::Harverstein(double longitude1, double latitude1, double lon
 
 inline std::unordered_map<int, Edge *> Graph::getEdgeSet() const {
     return edgeSet;
+}
+
+inline void Graph::populate_in_and_out_degree() {
+    for(auto pair: vertexSet){
+        pair.second->updateDegrees();
+    }
 }
 
 
