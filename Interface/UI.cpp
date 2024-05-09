@@ -395,16 +395,20 @@ void UI::main_menu(){
               << "D. Calculate TSP with Triangular Aprox" << std::endl
               << "E. Calculate Distance between two nodes" << std::endl
               << "F. Try N.N algo" << std::endl
-              << "G. Try real World graphs algo" << std::endl
-             << "H. Exit the program" << std::endl
+              << "G. Try larkeWright Savings algo" << std::endl
+              << "H. Try real World graphs Ant Colony Algo" << std::endl
+             << "I. Exit the program" << std::endl
+             << "J. Try cristofides algo" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'H');
+    validate_input(op, 'A', 'J');
 
     int index = 0 , index2 = 0;
     Vertex * testV1 ;
     Vertex * testeV2;
-    double weight = 0;
+    double weight = 0 , lastWeight = DBL_MAX;
+
+    double bestValue1 = 0.0 , bestValue2 = 0.0;
     Vertex * source;
     Vertex * dest;
     switch(op){
@@ -496,6 +500,37 @@ void UI::main_menu(){
 
             main_menu();
         case 'H':
+            source = g.findVertex(0);
+
+            TSP = ACO_TSP(&g , source , 5 , 0.3 , 2, 1.5 , 100 , 4 , 0.2);
+
+            std::cout << source->getId() << std::endl;
+            std::cout << "-------> ";
+            for(Edge * e : TSP){
+                weight += e->getWeight();
+                std::cout << e->getDestination()->getId() << "-------> " ;
+            }
+            std::cout << std::endl;
+            std::cout << "Weight :" << weight << std::endl;
+
+            main_menu();
+        case 'J':
+            source = g.findVertex(0);
+
+            TSP = ChristofidesAlgo(&g , source);
+
+            std::cout << source->getId() << std::endl;
+            std::cout << "-------> ";
+            for(Edge * e : TSP){
+                weight += e->getWeight();
+                //std::cout << e->getDestination()->getId() << "-------> " ;
+            }
+            std::cout << std::endl;
+            std::cout << "Weight :" << weight << std::endl;
+
+            main_menu();
+
+        case 'I':
            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                  << "Made by: " <<std::endl
                  << "Ângelo Oliveira || 202207798" <<std::endl

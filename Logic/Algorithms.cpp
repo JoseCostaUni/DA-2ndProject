@@ -208,7 +208,7 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
 
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest){
 
-    graph->makeFullyConnected();
+    //graph->makeFullyConnected();
 
     std::vector<Vertex * > path = PrimMst(graph , source);
 
@@ -257,81 +257,298 @@ std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * so
 }
 
 /*
-
     Initialization: We start by placing the ants on the starting point.
     Movement: Each ant selects a point to move to based on a probabilistic function that takes into account the pheromone level and the heuristic information. The heuristic information can be thought of as a measure of how good a particular point is.
     Updating pheromone trails: The pheromone trail on each edge is updated based on the quality of the solution found by the ant that traversed that edge.
     Termination: We stop the algorithm after a certain number of iterations or when a satisfactory solution is found.
 */
+std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, double evaporationRate, double alpha, double beta, int maxIterations, double Q, double elitistRatio) {
 
-std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, double evaporationRate, double alpha, double beta, int maxIterations , double Q) {
     std::vector<Edge *> bestTour;
-
     double bestTourLength = std::numeric_limits<double>::max();
-    std::unordered_map<Edge * , double> probabilityTable;
+    std::unordered_map<Edge *, double> probabilityTable;
 
-    for (auto &pair : graph->getVertexSet()) {
-        pair.second->setVisited(false);
-        pair.second->setDist(DBL_MAX);
-
-        for (auto &e : pair.second->getAdj()) {
-            e.second->setPheromones(1.0);
-            probabilityTable[e.second] =  1.0;
-        }
+    // Initialization: Set initial pheromone levels based on edge weights
+    for (auto &pair : graph->getEdgeSet()) {
+        pair.second->setPheromones(1.0 / pair.second->getWeight());
+        probabilityTable[pair.second] = 1.0;
     }
 
     for (int iter = 0; iter < maxIterations; ++iter) {
         for (int antIndex = 0; antIndex < numAnts; ++antIndex) {
             Vertex *currentVertex = startVertex;
+            startVertex->setVisited(true);
             std::vector<Edge *> tour;
             double tourLength = 0.0;
 
             // Move ant to the next city
-            while (tour.size() < graph->getVertexSet().size()) {
+            while (tour.size() < graph->getNumVertex()-1) {
                 std::unordered_map<int, Edge *> adjacentEdges = currentVertex->getAdj();
 
                 // Calculate probabilities for adjacent cities
                 double sumOfPheromoneLevels = 0.0;
 
-                for(auto edge : graph->getEdgeSet()){
-                    sumOfPheromoneLevels += edge.second->getPheromones();
-                }
-
                 for (auto &edgePair : adjacentEdges) {
-                    Edge * e = edgePair.second;
+                    Edge *e = edgePair.second;
                     Vertex *nextVertex = e->getDestination();
                     if (!nextVertex->isVisited()) {
-                        double pheromoneLevel = edgePair.second->getPheromones();
+                        double pheromoneLevel = e->getPheromones();
                         double visibility = 1.0 / e->getWeight(); // Inverse of distance
                         double probability = pow(pheromoneLevel, alpha) * pow(visibility, beta);
 
-                        probability /= sumOfPheromoneLevels;
-
-                        probabilityTable[edgePair.second] = probability;
+                        probabilityTable[e] = probability;
+                        sumOfPheromoneLevels += probability;
                     }
+                }
+
+                // Select next city based on probabilities
+                Edge *selectedEdge = nullptr;
+                double randValue = static_cast<double>(std::rand()) / RAND_MAX;
+                double cumulativeProbability = 0.0;
+
+                for (auto &edgePair : adjacentEdges) {
+                    Edge *e = edgePair.second;
+                    if (!e->getDestination()->isVisited()) {
+                        cumulativeProbability += probabilityTable[e] / sumOfPheromoneLevels;
+                        if (randValue <= cumulativeProbability) {
+                            selectedEdge = e;
+                            break;
+                        }
+                    }
+                }
+
+                if (selectedEdge) {
+                    tour.push_back(selectedEdge);
+                    tourLength += selectedEdge->getWeight();
+                    selectedEdge->getDestination()->setVisited(true);
+                    currentVertex = selectedEdge->getDestination();
                 }
             }
 
-            for (auto &pair : graph->getVertexSet()) {
-                pair.second->setVisited(false);
+            Edge * lastEdge = findEdgeTo(currentVertex , startVertex);
+
+            if(lastEdge == nullptr){
+                double distance = Harverstein(currentVertex->getLongitude() , currentVertex->getLatitude() , startVertex->getLongitude() , startVertex->getLatitude());
+                lastEdge = new Edge(currentVertex , startVertex , -1 , distance);
             }
 
+            tour.push_back(lastEdge);
+            // Update pheromone trails along the tour path (local pheromone update)
+            for (Edge *edge : tour) {
+                double newPheromoneLevel = (1.0 - evaporationRate) * edge->getPheromones() + Q / tourLength;
+                edge->setPheromones(newPheromoneLevel);
+            }
+
+            // Update best tour
             if (tourLength < bestTourLength) {
                 bestTour = tour;
                 bestTourLength = tourLength;
             }
 
-            // Update pheromone trails
-            for (int i = 0; i < tour.size() - 1; ++i) {
-                Edge *edge = tour[i];
-                double newPheromoneLevel = (1.0 - evaporationRate) * edge->getPheromones() + (1.0 / tourLength);
-                edge->setPheromones(newPheromoneLevel);
+            // Reset visited status for next iteration
+            for (auto &pair : graph->getVertexSet()) {
+                pair.second->setVisited(false);
             }
+        }
+
+        // Update global pheromone trails using elitist strategy
+        for (Edge *edge : bestTour) {
+            double newPheromoneLevel = (1.0 - evaporationRate) * edge->getPheromones() + elitistRatio * Q / bestTourLength;
+            edge->setPheromones(newPheromoneLevel);
         }
     }
 
     return bestTour;
 }
+
+std::vector<Vertex*> findOddDegreeVertices(const Graph& mst) {
+    std::vector<Vertex*> oddVertices;
+    for (const auto& vertexPair : mst.getVertexSet()) {
+        Vertex* v = vertexPair.second;
+        if (v->getAdj().size() % 2 != 0) {
+            oddVertices.push_back(v);
+        }
+    }
+    return oddVertices;
+}
+
+std::vector<Edge*> computeMWPM(const Graph& mst, const std::vector<Vertex*>& oddVertices) {
+    std::vector<Edge*> matching;
+
+    // Brute-force approach
+    // Iterate through all pairs of odd-degree vertices
+    for (size_t i = 0; i < oddVertices.size(); ++i) {
+        Vertex* u = oddVertices[i];
+        double minWeight = DBL_MAX;
+        Edge* minEdge = nullptr;
+
+        for (size_t j = i + 1; j < oddVertices.size(); ++j) {
+            Vertex* v = oddVertices[j];
+
+            // Find the edge with minimum weight between u and v
+            for (const auto& edgePair : u->getAdj()) {
+                Edge* edge = edgePair.second;
+                if (edge->getDestination() == v && edge->getWeight() < minWeight) {
+                    minWeight = edge->getWeight();
+                    minEdge = edge;
+                }
+            }
+        }
+
+        if (minEdge != nullptr) {
+            matching.push_back(minEdge);
+        }
+    }
+
+    return matching;
+}
+
+Graph combineMSTAndMWPM(const Graph& mst, const std::vector<Edge*>& mwpm) {
+    Graph combinedGraph = mst; // Start with the MST
+
+    // Add the edges from the minimum weight perfect matching
+    for (Edge* edge : mwpm) {
+        combinedGraph.addEdge(edge->getSource()->getId(), edge->getDestination()->getId(), edge->getId(), edge->getWeight());
+    }
+
+    return combinedGraph;
+}
+
+std::vector<Vertex*> findEulerianCircuit(Graph& graph, Vertex* startVertex) {
+    std::vector<Vertex*> circuit;
+    std::stack<Vertex*> stack;
+    stack.push(startVertex);
+
+    while (!stack.empty()) {
+        Vertex* u = stack.top();
+        if (u->getAdj().empty()) {
+            circuit.push_back(u);
+            stack.pop();
+        } else {
+            Edge* edge = u->getAdj().begin()->second; // Get any adjacent edge
+            stack.push(edge->getDestination());
+            u->deleteAdjEdge(edge->getId()); // Remove the edge from the graph
+            edge->getDestination()->deleteIncEdge(edge->getId());
+        }
+    }
+
+    return circuit;
+}
+
+std::vector<Vertex*> shortcutEulerianCircuit(const std::vector<Vertex*>& eulerianCircuit) {
+
+    std::vector<Vertex*> hamiltonianCircuit;
+
+    for (Vertex* v : eulerianCircuit) {
+        if (!v->isVisited()) {
+            hamiltonianCircuit.push_back(v);
+            v->setVisited(true);
+        }
+    }
+
+    return hamiltonianCircuit;
+}
+
+
+std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
+
+    std::vector<Vertex * > mstPath = PrimMst(g , source);
+    Graph mst;
+    for (Vertex* v : mstPath) {
+        mst.addVertex(v->getId(), v->getLongitude(), v->getLatitude());
+        for (const auto& edgePair : v->getAdj()) {
+            Edge* edge = edgePair.second;
+            if (!edge->isSelected()) // Consider only selected edges (part of the MST)
+                continue;
+            mst.addEdge(edge->getSource()->getId(), edge->getDestination()->getId(), edge->getId(), edge->getWeight());
+        }
+    }
+
+    // Step 2: Find odd-degree vertices from the MST
+    std::vector<Vertex*> oddVertices = findOddDegreeVertices(mst);
+
+    // Step 3: Find a minimum weight perfect matching among the odd-degree vertices
+    std::vector<Edge*> mwpm = computeMWPM(mst, oddVertices);
+
+    // Step 4: Combine the MST and MWPM
+    Graph combinedGraph = combineMSTAndMWPM(mst, mwpm);
+
+    // Step 5: Find an Eulerian circuit in the combined graph
+    std::vector<Vertex*> eulerianCircuit = findEulerianCircuit(combinedGraph, source);
+
+    // Step 6: Shortcut the Eulerian circuit to obtain a Hamiltonian circuit
+    std::vector<Vertex*> hamiltonianCircuit = shortcutEulerianCircuit(eulerianCircuit);
+
+    // Step 7: Convert the Hamiltonian circuit to edges
+    std::vector<Edge*> hamiltonianEdges;
+    for (size_t i = 0; i < hamiltonianCircuit.size() - 1; ++i) {
+        Vertex* u = hamiltonianCircuit[i];
+        Vertex* v = hamiltonianCircuit[i + 1];
+        Edge* edge = u->getAdj().at(v->getId()); // Assuming there's an edge between u and v
+        hamiltonianEdges.push_back(edge);
+    }
+
+    // Step 8: Return the Hamiltonian circuit (list of edges)
+    return hamiltonianEdges;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 std::vector<Edge*> larkeWrightSavings(Graph * graph , Vertex * sourceVertex) {

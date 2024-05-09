@@ -10,8 +10,10 @@ std::vector<Vertex*> PrimMst(const Graph* graph , Vertex * sourceVertex);
 
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest);
 
-std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, double evaporationRate, double alpha, double beta, int maxIterations , double Q);
+std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, double evaporationRate, double alpha, double beta, int maxIterations, double Q, double elitistRatio);
 
 Edge * findEdgeTo(Vertex * source , Vertex * dest);
 
 std::vector<Edge*> larkeWrightSavings(Graph * graph , Vertex * sourceVertex);
+
+std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source);
