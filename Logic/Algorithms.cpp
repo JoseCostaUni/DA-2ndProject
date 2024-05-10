@@ -607,26 +607,25 @@ void tspBruteForce(Graph* g){
 
     tspBacktrackingBruteForce(g,start,0,1,cost,path);
 
-    for(auto found_path: path[path.size()-2]->getAdj()){
-        if(found_path.second->getDestination()->getId() == 0){
-            cost -= found_path.second->getWeight();
-            break;
-        }
-    }
-
     std::cout << "The minimum cost obtained with backtracking was: " << cost << std::endl;
 
     auto end_time = std::chrono::steady_clock::now();
 
     std::cout << "The path chosen was: " << std::endl;
 
-    for(auto ver: path){
-        std::cout << ver->getId() << " - ";
+    if (!path.empty()) {
+        auto it = path.begin();
+        for (; it != path.end() - 1; ++it) {
+            std::cout << (*it)->getId() << " - ";
+        }
+        std::cout << (*it)->getId();
     }
 
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+    auto duration_seconds = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);
+    auto duration_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
 
-    std::cout << std::endl <<  "The execution time was: " << duration.count() << " seconds" <<  std::endl;
+    std::cout << std::endl << std::endl <<  "The execution time was: " << duration_seconds.count() << " seconds" <<  std::endl;
+    std::cout << "The execution time was: " << duration_ms.count() << " milliseconds" <<  std::endl;
 }
 
 void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visited,double &min_cost,std::vector<Vertex*> &path){
@@ -658,20 +657,7 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
 
             path.push_back(g->findVertex(0));
             std::reverse(path.begin(),path.end());
-            bool done = false;
-            for(auto found_path: path[path.size()-1]->getAdj()){
-                if(found_path.second->getDestination()->getId() == 0){
-                    min_cost += found_path.second->getWeight();
-                    path.push_back(g->findVertex(0));
-                    done = true;
-                    break;
-                }
-            }
-
-            if(!done){
-                path.clear();
-                min_cost = INT32_MAX;
-            }
+            path.push_back(g->findVertex(0));
         }
         return;
     }
