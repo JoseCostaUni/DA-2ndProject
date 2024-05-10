@@ -494,8 +494,19 @@ inline std::unordered_map<int, Edge *> Graph::getEdgeSet() const {
 }
 
 inline void Graph::populate_in_and_out_degree() {
-    for(auto pair: vertexSet){
-        pair.second->updateDegrees();
+    for (const auto& pair: vertexSet){
+        pair.second->setVisited(false);
+        pair.second->setIndegree(0);
+        pair.second->setOutdegree(0);
+    }
+
+    for (const auto& pair: vertexSet){
+        for (auto& e: pair.second->getAdj()){
+            if (e.second->isSelected()){
+                e.second->getSource()->setOutdegree(e.second->getSource()->getOutdegree() + 1);
+                e.second->getDestination()->setIndegree(e.second->getDestination()->getIndegree() + 1);
+            }
+        }
     }
 }
 

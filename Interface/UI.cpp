@@ -405,6 +405,7 @@ void UI::main_menu(){
     validate_input(op, 'A', 'K');
 
     int index = 0 , index2 = 0;
+    auto a = 0, b = 0 , i = 0;
     Vertex * testV1 ;
     Vertex * testeV2;
     double weight = 0 , lastWeight = DBL_MAX;
@@ -470,6 +471,18 @@ void UI::main_menu(){
             main_menu();
         case 'G':
 
+            for(int k = 0 ; k <= 100 ; k++){
+                source = g.findVertex(k);
+
+                TSP = NearestNeighbour(&g , source);
+
+                if(TSP.size() == g.getNumVertex() -1 || TSP.size() == g.getNumVertex() +1 || TSP.size() == g.getNumVertex()){
+                    i++;
+                }
+            }
+
+            std::cout << "NUmber of nodes with hamilton paths: " << i << std::endl;
+            /*
             source = g.findVertex(0);
 
             TSP = NearestNeighbour(&g , source);
@@ -482,7 +495,7 @@ void UI::main_menu(){
             }
             std::cout << std::endl;
             std::cout << "Weight :" << weight << std::endl;
-
+*/
             main_menu();
         case 'H':
 
@@ -526,7 +539,13 @@ void UI::main_menu(){
 
             std::cout << source->getId() << std::endl;
             std::cout << "-------> ";
+             a = TSP.size();
+             b = g.getVertexSet().size();
             for(Edge * e : TSP){
+                i += 1;
+                if(e == nullptr){
+                    auto x = 0;
+                }
                 weight += e->getWeight();
                 //std::cout << e->getDestination()->getId() << "-------> " ;
             }

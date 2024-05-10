@@ -385,7 +385,7 @@ void computeMWPM(Graph *g) {
 
 }
 
-void findEulerianCircuit(Graph* g, std::vector<Vertex*> visited_vertices) {
+void findEulerianCircuit(Graph* g, std::vector<Vertex*>& visited_vertices) {
     std::stack<Vertex*> vertex_stack;
     Vertex* start = g->findVertex(0);
     vertex_stack.push(start);
@@ -419,12 +419,6 @@ std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
 
     if(mstPath.size() != g->getVertexSet().size()){
         return result;
-    }
-
-    for (auto& pair_ : g->getEdgeSet()){
-        pair_.second->setSelected(false);
-        pair_.second->getSource()->setVisited(false);
-        pair_.second->getDestination()->setVisited(false);
     }
 
     g->populate_in_and_out_degree();
