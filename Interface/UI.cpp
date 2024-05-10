@@ -322,10 +322,10 @@ void UI::changeDataSet(){
                     LoadRealWorldGraphs(&g , path , 0);
                     break;
                 case 'B':
-                    LoadToyGraphs(&g , path , 1);
+                    LoadRealWorldGraphs(&g , path , 1);
                     break;
                 case 'C':
-                    LoadToyGraphs(&g , path , 2);
+                    LoadRealWorldGraphs(&g , path , 2);
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -471,13 +471,14 @@ void UI::main_menu(){
             main_menu();
         case 'G':
 
-            for(int k = 0 ; k <= 100 ; k++){
+            for(int k = 0 ; k <= 50 ; k++){
                 source = g.findVertex(k);
 
                 TSP = NearestNeighbour(&g , source);
 
                 if(TSP.size() == g.getNumVertex() -1 || TSP.size() == g.getNumVertex() +1 || TSP.size() == g.getNumVertex()){
                     i++;
+                    std::cout << "Index: " << i << "Size: " << TSP.size() << std::endl;
                 }
             }
 
@@ -544,7 +545,8 @@ void UI::main_menu(){
             for(Edge * e : TSP){
                 i += 1;
                 if(e == nullptr){
-                    auto x = 0;
+                    std::cout << "No Path Found. Null edge on " << i << std::endl;
+                    break;
                 }
                 weight += e->getWeight();
                 //std::cout << e->getDestination()->getId() << "-------> " ;

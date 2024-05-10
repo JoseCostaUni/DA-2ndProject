@@ -361,6 +361,7 @@ std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, doub
     return bestTour;
 }
 
+
 void computeMWPM(Graph *g) {
     std::vector<Edge*> matching;
 
@@ -428,6 +429,10 @@ std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
 
     findEulerianCircuit(g,path);
 
+    for(auto v : g->getVertexSet()){
+        v.second->setVisited(false);
+    }
+
     std::unordered_set<Vertex*> vertex_dup_set;
     std::vector<Vertex*> result_path;
 
@@ -438,12 +443,16 @@ std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
         }
     }
 
-    for(uint64_t i = 0; i < path.size() - 1 ;i++){
-        Edge* e = findEdgeTo(path[i],path[i+1]);
+    auto a = result_path.size();
+
+    for(uint64_t i = 0; i < result_path.size() - 1 ;i++){
+        Edge* e = findEdgeTo(result_path[i],result_path[i+1]);
         result.push_back(e);
     }
 
-    result.push_back(findEdgeTo(path.back(),source));
+    result.push_back(findEdgeTo(result_path.back(),source));
+
+    auto b = result.size();
     return result;
 }
 
