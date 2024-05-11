@@ -674,3 +674,75 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
         }
     }
 }
+
+std::vector<Vertex*> generateRandomTour(Graph& graph) {
+    std::vector<Vertex*> tour;
+
+    for (const auto& pair : graph.getVertexSet()) {
+        tour.push_back(pair.second);
+    }
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(tour.begin(), tour.end(), g);
+
+    return tour;
+}
+
+double evaluateTour(Graph& graph, const std::vector<Vertex*>& tour) {
+    double cost = 0.0;
+    for (size_t i = 0; i < tour.size() - 1; ++i) {
+        cost += graph.Harverstein(tour[i]->getLongitude(), tour[i]->getLatitude(),
+                                  tour[i + 1]->getLongitude(), tour[i + 1]->getLatitude());
+    }
+    cost += graph.Harverstein(tour.back()->getLongitude(), tour.back()->getLatitude(),
+                              tour.front()->getLongitude(), tour.front()->getLatitude());
+    return cost;
+}
+
+
+
+bool kOptMove(Graph& graph, std::vector<Vertex*>& tour, int k) {
+    bool improvement = false;
+
+    for (size_t i = 0; i < tour.size() - k + 1; ++i) {
+        std::vector<Vertex*> newTour = tour;
+
+        newTour.erase(newTour.begin() + i, newTour.begin() + i + k);
+
+        for (size_t j = 0; j < k - 1; ++j) {
+            Edge* edge = graph.findEdge(newTour[i + j]->getId(), newTour[i + j + 1]->getId());
+            newTour[i + j]->setPath(edge);
+        }
+
+        Edge* edge = graph.findEdge(newTour[i + k - 1]->getId(), newTour[(i + k) % tour.size()]->getId());
+        newTour[i + k - 1]->setPath(edge);
+
+        double newCost = evaluateTour(graph, newTour);
+
+        if (newCost < evaluateTour(graph, tour)) {
+            tour = newTour;
+            improvement = true;
+        }
+    }
+
+    return improvement;
+}
+
+std::vector<Vertex*> linKernighan(Graph& graph) {
+    std::vector<Vertex*> tour = generateRandomTour(graph);
+
+    while (true) {
+        bool improvement = false;
+
+        for (int k = 2; k <= 3; ++k) {
+            improvement |= kOptMove(graph, tour, k);
+        }
+
+        if (!improvement) {
+            break;
+        }
+    }
+
+    return tour;
+}

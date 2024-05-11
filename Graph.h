@@ -222,6 +222,7 @@ private:
 class Graph {
 public:
     ~Graph();
+    Edge* findEdge(int sourceId, int destId) const;
     Vertex* findVertex(int id) const;
     bool addVertex(int id , double longitude , double latitude);
     bool removeVertex(int id);
@@ -320,6 +321,16 @@ inline Vertex* Graph::findVertex(int id) const {
     }
 
     return nullptr;
+}
+
+inline Edge* Graph::findEdge(int sourceId, int destId) const {
+    for (const auto& pair : edgeSet) {
+        Edge* edge = pair.second;
+        if (edge->getSource()->getId() == sourceId && edge->getDestination()->getId() == destId) {
+            return edge;
+        }
+    }
+    return nullptr;  // Edge not found
 }
 
 inline bool Graph::addVertex(int id , double longitude , double latitude) {

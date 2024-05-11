@@ -552,7 +552,7 @@ void UI::main_menu(){
                 //std::cout << e->getDestination()->getId() << "-------> " ;
             }
             std::cout << std::endl;
-            std::cout << "Weight :" << weight << std::endl;
+            std::cout << "Weight : " << weight << std::endl;
 
             main_menu();
 
