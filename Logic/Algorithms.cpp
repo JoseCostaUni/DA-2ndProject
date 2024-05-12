@@ -678,31 +678,89 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
 std::vector<Vertex*> generateRandomTour(Graph& graph) {
     std::vector<Vertex*> tour;
 
+    Vertex* startVertex = nullptr;
     for (const auto& pair : graph.getVertexSet()) {
-        tour.push_back(pair.second);
+        if (pair.second->getLatitude() == 0.0 && pair.second->getLongitude() == 0.0) {
+            startVertex = pair.second;
+            break;
+        }
     }
 
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(tour.begin(), tour.end(), g);
+    if (startVertex == nullptr) {
+        return tour;
+    }
+
+    tour.push_back(startVertex);
+
+    std::unordered_set<Vertex*> visited;
+    visited.insert(startVertex);
+
+    while (tour.size() < graph.getVertexSet().size()) {
+        bool foundNext = false;
+        std::vector<Vertex*> adjacentVertices;
+
+        for(auto pair: startVertex->getAdj()){
+            Edge* e = pair.second;
+            adjacentVertices.push_back(e->getDestination());
+        }
+
+        for (Vertex* vertex : adjacentVertices) {
+            if (visited.find(vertex) == visited.end()) {
+                tour.push_back(vertex);
+                visited.insert(vertex);
+                startVertex = vertex;
+                foundNext = true;
+                break;
+            }
+        }
+
+        if (!foundNext) {
+            break;
+        }
+    }
 
     return tour;
 }
 
-double evaluateTour(Graph& graph, const std::vector<Vertex*>& tour) {
+double evaluateTour(Graph& graph, std::vector<Vertex*>& tour) {
     double cost = 0.0;
     for (size_t i = 0; i < tour.size() - 1; ++i) {
-        cost += graph.Harverstein(tour[i]->getLongitude(), tour[i]->getLatitude(),
-                                  tour[i + 1]->getLongitude(), tour[i + 1]->getLatitude());
+        Vertex* currentVertex = tour[i];
+        Vertex* nextVertex = tour[i + 1];
+        Edge* edge = currentVertex->getPath();
+        if (edge != nullptr) {
+            cost += edge->getWeight();
+        } else {
+
+            if (currentVertex->getLongitude() == 0 || currentVertex->getLatitude() == 0 ||
+                nextVertex->getLongitude() == 0 || nextVertex->getLatitude() == 0) {
+                return cost;
+            }
+
+            cost += graph.Harverstein(currentVertex->getLongitude(), currentVertex->getLatitude(),nextVertex->getLongitude(), nextVertex->getLatitude());
+        }
     }
-    cost += graph.Harverstein(tour.back()->getLongitude(), tour.back()->getLatitude(),
-                              tour.front()->getLongitude(), tour.front()->getLatitude());
+
+    Vertex* lastVertex = tour.back();
+    Vertex* firstVertex = tour.front();
+    Edge* edge = lastVertex->getPath();
+    if (edge != nullptr) {
+        cost += edge->getWeight();
+    } else {
+        if (lastVertex->getLongitude() == 0 || lastVertex->getLatitude() == 0 ||
+            firstVertex->getLongitude() == 0 || firstVertex->getLatitude() == 0) {
+            tour.clear();
+            return cost;
+        }
+        cost += graph.Harverstein(lastVertex->getLongitude(), lastVertex->getLatitude(),firstVertex->getLongitude(), firstVertex->getLatitude());
+    }
     return cost;
 }
 
 
 
-bool kOptMove(Graph& graph, std::vector<Vertex*>& tour, int k) {
+
+bool kOptMove(Graph& graph, std::vector<Vertex*>& tour, int k,double &curr_cost) {
     bool improvement = false;
 
     for (size_t i = 0; i < tour.size() - k + 1; ++i) {
@@ -720,29 +778,43 @@ bool kOptMove(Graph& graph, std::vector<Vertex*>& tour, int k) {
 
         double newCost = evaluateTour(graph, newTour);
 
+
+        if(newTour.empty()){
+            improvement = true;
+            break;
+        }
+
         if (newCost < evaluateTour(graph, tour)) {
             tour = newTour;
             improvement = true;
+            curr_cost = newCost;
         }
     }
-
     return improvement;
 }
 
 std::vector<Vertex*> linKernighan(Graph& graph) {
     std::vector<Vertex*> tour = generateRandomTour(graph);
+    double curr_cost = DBL_MAX;
 
-    while (true) {
+    int max_iterations = 1000;
+    int iteration_count = 0;
+
+    while (iteration_count < max_iterations) {
         bool improvement = false;
 
         for (int k = 2; k <= 3; ++k) {
-            improvement |= kOptMove(graph, tour, k);
+            improvement |= kOptMove(graph, tour, k, curr_cost);
         }
 
         if (!improvement) {
             break;
         }
+
+        iteration_count++;
     }
+
+    std::cout << "The cost of the best tour is: " << curr_cost << std::endl;
 
     return tour;
 }

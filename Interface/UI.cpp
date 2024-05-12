@@ -554,6 +554,10 @@ void UI::main_menu(){
             std::cout << std::endl;
             std::cout << "Weight : " << weight << std::endl;
 
+            for(auto ver: linKernighan(g)){
+                std::cout << ver->getId() << " ";
+            }
+
             main_menu();
 
         case 'K':
