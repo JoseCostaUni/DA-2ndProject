@@ -405,11 +405,12 @@ void UI::main_menu(){
     validate_input(op, 'A', 'K');
 
     int index = 0 , index2 = 0;
-    auto a = 0, b = 0 , i = 0;
+    auto a = 0, b = 0 , i = 0 , graphSize = 0;
     Vertex * testV1 ;
     Vertex * testeV2;
     double weight = 0 , lastWeight = DBL_MAX;
-
+    std::vector<Vertex *> articulationPoints;
+    std::vector<std::vector<Vertex *>> scc;
     double bestValue1 = 0.0 , bestValue2 = 0.0;
     Vertex * source;
     Vertex * dest;
@@ -470,7 +471,7 @@ void UI::main_menu(){
 
             main_menu();
         case 'G':
-
+            /*
             for(int k = 0 ; k <= 50 ; k++){
                 source = g.findVertex(k);
 
@@ -483,7 +484,7 @@ void UI::main_menu(){
             }
 
             std::cout << "NUmber of nodes with hamilton paths: " << i << std::endl;
-            /*
+            */
             source = g.findVertex(0);
 
             TSP = NearestNeighbour(&g , source);
@@ -496,7 +497,7 @@ void UI::main_menu(){
             }
             std::cout << std::endl;
             std::cout << "Weight :" << weight << std::endl;
-*/
+
             main_menu();
         case 'H':
 
@@ -519,9 +520,10 @@ void UI::main_menu(){
 
             main_menu();
         case 'I':
+            /*
             source = g.findVertex(0);
 
-            TSP = ACO_TSP(&g , source , 5 , 0.3 , 2, 1.5 , 100 , 4 , 0.2);
+            TSP = ACO_TSP(&g , source , 5 , 0.3 , 2, 1.5 , 10 , 4 , 0.2);
 
             std::cout << source->getId() << std::endl;
             std::cout << "-------> ";
@@ -531,10 +533,17 @@ void UI::main_menu(){
             }
             std::cout << std::endl;
             std::cout << "Weight :" << weight << std::endl;
+            */
 
+            scc = SCCkosaraju(&g);
+            articulationPoints = findArticulationPoints(&g);
+            a = scc.size();
+            b = articulationPoints.size();
+            i = scc[0].size();
+            graphSize = g.getNumVertex();
             main_menu();
         case 'J':
-            source = g.findVertex(0);
+            source = g.findVertex(6);
 
             TSP = ChristofidesAlgo(&g , source);
 
@@ -553,11 +562,11 @@ void UI::main_menu(){
             }
             std::cout << std::endl;
             std::cout << "Weight : " << weight << std::endl;
-
+            /*
             for(auto ver: linKernighan(g)){
                 std::cout << ver->getId() << " ";
             }
-
+            */
             main_menu();
 
         case 'K':

@@ -40,7 +40,10 @@ public:
     double getLongitude() const;
     double getLatitude() const;
     double getDist() const;
+    int getNum() const;
+    int getLow() const;
     bool isVisited() const;
+    bool isProcessing() const;
     Edge * getPath() const;
 
 
@@ -59,11 +62,16 @@ public:
     void setPath(Edge * e);
     void setOutdegree(int outdegree);
     void setIndegree(int indegree);
+    void setNum(int i);
+    void setLow(int i);
+    void setProcessing(const bool & _processing);
 
     bool operator<(Vertex & vertex) const;
     bool operator==(Vertex & vertex) const;
     void updateDegrees();
     friend class MutablePriorityQueue<Vertex>;
+
+
 
 protected:
     int id;
@@ -78,6 +86,9 @@ protected:
     double dist = 0;
     Edge * path = nullptr;
     int queueIndex = 0;
+
+    int num = 0;
+    int low = 0;
 };
 
 inline Vertex::Vertex(int id, double intitude, double latitude)
@@ -187,6 +198,29 @@ inline void Vertex::updateDegrees() {
     outdegree = adjacentEdges.size();
 }
 
+inline void Vertex::setNum(int i) {
+    this->num = i;
+}
+
+inline int Vertex::getNum() const {
+    return num;
+}
+
+inline int Vertex::getLow() const{
+    return low;
+}
+
+inline void Vertex::setLow(int i) {
+    this->low = i;
+}
+
+inline bool Vertex::isProcessing() const {
+    return this->processing;
+}
+
+inline void Vertex::setProcessing(const bool & _processing) {
+    this->processing = _processing;
+}
 
 /********************** Edge  ****************************/
 
@@ -376,6 +410,7 @@ inline bool Graph::removeEdge(int sourceId, int destId) const {
     }
 
     for (auto it = source->getAdj().begin(); it != source->getAdj().end(); ++it) {
+        auto edges = *it;
         if (it->second->getDestination()->getId() == destId) {
             dest->deleteIncEdge(it->second->getId());
             delete it->second;

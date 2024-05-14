@@ -3,7 +3,35 @@
 #include "algorithm"
 
 #include "../data_structures/MutablePriorityQueue.h"
+using namespace  std;
 
+
+void dfsAux(Graph & graph , Vertex * current , std::vector<Vertex *> &path){
+
+    path.push_back(current);
+    current->setVisited(true);
+
+    for(auto pair : current->getAdj()){
+        Edge * e = pair.second;
+
+        if(!e->getDestination()->isVisited()){
+            Vertex *nextVertex = e->getDestination();
+            dfsAux(graph, nextVertex, path);
+        }
+    }
+
+    //current->setVisited(false); dont know if i have to put
+}
+
+void dfs(Graph & graph , Vertex * source , std::vector<Vertex *>& path){
+    std::unordered_map<int, Vertex *> vertexSet = graph.getVertexSet();
+    for(std::pair<int , Vertex *> pair : vertexSet){
+        Vertex * v = pair.second;
+        v->setVisited(false);
+    }
+
+    dfsAux(graph , source , path);
+}
 
 std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
     std::unordered_map<int, Vertex *> vertexSet = graph->getVertexSet();
@@ -258,7 +286,7 @@ std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * so
 
 /*
     Initialization: We start by placing the ants on the starting point.
-    Movement: Each ant selects a point to move to based on a probabilistic function that takes into account the pheromone level and the heuristic information. The heuristic information can be thought of as a measure of how good a particular point is.
+    Movement: Each ant selects a point to move to based on a probabivectoric function that takes into account the pheromone level and the heuristic information. The heuristic information can be thought of as a measure of how good a particular point is.
     Updating pheromone trails: The pheromone trail on each edge is updated based on the quality of the solution found by the ant that traversed that edge.
     Termination: We stop the algorithm after a certain number of iterations or when a satisfactory solution is found.
 */
@@ -280,9 +308,9 @@ std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, doub
             startVertex->setVisited(true);
             std::vector<Edge *> tour;
             double tourLength = 0.0;
-
+            int tries = graph->getNumVertex() ;
             // Move ant to the next city
-            while (tour.size() < graph->getNumVertex()-1) {
+            while (tour.size() < graph->getNumVertex()-1 && tries > 0) {
                 std::unordered_map<int, Edge *> adjacentEdges = currentVertex->getAdj();
 
                 // Calculate probabilities for adjacent cities
@@ -323,6 +351,9 @@ std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, doub
                     selectedEdge->getDestination()->setVisited(true);
                     currentVertex = selectedEdge->getDestination();
                 }
+
+                tries--;
+                //std::cout << tries << std::endl;
             }
 
             Edge * lastEdge = findEdgeTo(currentVertex , startVertex);
@@ -455,64 +486,6 @@ std::vector<Edge *> ChristofidesAlgo(Graph * g , Vertex * source){
     auto b = result.size();
     return result;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 std::vector<Edge*> larkeWrightSavings(Graph * graph , Vertex * sourceVertex) {
@@ -766,25 +739,35 @@ bool kOptMove(Graph& graph, std::vector<Vertex*>& tour, int k,double &curr_cost)
     for (size_t i = 0; i < tour.size() - k + 1; ++i) {
         std::vector<Vertex*> newTour = tour;
 
-        newTour.erase(newTour.begin() + i, newTour.begin() + i + k);
-
-        for (size_t j = 0; j < k - 1; ++j) {
-            Edge* edge = graph.findEdge(newTour[i + j]->getId(), newTour[i + j + 1]->getId());
-            newTour[i + j]->setPath(edge);
+        if(newTour.size() == 1){
+            newTour.erase(newTour.begin() , newTour.begin() +1);
+        }else{
+            newTour.erase(newTour.begin() + i, newTour.begin() + i + k);
         }
 
-        Edge* edge = graph.findEdge(newTour[i + k - 1]->getId(), newTour[(i + k) % tour.size()]->getId());
-        newTour[i + k - 1]->setPath(edge);
 
-        double newCost = evaluateTour(graph, newTour);
+        for (size_t j = 0; j < k - 1; ++j) {
+            if(!newTour.empty()){
+                Edge* edge = graph.findEdge(newTour[i + j]->getId(), newTour[i + j + 1]->getId());
+                newTour[i + j]->setPath(edge);
+            }
+        }
+        if(!newTour.empty()){
+            Edge* edge = graph.findEdge(newTour[i + k - 1]->getId(), newTour[(i + k) % tour.size()]->getId());
+            newTour[i + k - 1]->setPath(edge);
+        }
 
+        double newCost = DBL_MAX;
+
+        if(!newTour.empty())
+            newCost = evaluateTour(graph, newTour);
 
         if(newTour.empty()){
             improvement = true;
             break;
         }
 
-        if (newCost < evaluateTour(graph, tour)) {
+        if (newCost <= evaluateTour(graph, tour)) {
             tour = newTour;
             improvement = true;
             curr_cost = newCost;
@@ -794,7 +777,9 @@ bool kOptMove(Graph& graph, std::vector<Vertex*>& tour, int k,double &curr_cost)
 }
 
 std::vector<Vertex*> linKernighan(Graph& graph) {
-    std::vector<Vertex*> tour = generateRandomTour(graph);
+    Vertex * source = graph.findVertex(0);
+    std::vector<Vertex*> tour;
+    dfs(graph , source , tour);
     double curr_cost = DBL_MAX;
 
     int max_iterations = 1000;
@@ -818,3 +803,179 @@ std::vector<Vertex*> linKernighan(Graph& graph) {
 
     return tour;
 }
+
+
+
+void dfs_scc(Graph * g, Vertex * v, std::stack<Vertex *> &s, vector<vector<Vertex *>> &l, int &i){
+    v->setNum(i);
+    v->setLow(i);
+    i++;
+    s.push(v);
+    v->setProcessing(true);
+
+    for(auto & pair : v->getAdj()){
+
+        Edge * edge = pair.second;
+
+        if(edge->getDestination()->getNum() == 0){
+            dfs_scc(g,edge->getDestination(),s,l,i);
+
+            int min = INT16_MAX;
+
+            if(v->getLow() < edge->getDestination()->getLow()){
+                min = v->getLow();
+            }else{
+                min = edge->getDestination()->getLow();
+            }
+
+            v->setLow(min);
+        }
+        else if(edge->getDestination()->isProcessing()){
+            int min = 0;
+
+            if(v->getLow() < edge->getDestination()->getLow()){
+                min = v->getLow();
+            }else{
+                min = edge->getDestination()->getLow();
+            }
+            v->setLow(min);
+        }
+    }
+
+    if(v->getNum() == v->getLow()){
+        vector<Vertex *> vectora;
+
+        while(!s.empty()){
+            Vertex * vertex = s.top();
+            vectora.push_back(vertex);
+            s.pop();
+            if(v == vertex){
+                break;
+            }
+        }
+        l.push_back(vectora);
+    }
+}
+
+vector<vector<Vertex *>> sccTarjan(Graph* g) {
+    vector<vector<Vertex *>> res;
+    int index = 1;
+    stack<Vertex *> s;
+
+    for(auto & pair: g->getVertexSet()){
+
+        Vertex * ver = pair.second;
+
+        ver->setNum(0);
+        ver->setLow(0);
+        ver->setProcessing(false);
+    }
+
+    g->findVertex(0)->setVisited(true);
+
+    for(auto & pair: g->getVertexSet()){
+
+        Vertex * ver = pair.second;
+
+        if(ver->getNum() == 0){
+            dfs_scc(g,ver,s,res,index);
+        }
+    }
+
+    return res;
+}
+
+std::vector<Vertex *> findArticulationPoints(Graph * g ){
+    std::vector<Vertex *> articulationPoints;
+    for(auto & pair : g->getVertexSet()){
+        if((pair.second->getAdj().size() == (g->getNumVertex() -1)) && (pair.second->getInc().size() == (g->getNumVertex() -1))){
+            articulationPoints.push_back(pair.second);
+        }
+    }
+
+    return articulationPoints;
+}
+
+
+void aux_reverseGraphEdges(Graph * g) {
+    vector<pair<Vertex * ,Vertex * >> edgesToReverse;
+
+    for(auto & pair : g->getVertexSet()) {
+        Vertex * v = pair.second;
+        v->setVisited(true);
+        for(auto & pair2 : v->getAdj()) {
+            Edge * e = pair2.second;
+            Vertex * w = e->getDestination();
+            edgesToReverse.emplace_back(v , w);
+        }
+    }
+
+    for(const auto& edge: edgesToReverse)
+    {
+        g->addEdge(edge.second->getId() , edge.first->getId() , g->getEdgeSet().size() ,  0);
+        g->removeEdge(edge.first->getId() , edge.second->getId());
+    }
+}
+
+// First depth-first search in Kosaraju-Sharir algorithm
+
+void firstDFSKosarajuSharir(Vertex *v, stack<Vertex *> *vertexStack) {
+    v->setVisited(true);
+    for(auto& pair : v->getAdj()) {
+        Edge * e = pair.second;
+        Vertex * w = e->getDestination();
+        if(!w->isVisited())
+            firstDFSKosarajuSharir(w, vertexStack);
+    }
+    vertexStack->push(v);
+}
+
+// Second depth-first search in Kosaraju-Sharir algorithm
+
+void secondDFSKosarajuSharir(Vertex *v, vector<Vertex *>& res) {
+    v->setVisited(true);
+    res.push_back(v);
+    for(auto & pair : v->getAdj()) {
+        Edge * e = pair.second;
+        Vertex * w = e->getDestination();
+        if(!w->isVisited())
+            secondDFSKosarajuSharir(w, res);
+    }
+}
+
+// Kosaraju-Sharir algorithm to find strongly connected components
+
+vector<vector< Vertex *>> SCCkosaraju(Graph * g) {
+    stack<Vertex *> vertexStack;
+
+    for(auto & v : g->getVertexSet())
+        v.second->setVisited(false);
+
+    for(auto & v : g->getVertexSet()) {
+        if(!v.second->isVisited())
+            firstDFSKosarajuSharir(v.second, &vertexStack);
+    }
+
+    for(auto & v : g->getVertexSet())
+        v.second->setVisited(false);
+
+    aux_reverseGraphEdges(g);
+
+    for(auto & v : g->getVertexSet())
+        v.second->setVisited(false);
+
+    vector<vector<Vertex *>> sccs;
+    while(!vertexStack.empty()) {
+        Vertex * v = vertexStack.top();
+        vertexStack.pop();
+        if (!v->isVisited()) {
+            vector<Vertex *> scc;
+            secondDFSKosarajuSharir(v, scc);
+            sccs.push_back(scc);
+        }
+    }
+
+    return sccs;
+}
+
+
