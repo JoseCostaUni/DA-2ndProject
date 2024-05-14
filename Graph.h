@@ -273,7 +273,7 @@ public:
     void printNodesContente() const;
     void printGraphInfo() const;
     void populate_in_and_out_degree();
-    void makeFullyConnected() ;
+    bool makeFullyConnected() ;
 private:
 
     Clock clock;
@@ -490,8 +490,14 @@ inline Clock Graph::getClock() {
     return this->clock;
 }
 
-inline void Graph::makeFullyConnected() {
+inline bool Graph::makeFullyConnected() {
     std::unordered_map<int, Vertex*> vertices = getVertexSet();
+
+    for(auto v : vertices){
+        if(v.second->getLatitude() == DBL_MAX || v.second->getLongitude() == DBL_MAX && v.second->getInc().size() != (getNumVertex()-1) && v.second->getAdj().size() != (getNumVertex()-1)){
+            return false;
+        }
+    }
 
     // Iterate through all pairs of vertices
     for (auto it1 = vertices.begin(); it1 != vertices.end(); ++it1) {
@@ -516,6 +522,7 @@ inline void Graph::makeFullyConnected() {
             }
         }
     }
+    return true;
 }
 
 inline double Graph::Harverstein(double longitude1, double latitude1, double longitude2, double latitude2) const{

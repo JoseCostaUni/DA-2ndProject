@@ -65,6 +65,9 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
         case 2:
             file_name = "tourism.csv";
             break;
+        case 3:
+            file_name = "myGraph.csv";
+            break;
         default:
             std::cerr << "Choose a valid graph";
             return;
@@ -95,8 +98,8 @@ void LoadToyGraphs(Graph * g , const std::string& path , const int& graph){
         int id_V2 = stoi(id_v2);
         double v_distances = stod(distance);
 
-        g->addVertex(id_V1 , 0 , 0);
-        g->addVertex(id_V2 , 0 , 0);
+        g->addVertex(id_V1 , 2 , 2);
+        g->addVertex(id_V2 , 2 , 2);
         g->addEdge(id_V1 , id_V2 ,edgeId, v_distances);
         edgeId++;
         g->addEdge(id_V2 , id_V1 ,edgeId, v_distances);

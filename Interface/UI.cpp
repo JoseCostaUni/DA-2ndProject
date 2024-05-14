@@ -99,8 +99,9 @@ void UI::loading_stuff(UI &ui) {
                 << "A. shipping.csv" << std::endl
                 << "B. stadiums.csv" << std::endl
                 << "C. tourism.csv" << std::endl
+                << "D. myGraph.csv" << std::endl
                 << "Insert the letter: " ;
-            validate_input(secondOp,'A','C');
+            validate_input(secondOp,'A','D');
             switch (secondOp) {
                 case 'A':
                     LoadToyGraphs(&g , path , 0);
@@ -110,6 +111,9 @@ void UI::loading_stuff(UI &ui) {
                     break;
                 case 'C':
                     LoadToyGraphs(&g , path , 2);
+                    break;
+                case 'D':
+                    LoadToyGraphs(&g , path , 3);
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -232,8 +236,9 @@ void UI::changeDataSet(){
                       << "A. shipping.csv" << std::endl
                       << "B. stadiums.csv" << std::endl
                       << "C. tourism.csv" << std::endl
+                      << "D. myGraph.csv" << std::endl
                       << "Insert the letter: " ;
-            validate_input(secondOp,'A','C');
+            validate_input(secondOp,'A','D');
             switch (secondOp) {
                 case 'A':
                     LoadToyGraphs(&g , path , 0);
@@ -244,6 +249,8 @@ void UI::changeDataSet(){
                 case 'C':
                     LoadToyGraphs(&g , path , 2);
                     break;
+                case 'D':
+                    LoadToyGraphs(&g , path , 3);
                 default:
                     std::cerr << "Invalid Input";
                     return;
@@ -396,10 +403,8 @@ void UI::main_menu(){
               << "E. Calculate TSP with Triangular Aprox" << std::endl
               << "F. Calculate Distance between two nodes" << std::endl
               << "G. Try N.N algo" << std::endl
-              << "H. Try larkeWright Savings algo" << std::endl
-              << "I. Try real World graphs Ant Colony Algo" << std::endl
-             << "J. Try cristofides algo" << std::endl
-            << "K. Exit the program" << std::endl
+             << "H. Try cristofides algo" << std::endl
+             << "I Exit the program" << std::endl
              << "Insert your choice:";
 
     validate_input(op, 'A', 'K');
@@ -501,56 +506,14 @@ void UI::main_menu(){
             main_menu();
         case 'H':
 
-            std::cout << "Introduce the id of the starting node\n";
-
-            std::cin >> index;
-
-            source = g.findVertex(index);
-
-            TSP = larkeWrightSavings(&g , source);
-
-            std::cout << source->getId() << std::endl;
-            std::cout << "-------> ";
-            for(Edge * e : TSP){
-                weight += e->getWeight();
-                std::cout << e->getDestination()->getId() << "-------> " ;
-            }
-            std::cout << std::endl;
-            std::cout << "Weight :" << weight << std::endl;
-
-            main_menu();
-        case 'I':
-            /*
-            source = g.findVertex(0);
-
-            TSP = ACO_TSP(&g , source , 5 , 0.3 , 2, 1.5 , 10 , 4 , 0.2);
-
-            std::cout << source->getId() << std::endl;
-            std::cout << "-------> ";
-            for(Edge * e : TSP){
-                weight += e->getWeight();
-                std::cout << e->getDestination()->getId() << "-------> " ;
-            }
-            std::cout << std::endl;
-            std::cout << "Weight :" << weight << std::endl;
-            */
-
-            scc = SCCkosaraju(&g);
-            articulationPoints = findArticulationPoints(&g);
-            a = scc.size();
-            b = articulationPoints.size();
-            i = scc[0].size();
-            graphSize = g.getNumVertex();
-            main_menu();
-        case 'J':
             source = g.findVertex(6);
 
             TSP = ChristofidesAlgo(&g , source);
 
             std::cout << source->getId() << std::endl;
             std::cout << "-------> ";
-             a = TSP.size();
-             b = g.getVertexSet().size();
+            a = TSP.size();
+            b = g.getVertexSet().size();
             for(Edge * e : TSP){
                 i += 1;
                 if(e == nullptr){
@@ -562,19 +525,15 @@ void UI::main_menu(){
             }
             std::cout << std::endl;
             std::cout << "Weight : " << weight << std::endl;
-            /*
-            for(auto ver: linKernighan(g)){
-                std::cout << ver->getId() << " ";
-            }
-            */
+
             main_menu();
 
-        case 'K':
-           std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
-                 << "Made by: " <<std::endl
-                 << "Ângelo Oliveira || 202207798" <<std::endl
-                 << "José Costa      || 202207871" <<std::endl
-                 << "Bruno Fortes    || 202209730" << std::endl;
+        case 'I':
+            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
+                      << "Made by: " <<std::endl
+                      << "Ângelo Oliveira || 202207798" <<std::endl
+                      << "José Costa      || 202207871" <<std::endl
+                      << "Bruno Fortes    || 202209730" << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2)); // Espera 2 segundos antes de fechar o terminal
             exit(0);
         default:
