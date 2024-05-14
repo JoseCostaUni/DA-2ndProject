@@ -433,7 +433,8 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
-            tspBruteForce(&g);
+            simulatedAnnealing(&g, 1000, 0.999, 1000);
+            // tspBruteForce(&g);
             main_menu();
             break;
         case 'E':

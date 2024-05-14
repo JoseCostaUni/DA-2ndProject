@@ -581,3 +581,95 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
     }
 }
 
+void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rate, int max_iterations) {
+
+    auto start_time = std::chrono::steady_clock::now();
+
+    std::vector<Vertex*> best_path;
+    double best_cost = std::numeric_limits<double>::max();
+
+    std::vector<Vertex*> current_path;
+    double current_cost = 0;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(0, 1);
+
+    for (int i = 0; i < max_iterations; ++i) {
+        double temperature = initial_temperature * pow(cooling_rate, i);
+
+        current_path.clear();
+        current_cost = 0;
+
+        std::unordered_set<Vertex*> visited_vertices;
+
+        Vertex* current_vertex = g->findVertex(0); // Assumi que começava no 0 , alterar depois para o parametro
+        visited_vertices.insert(current_vertex);
+
+
+        //Cria um vetor de edges que não foram selected e que existem
+        while (visited_vertices.size() < g->getNumVertex()) {
+            std::vector<Edge*> unvisited_edges;
+            for (auto pair : current_vertex->getAdj()) {
+                if (!pair.second->isSelected() && visited_vertices.find(pair.second->getDestination()) == visited_vertices.end()) {
+                    unvisited_edges.push_back(pair.second);
+                }
+            }
+
+            if (unvisited_edges.empty()) {
+                break;
+            }
+
+            //Distribuição uniforme para escolher um edge aleatório
+            std::uniform_int_distribution<> distributionUnvisited(0, unvisited_edges.size() - 1);
+            int random_index = distributionUnvisited(gen);
+            Edge* selected_edge = unvisited_edges[random_index];
+            selected_edge->setSelected(true);
+
+            current_path.push_back(current_vertex);
+            current_cost += selected_edge->getWeight();
+
+            current_vertex = selected_edge->getDestination();
+            visited_vertices.insert(current_vertex);
+        }
+
+        // Adiciona o ultimo edge para voltar ao inicio
+        Edge* last_edge = findEdgeTo(current_vertex, g->findVertex(0));
+        last_edge->setSelected(true);
+        current_path.push_back(current_vertex);
+        current_path.push_back(g->findVertex(0));// Assumi que começava no 0 , alterar depois para o parametro, alterar depois para o parametro
+        current_cost += last_edge->getWeight();
+
+        // Decide se vai aceitar ou não a solução
+        if (current_cost < best_cost) {
+            best_path = current_path;
+            best_cost = current_cost;
+        } else {
+            double acceptance_probability = exp((best_cost - current_cost) / temperature); // Função de probabilidade de aceitação baseado na temperatura
+            double random_value = dis(gen);
+            if (random_value < acceptance_probability) {
+                best_path = current_path;
+                best_cost = current_cost;
+            }
+        }
+
+        // Reset visited and selected status for the next iteration
+        for(auto pair: g->getEdgeSet()){
+            pair.second->setSelected(false);
+        }
+
+    }
+
+    auto end_time = std::chrono::steady_clock::now();
+    auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+
+    std::cout << "Best cost: " << best_cost << std::endl;
+    std::cout << "Best path: ";
+    for (Vertex* vertex : best_path) {
+        std::cout << vertex->getId() << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Execution time: " << elapsed_time << " milliseconds" << std::endl;
+}
+
+

@@ -37,3 +37,5 @@ void firstDFSKosarajuSharir(Vertex *v, stack<Vertex *> *vertexStack) ;
 void secondDFSKosarajuSharir(Vertex *v, vector<Vertex *>& res) ;
 void aux_reverseGraphEdges(Graph * g) ;
 vector<vector< Vertex *>> SCCkosaraju(Graph * g) ;
+
+void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rate, int max_iterations);
