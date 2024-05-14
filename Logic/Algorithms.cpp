@@ -596,18 +596,16 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
     std::uniform_real_distribution<> dis(0, 1);
 
     for (int i = 0; i < max_iterations; ++i) {
-        double temperature = initial_temperature * pow(cooling_rate, i);
 
         current_path.clear();
         current_cost = 0;
 
         std::unordered_set<Vertex*> visited_vertices;
 
-        Vertex* current_vertex = g->findVertex(0); // Assumi que começava no 0 , alterar depois para o parametro
+        Vertex* current_vertex = g->findVertex(0); // Assuming it starts from vertex 0, can be adjusted later
         visited_vertices.insert(current_vertex);
 
-
-        //Cria um vetor de edges que não foram selected e que existem
+        // Create a vector of edges that are not selected and exist
         while (visited_vertices.size() < g->getNumVertex()) {
             std::vector<Edge*> unvisited_edges;
             for (auto pair : current_vertex->getAdj()) {
@@ -620,7 +618,7 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
                 break;
             }
 
-            //Distribuição uniforme para escolher um edge aleatório
+            // Uniform distribution to choose a random edge
             std::uniform_int_distribution<> distributionUnvisited(0, unvisited_edges.size() - 1);
             int random_index = distributionUnvisited(gen);
             Edge* selected_edge = unvisited_edges[random_index];
@@ -633,31 +631,26 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
             visited_vertices.insert(current_vertex);
         }
 
-        // Adiciona o ultimo edge para voltar ao inicio
-        Edge* last_edge = findEdgeTo(current_vertex, g->findVertex(0));
-        last_edge->setSelected(true);
-        current_path.push_back(current_vertex);
-        current_path.push_back(g->findVertex(0));// Assumi que começava no 0 , alterar depois para o parametro, alterar depois para o parametro
-        current_cost += last_edge->getWeight();
+        // Check if the last vertex has a connection to the first one
+        Edge* last_to_first_edge = findEdgeTo(current_vertex, g->findVertex(0));
+        if (last_to_first_edge != nullptr) {
+            // Add the last edge to return to the starting vertex
+            last_to_first_edge->setSelected(true);
+            current_path.push_back(current_vertex);
+            current_path.push_back(g->findVertex(0)); // Assuming it starts from vertex 0, can be adjusted later
+            current_cost += last_to_first_edge->getWeight();
+        }
 
-        // Decide se vai aceitar ou não a solução
-        if (current_cost < best_cost) {
+        // Decide whether to accept or reject the solution
+        if (current_cost < best_cost && current_path.size() == g->getVertexSet().size() + 1) {
             best_path = current_path;
             best_cost = current_cost;
-        } else {
-            double acceptance_probability = exp((best_cost - current_cost) / temperature); // Função de probabilidade de aceitação baseado na temperatura
-            double random_value = dis(gen);
-            if (random_value < acceptance_probability) {
-                best_path = current_path;
-                best_cost = current_cost;
-            }
         }
 
         // Reset visited and selected status for the next iteration
         for(auto pair: g->getEdgeSet()){
             pair.second->setSelected(false);
         }
-
     }
 
     auto end_time = std::chrono::steady_clock::now();
