@@ -203,7 +203,7 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
         }
     }
 
-    double time = clock1.elapsed();
+    clock1.elapsed();
 
     std::cout << "Prim took " << time << "second" << std::endl;
     return path;
@@ -581,7 +581,7 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
     }
 }
 
-void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rate, int max_iterations) {
+void simulatedAnnealing(Graph* g ,Vertex * source ,  int max_iterations) {
 
     auto start_time = std::chrono::steady_clock::now();
 
@@ -591,6 +591,7 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
     std::vector<Vertex*> current_path;
     double current_cost = 0;
 
+    max_iterations = 100;
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0, 1);
@@ -602,7 +603,7 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
 
         std::unordered_set<Vertex*> visited_vertices;
 
-        Vertex* current_vertex = g->findVertex(0); // Assuming it starts from vertex 0, can be adjusted later
+        Vertex* current_vertex = source; // Assuming it starts from vertex 0, can be adjusted later
         visited_vertices.insert(current_vertex);
 
         // Create a vector of edges that are not selected and exist
@@ -632,12 +633,18 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
         }
 
         // Check if the last vertex has a connection to the first one
-        Edge* last_to_first_edge = findEdgeTo(current_vertex, g->findVertex(0));
+        Edge* last_to_first_edge = findEdgeTo(current_vertex, source);
         if (last_to_first_edge != nullptr) {
             // Add the last edge to return to the starting vertex
             last_to_first_edge->setSelected(true);
             current_path.push_back(current_vertex);
-            current_path.push_back(g->findVertex(0)); // Assuming it starts from vertex 0, can be adjusted later
+            Vertex * next = nullptr;
+            if(source->getId() != g->getVertexSet().size() - 1) {
+                next = g->findVertex(source->getId() + 1);
+            }else{
+                next = g->findVertex(0);
+            }
+            current_path.push_back(next); // Assuming it starts from vertex 0, can be adjusted later
             current_cost += last_to_first_edge->getWeight();
         }
 

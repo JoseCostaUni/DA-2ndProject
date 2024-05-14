@@ -9,7 +9,7 @@ UI::UI() {}
 
 void UI::clear_screen() {
     int i = 0;
-    while(i != 100) {
+    while(i != 20) {
         std::cout << std::endl;
         i++;
     }
@@ -403,11 +403,12 @@ void UI::main_menu(){
               << "E. Calculate TSP with Triangular Aprox" << std::endl
               << "F. Calculate Distance between two nodes" << std::endl
               << "G. Try N.N algo" << std::endl
-             << "H. Try cristofides algo" << std::endl
-             << "I Exit the program" << std::endl
+             << "H. Try Christofides algo" << std::endl
+             << "I. Try Annealing Algorithm" << std::endl
+             << "J Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'K');
+    validate_input(op, 'A', 'J');
 
     int index = 0 , index2 = 0;
     auto a = 0, b = 0 , i = 0 , graphSize = 0;
@@ -433,8 +434,7 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
-            simulatedAnnealing(&g, 1000, 0.999, 1000);
-            // tspBruteForce(&g);
+            tspBruteForce(&g);
             main_menu();
             break;
         case 'E':
@@ -528,8 +528,18 @@ void UI::main_menu(){
             std::cout << "Weight : " << weight << std::endl;
 
             main_menu();
-
         case 'I':
+
+            std::cout << "Introduce the source node id: ";
+
+            validate_int_input(index);
+
+            source = g.findVertex(index);
+
+            simulatedAnnealing(&g, source , 1000);
+
+            main_menu();
+        case 'J':
             std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                       << "Made by: " <<std::endl
                       << "Ângelo Oliveira || 202207798" <<std::endl

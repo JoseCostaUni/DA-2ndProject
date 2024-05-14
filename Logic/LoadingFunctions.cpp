@@ -114,6 +114,9 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
     std::string file_name;
     int edgeId = 0;
 
+    Clock clock1 = Clock();
+    clock1.start();
+
     switch (graph) {
         case 0:
             file_name = "/graph1/nodes.csv";
@@ -212,6 +215,7 @@ void LoadRealWorldGraphs(Graph * g , const std::string& path , const int& graph)
 
     file2.close();
 
+    clock1.elapsed();
 }
 
 void LoadMediumGraphs(Graph * g , const std::string& path , const int& graph){

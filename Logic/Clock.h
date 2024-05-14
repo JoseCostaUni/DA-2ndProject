@@ -14,10 +14,11 @@ public:
         startTime = std::chrono::high_resolution_clock::now();
     }
 
-    double elapsed() {
+    void elapsed() {
         auto endTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsedSeconds = endTime - startTime;
-        return elapsedSeconds.count();
+
+        std::cout << "Elapsed time: " << elapsedSeconds.count() << "s" << std::endl;
     }
 
 private:
