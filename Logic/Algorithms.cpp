@@ -581,6 +581,42 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
     }
 }
 
+double twoOpt(std::vector<Vertex*>& path, Graph* g,int max_iterations) {
+    int n = path.size();
+    bool improvement = true;
+    double total_cost = 0.0;
+    int iteration_count = 0;
+
+    while (improvement && iteration_count < max_iterations) {
+        improvement = false;
+        for (int i = 0; i < n - 2; ++i) {
+            for (int j = i + 2; j < n; ++j) {
+                Edge* edge_1 = g->findEdge(path[i]->getId(), path[j]->getId());
+                Edge* edge_2 = g->findEdge(path[i + 1]->getId(), path[(j + 1) % n]->getId());
+                Edge* edge_3 = g->findEdge(path[i]->getId(), path[i + 1]->getId());
+                Edge* edge_4 = g->findEdge(path[j]->getId(), path[(j + 1) % n]->getId());
+
+                if (edge_1 && edge_2 && edge_3 && edge_4) {
+                    double delta = edge_1->getWeight() + edge_2->getWeight() - edge_3->getWeight() - edge_4->getWeight();
+                    if (delta < 0) {
+                        std::reverse(path.begin() + i + 1, path.begin() + j + 1);
+                        improvement = true;
+                    }
+                }
+            }
+        }
+        iteration_count++;
+    }
+
+    for (int i = 0; i < n - 1 ; ++i) {
+        int edge_cost = g->findEdge(path[i]->getId(), path[i + 1]->getId())->getWeight();
+        std::cout << path[i]->getId() << " - " << path[i + 1]->getId() << " : " << edge_cost << std::endl;
+        total_cost += g->findEdge(path[i]->getId(), path[i + 1]->getId())->getWeight();
+    }
+    return total_cost;
+}
+
+
 void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rate, int max_iterations) {
 
     auto start_time = std::chrono::steady_clock::now();
@@ -608,6 +644,7 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
         // Create a vector of edges that are not selected and exist
         while (visited_vertices.size() < g->getNumVertex()) {
             std::vector<Edge*> unvisited_edges;
+
             for (auto pair : current_vertex->getAdj()) {
                 if (!pair.second->isSelected() && visited_vertices.find(pair.second->getDestination()) == visited_vertices.end()) {
                     unvisited_edges.push_back(pair.second);
@@ -652,6 +689,8 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
             pair.second->setSelected(false);
         }
     }
+
+   best_cost = twoOpt(best_path, g,max_iterations);
 
     auto end_time = std::chrono::steady_clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
