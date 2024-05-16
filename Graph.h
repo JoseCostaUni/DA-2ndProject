@@ -223,9 +223,8 @@ inline int Vertex::getDegree() const {
     return indegree + outdegree;
 }
 
-inline void Vertex::setAdj(std::vector<Edge *> newAdj) {
-    this->adjacentEdges.clear();
-    this->adjacentEdges.assign(newAdj.begin(), newAdj.end());
+inline void Vertex::setAdj(std::vector<Edge*> newAdj) {
+    this->adjacentEdges = std::move(newAdj);
 }
 
 inline int Vertex::getTentativas() const {
@@ -288,6 +287,9 @@ public:
     void printGraphInfo() const;
     void populate_in_and_out_degree();
     bool makeFullyConnected() ;
+
+    void orderVertexAdj(Vertex * v);
+
 private:
 
     Clock clock;
@@ -614,6 +616,20 @@ inline void Graph::populate_in_and_out_degree() {
             }
         }
     }
+}
+
+inline void Graph::orderVertexAdj(Vertex * v){
+    auto comp = [] (Edge * e1, Edge * e2){
+        if (e1->getDestination()->getDegree() < e2->getDestination()->getDegree()) {
+            return true;
+        }
+        else if (e1->getDestination()->getDegree() == e2->getDestination()->getDegree() and e1->getWeight() < e2->getWeight()){
+            return true;
+        }
+        return false;
+    };
+
+    std::sort(v->getAdj().begin(), v->getAdj().end(), comp);
 }
 
 

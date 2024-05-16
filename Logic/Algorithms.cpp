@@ -1,4 +1,5 @@
 #include <random>
+#include <iomanip>
 #include "Algorithms.h"
 #include "algorithm"
 #include "set"
@@ -852,16 +853,14 @@ void orderEdges(Vertex * v) {
 }
 
 
-bool nn_backtracking(Graph * g , Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
+bool nn_backtracking(Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
     s->setVisited(true);
     path.push_back(s);
-    std::cout << "Current Node: " << s->getId() << std::endl;
-    std::cout << "Current Path size: " << path.size() << std::endl;
     for (Edge * e : s->getAdj()){
         if (!e->getDestination()->isVisited()){
-            if (nn_backtracking(g ,  e->getDestination(), d, path)) return true;
+            if (nn_backtracking(e->getDestination(), d, path)) return true;
         }
-        else if (path.size() == g->getVertexSet().size()){ /// Check if the vertex is connected to the destination
+        else if (path.size() == 10000){ /// Check if the vertex is connected to the destination
             std::cout <<"Full Path" << std::endl ;
             if (e->getDestination()->getId() == d->getId()){
                 path.push_back(d);
@@ -881,7 +880,7 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
     std::vector<Vertex *>  mst = PrimMst(g , s);
 
     g->populate_in_and_out_degree();
-    //set_in_out_degree();
+
     for (auto & pair : g->getVertexSet()){
         Vertex * v = pair.second;
         orderEdges(v);
@@ -892,16 +891,29 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
 
     hamiltonian.clear();
     std::cout << "Enter\n";
-    if (!nn_backtracking( g , s, s, hamiltonian))
+    if (!nn_backtracking(s, s, hamiltonian))
         return false;
 
 
     std::cout << "Left\n";
     std::set<uint32_t> set;
-    for (auto x : hamiltonian){
+    double cost = 0;
+    Vertex * prev = nullptr;
+    for (Vertex * x : hamiltonian){
         std::cout << x->getId() << " - ";
         set.insert(x->getId());
+        if(prev != nullptr){
+            Edge * e = findEdgeTo(prev, x);
+            if(e == nullptr){
+                std::cout << "null edge\n";
+            }
+            cost += e->getWeight();
+        }
+        prev = x;
     }
     std::cout << "\nSet size: " << set.size() << "\n";
+    std::cout << std::fixed;
+    std::cout << std::setprecision(2);
+    std::cout << "\nCost: " << cost << "\n";
     return true;
 }

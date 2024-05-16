@@ -64,4 +64,4 @@ void XNearestNeighbor(Graph * g, Vertex* src, int x);
 
 void orderEdges(Vertex * v);
 bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamiltonian) ;
-bool nn_backtracking(Graph * g , Vertex * s, Vertex * d, std::vector<Vertex *>& path);
+bool nn_backtracking(Vertex * s, Vertex * d, std::vector<Vertex *>& path);
