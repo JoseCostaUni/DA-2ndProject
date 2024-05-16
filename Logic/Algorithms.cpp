@@ -853,18 +853,17 @@ void orderEdges(Vertex * v) {
 }
 
 
-bool nn_backtracking(Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
+bool nn_backtracking(int & size , Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
     s->setVisited(true);
     path.push_back(s);
     for (Edge * e : s->getAdj()){
         if (!e->getDestination()->isVisited()){
-            if (nn_backtracking(e->getDestination(), d, path)) return true;
+            if (nn_backtracking(size , e->getDestination(), d, path)) return true;
         }
-        else if (path.size() == 10000){ /// Check if the vertex is connected to the destination
-            std::cout <<"Full Path" << std::endl ;
+        else if (path.size() == size){ /// Check if the vertex is connected to the destination
+
             if (e->getDestination()->getId() == d->getId()){
                 path.push_back(d);
-                std::cout << "Node pushed: " << d->getId() << std::endl;
                 return true;
             }
         }
@@ -889,13 +888,22 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
 
     std::cout << "VertexSize : " << g->getVertexSet().size() << std::endl;
 
+    Clock clock1 = Clock();
+    clock1.start();
+
     hamiltonian.clear();
     std::cout << "Enter\n";
-    if (!nn_backtracking(s, s, hamiltonian))
+    int size = g->getVertexSet().size();
+    if (!nn_backtracking( size ,  s, s, hamiltonian))
         return false;
 
-
     std::cout << "Left\n";
+
+    clock1.elapsed();
+
+    twoOpt(hamiltonian , g , 10);
+
+
     std::set<uint32_t> set;
     double cost = 0;
     Vertex * prev = nullptr;
