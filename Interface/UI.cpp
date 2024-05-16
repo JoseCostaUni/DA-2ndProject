@@ -251,6 +251,7 @@ void UI::changeDataSet(){
                     break;
                 case 'D':
                     LoadToyGraphs(&g , path , 3);
+                    break;
                 default:
                     std::cerr << "Invalid Input";
                     return;
@@ -405,12 +406,14 @@ void UI::main_menu(){
               << "G. Try N.N algo" << std::endl
              << "H. Try cristofides algo" << std::endl
              << "I Exit the program" << std::endl
+                << "J. Try NN with backtracking" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'K');
+    validate_input(op, 'A', 'J');
 
     int index = 0 , index2 = 0;
-    auto a = 0, b = 0 , i = 0 , graphSize = 0;
+    auto a = 0, b = 0 , i = 0;
+    auto graphSize = g.getVertexSet().size();
     Vertex * testV1 ;
     Vertex * testeV2;
     double weight = 0 , lastWeight = DBL_MAX;
@@ -528,7 +531,12 @@ void UI::main_menu(){
             std::cout << "Weight : " << weight << std::endl;
 
             main_menu();
+        case 'J':
+            source = g.findVertex(0);
+            articulationPoints.clear();
+            nn_with_backtracking(&g , source , articulationPoints);
 
+            main_menu();
         case 'I':
             std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
                       << "Made by: " <<std::endl

@@ -1,6 +1,7 @@
 #include <random>
 #include "Algorithms.h"
 #include "algorithm"
+#include "set"
 
 #include "../data_structures/MutablePriorityQueue.h"
 using namespace  std;
@@ -11,8 +12,8 @@ void dfsAux(Graph & graph , Vertex * current , std::vector<Vertex *> &path){
     path.push_back(current);
     current->setVisited(true);
 
-    for(auto pair : current->getAdj()){
-        Edge * e = pair.second;
+    for(Edge * e : current->getAdj()){
+
 
         if(!e->getDestination()->isVisited()){
             Vertex *nextVertex = e->getDestination();
@@ -43,8 +44,8 @@ std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
         v->setDist(DBL_MAX);
         v->setVisited(false);
         v->setPath(nullptr);
-        for (auto& pair_ : v->getAdj()){
-            pair_.second->setSelected(false);
+        for (Edge * e : v->getAdj()){
+            e->setSelected(false);
         }
     }
 
@@ -53,8 +54,8 @@ std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
 
     while (true){
         std::vector<Edge *> edgesV;
-        for(auto& pair : curr->getAdj()){
-            edgesV.push_back(pair.second);
+        for(Edge * e : curr->getAdj()){
+            edgesV.push_back(e);
         }
 
         std::sort(edgesV.begin(), edgesV.end(), [](const Edge * e1, const Edge* e2)
@@ -90,6 +91,13 @@ std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
         return {};
     }
 
+    for(auto e : optimalPath){
+        if(e == nullptr){
+            std::cout << "No hamiltion path";
+            return {};
+        }
+    }
+
     return optimalPath;
 }
 
@@ -112,9 +120,7 @@ double Harverstein(double longitude1, double latitude1, double longitude2, doubl
 }
 
 Edge * findEdgeTo(Vertex * source , Vertex * dest){
-    for(auto pair : source->getAdj()){
-        Edge * e = pair.second;
-
+    for(Edge * e : source->getAdj()){
         if(e->getDestination() == dest){
             return e;
         }
@@ -127,8 +133,7 @@ void preOrderDFSAux(const Graph * graph , Vertex * current , std::vector<Vertex 
     path.push_back(current);
     current->setVisited(true);
 
-    for(auto pair : current->getAdj()){
-        Edge * e = pair.second;
+    for(Edge * e : current->getAdj()){
 
         if(!e->getDestination()->isVisited() && e->isSelected()){
             Vertex *nextVertex = e->getDestination();
@@ -163,8 +168,8 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
         v->setDist(DBL_MAX);
         v->setVisited(false);
         v->setPath(nullptr);
-        for (auto& pair_ : v->getAdj()){
-            pair_.second->setSelected(false);
+        for (Edge * e : v->getAdj()){
+            e->setSelected(false);
         }
     }
 
@@ -179,11 +184,8 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
         curr->setVisited(true);
         path.push_back(curr);
         // Update distances and paths to adjacent vertices
-        std::unordered_map<int , Edge *> edgeSet = curr->getAdj();
 
-        for(std::pair<int , Edge *> edgePair : edgeSet){
-            Edge * e = edgePair.second;
-
+        for(Edge * e : curr->getAdj()){
             Vertex * neighbor = e->getDestination();
 
             if(neighbor->isVisited()){
@@ -315,13 +317,11 @@ std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, doub
             int tries = graph->getNumVertex() ;
             // Move ant to the next city
             while (tour.size() < graph->getNumVertex()-1 && tries > 0) {
-                std::unordered_map<int, Edge *> adjacentEdges = currentVertex->getAdj();
 
                 // Calculate probabilities for adjacent cities
                 double sumOfPheromoneLevels = 0.0;
 
-                for (auto &edgePair : adjacentEdges) {
-                    Edge *e = edgePair.second;
+                for (Edge * e : currentVertex->getAdj()) {
                     Vertex *nextVertex = e->getDestination();
                     if (!nextVertex->isVisited()) {
                         double pheromoneLevel = e->getPheromones();
@@ -338,8 +338,7 @@ std::vector<Edge *> ACO_TSP(Graph *graph, Vertex *startVertex, int numAnts, doub
                 double randValue = static_cast<double>(std::rand()) / RAND_MAX;
                 double cumulativeProbability = 0.0;
 
-                for (auto &edgePair : adjacentEdges) {
-                    Edge *e = edgePair.second;
+                for (Edge *e : currentVertex->getAdj()) {
                     if (!e->getDestination()->isVisited()) {
                         cumulativeProbability += probabilityTable[e] / sumOfPheromoneLevels;
                         if (randValue <= cumulativeProbability) {
@@ -403,8 +402,8 @@ void computeMWPM(Graph *g) {
     for(std::pair<int,Vertex*> pair: g->getVertexSet()){
         Vertex* v = pair.second;
         if((v->getIndegree() + v->getOutdegree()) % 2 != 0){
-            for(std::pair<int,Edge*> pair_edge: v->getAdj()){
-                matching.push_back(pair_edge.second);
+            for(Edge * e: v->getAdj()){
+                matching.push_back(e);
             }
         }
     }
@@ -429,8 +428,7 @@ void findEulerianCircuit(Graph* g, std::vector<Vertex*>& visited_vertices) {
     while(!vertex_stack.empty()){
         Vertex* top_vertex = vertex_stack.top();
         bool unexploredEdges = false;
-        for(std::pair<int,Edge*> pair : top_vertex->getAdj() ){
-            Edge* e = pair.second;
+        for(Edge * e  : top_vertex->getAdj() ){
             if(e->isSelected()){
                e->setSelected(false);
                vertex_stack.push(e->getDestination());
@@ -540,8 +538,7 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
     double costt = 0;
 
     if (n_visited == g->getNumVertex()) {
-        for (std::pair<int, Edge*> pair : curr->getAdj()) {
-            Edge* e = pair.second;
+        for (Edge * e  : curr->getAdj()) {
             Vertex* ver = e->getDestination();
             if(ver->getId() == g->findVertex(0)->getId()){
                 costt = e->getWeight();
@@ -568,8 +565,7 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
         return;
     }
 
-    for(std::pair<int, Edge *> pair: curr->getAdj()){
-        Edge* e = pair.second;
+    for(Edge *e : curr->getAdj()){
         Vertex* ver = e->getDestination();
         if(!ver->isVisited()){
             ver->setVisited(true);
@@ -645,9 +641,9 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
         while (visited_vertices.size() < g->getNumVertex()) {
             std::vector<Edge*> unvisited_edges;
 
-            for (auto pair : current_vertex->getAdj()) {
-                if (!pair.second->isSelected() && visited_vertices.find(pair.second->getDestination()) == visited_vertices.end()) {
-                    unvisited_edges.push_back(pair.second);
+            for (Edge *e : current_vertex->getAdj()) {
+                if (!e->isSelected() && visited_vertices.find(e->getDestination()) == visited_vertices.end()) {
+                    unvisited_edges.push_back(e);
                 }
             }
 
@@ -704,4 +700,201 @@ void simulatedAnnealing(Graph* g, double initial_temperature, double cooling_rat
     std::cout << "Execution time: " << elapsed_time << " milliseconds" << std::endl;
 }
 
+/*
+void XNearestNeighbor(Graph* g , Vertex* source, int x){
+    std::priority_queue<Edge *, std::vector<Edge *>, CompareEdgeWeight> xnnpq;
+    std::priority_queue<Edge *, std::vector<Edge *>, CompareEdgeWeight> pq;
 
+    for(auto & pair : g->getVertexSet()){
+        Vertex* v = pair.second;
+        v->setDist(DBL_MAX);
+        v->setVisited(false);
+        v->setPath(nullptr);
+        v->setOutdegree(v->getAdj().size());
+        for(auto & pair_ : v->getAdj()){
+            pair_.second->setSelected(false);
+        }
+    }
+
+    for(auto & pair : source->getAdj()){
+        Edge * e = pair.second;
+        pq.push(e);
+    }
+
+    source->setDist(0);
+
+    int nn = 0;
+
+    while (!pq.empty() && nn <= x) {
+        Edge * e = pq.top();
+        pq.pop();
+        Vertex* v0 = e->getDestination() ? e->getDestination() : source;
+
+        if (!v0->isVisited()) {
+            v0->setVisited(true);
+            v0->setDist(e->getWeight() + source->getDist());
+            if (v0->getOutdegree() > 0) {
+                nn++;
+                if (nn > 1) {
+                    Edge * e = findEdgeTo(source, v0);
+                    if(e != nullptr)
+                        xnnpq.push(e);
+                }
+            }
+            for (auto& adjEdgePair : v0->getAdj()) {
+                Edge* e = adjEdgePair.second;
+                Vertex* v1 = e->getDestination();
+                double d = v0->getDist() + e->getWeight();
+                if (v1->getDist() > d) {
+                    v1->setDist(d);
+                    pq.push(e);
+                }
+            }
+            source = v0;
+        }
+    }
+
+    double cost = 0;
+    std::vector<Edge *> path;
+    for (int i = 0; i < x; i++) {
+        Edge * e = xnnpq.top();
+        xnnpq.pop();
+        cost += e->getWeight();
+        path.push_back(e);
+    }
+
+    for (Edge* e : path) {
+        std::cout << e->getSource()->getId() << " - " << e->getDestination()->getId() << std::endl;
+    }
+    auto a = xnnpq;
+
+}
+
+/*
+ * struct WeightedEdge {
+    Edge* edge;
+    double distance;
+
+    WeightedEdge(Edge* e, double d) : edge(e), distance(d) {}
+
+    // Comparator for priority queue
+    bool operator>(const WeightedEdge& other) const {
+        return distance > other.distance;
+    }
+};*//*
+// XNearestNeighbor algorithm implementation
+void XNearestNeighbor(Graph * g, Vertex* src, int x) {
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, std::greater<WeightedEdge>> xnnpq;
+    std::priority_queue<WeightedEdge, std::vector<WeightedEdge>, std::greater<WeightedEdge>> pq;
+    std::unordered_set<int> visited;
+    src->setDist(0);
+    pq.push(WeightedEdge(src, 0)); // Source node
+
+    int nn = 0;
+
+    while (!pq.empty() && nn <= x) {
+        WeightedEdge we = pq.top();
+        pq.pop();
+        Vertex* v0 = we.edge ? we.edge->getDestination() : src;
+
+        if (!v0->isVisited()) {
+            v0->setVisited(true);
+            if (v0->getOutdegree() > 0) { // Check if it's a city node
+                nn++;
+                if (nn > 1) {
+                    xnnpq.push(WeightedEdge(g->findEdge(src->getId(), v0->getId()), v0->getDist()));
+                }
+            }
+            for (auto& adjEdgePair : v0->getAdj()) {
+                Edge* e = adjEdgePair.second;
+                Vertex* v1 = e->getDestination();
+                double d = v0->getDist() + e->getWeight();
+                if (v1->getDist() > d) {
+                    v1->setDist(d);
+                    pq.push(WeightedEdge(e, d));
+                }
+            }
+        }
+    }
+
+    double cost = 0;
+    std::vector<Edge *> path;
+    for (int i = 0; i < x; i++) {
+        WeightedEdge we = xnnpq.top();
+        xnnpq.pop();
+        cost += we.distance;
+        path.push_back(we.edge);
+    }
+
+    auto a = xnnpq;
+}
+
+*/
+
+
+void orderEdges(Vertex * v) {
+
+    auto comp = [] (Edge * e1, Edge * e2){
+        if (e1->getDestination()->getDegree() < e2->getDestination()->getDegree()) {
+            return true;
+        }
+        else if (e1->getDestination()->getDegree() == e2->getDestination()->getDegree() and e1->getWeight() < e2->getWeight()){
+            return true;
+        }
+        return false;
+    };
+
+    std::vector<Edge *> edges = v->getAdj();
+
+    std::sort(edges.begin(), edges.end(), comp);
+
+    v->setAdj(edges);
+}
+
+
+bool nn_backtracking(Graph * g , Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
+    s->setVisited(true);
+    path.push_back(s);
+    for (Edge * e : s->getAdj()){
+        if (!e->getDestination()->isVisited()){
+            if (nn_backtracking(g ,  e->getDestination(), d, path)) return true;
+        }
+        else if (path.size() == g->getVertexSet().size() and e->getDestination()->getId() == d->getId()){ /// Check if the vertex is connected to the destination
+            path.push_back(d);
+            return true;
+        }
+    }
+    if(s->getTentativas() < 0){
+        path.pop_back();
+        s->setTentativas(s->getTentativas() + 1);
+    }
+    return false;
+}
+
+bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamiltonian) {
+
+    std::vector<Vertex *>  mst = PrimMst(g , s);
+
+    g->populate_in_and_out_degree();
+    //set_in_out_degree();
+    for (auto & pair : g->getVertexSet()){
+        Vertex * v = pair.second;
+        orderEdges(v);
+        v->setVisited(false);
+    }
+
+    hamiltonian.clear();
+    std::cout << "Enter\n";
+    if (!nn_backtracking( g , s, s, hamiltonian))
+        return false;
+
+
+    std::cout << "Left\n";
+    std::set<uint32_t> set;
+    for (auto x : hamiltonian){
+        std::cout << x->getId() << " - ";
+        set.insert(x->getId());
+    }
+    std::cout << "\nSet size: " << set.size() << "\n";
+    return true;
+}

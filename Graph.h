@@ -37,18 +37,20 @@ public:
     int getId() const;
     int getIndegree() const;
     int getOutdegree() const;
+    int getDegree() const;
     double getLongitude() const;
     double getLatitude() const;
     double getDist() const;
     int getNum() const;
     int getLow() const;
+    int getTentativas() const;
     bool isVisited() const;
     bool isProcessing() const;
     Edge * getPath() const;
 
 
-    std::unordered_map<int, Edge*> getAdj() const;
-    std::unordered_map<int, Edge*> getInc() const;
+    std::vector<Edge*> getAdj() const;
+    std::vector<Edge*> getInc() const;
     void addAdjEdge(int edgeId ,Edge* edge);
     void addIncEdge(int edgeId ,Edge* edge);
     void deleteIncEdge(int edgeId);
@@ -58,6 +60,8 @@ public:
     void setId(int newId);
     void setintitude(double newintitude);
     void setLatitude(double newLatitude);
+    void setTentativas(int newTentativas);
+    void setAdj(std::vector<Edge*> newAdj);
     void setVisited(bool visited);
     void setPath(Edge * e);
     void setOutdegree(int outdegree);
@@ -68,6 +72,7 @@ public:
 
     bool operator<(Vertex & vertex) const;
     bool operator==(Vertex & vertex) const;
+    std::vector<Edge*> orderEdges();
     void updateDegrees();
     friend class MutablePriorityQueue<Vertex>;
 
@@ -77,8 +82,8 @@ protected:
     int id;
     double intitude;
     double latitude;
-    std::unordered_map<int, Edge*> incomingEdges;
-    std::unordered_map<int, Edge*> adjacentEdges;
+    std::vector<Edge*> incomingEdges;
+    std::vector<Edge*> adjacentEdges;
     bool visited = false;
     bool processing = false;
     unsigned int indegree = 0;
@@ -87,6 +92,7 @@ protected:
     Edge * path = nullptr;
     int queueIndex = 0;
 
+    int tentativas = 0;
     int num = 0;
     int low = 0;
 };
@@ -116,29 +122,20 @@ inline int Vertex::getOutdegree() const {
     return outdegree;
 }
 
-inline std::unordered_map<int, Edge*> Vertex::getAdj() const {
+inline std::vector<Edge*> Vertex::getAdj() const {
     return adjacentEdges;
 }
 
-inline std::unordered_map<int, Edge*> Vertex::getInc() const {
+inline std::vector<Edge*> Vertex::getInc() const {
     return incomingEdges;
 }
 
 inline void Vertex::addAdjEdge(int edgeId , Edge* edge) {
-    adjacentEdges[edgeId] = edge;
+    adjacentEdges.push_back(edge);
 }
 
 inline void Vertex::addIncEdge(int edgeId , Edge* edge) {
-
-    incomingEdges[edgeId] = edge;
-}
-
-inline void Vertex::deleteIncEdge(int edgeId) {
-    incomingEdges.erase(edgeId);
-}
-
-inline void Vertex::deleteAdjEdge(int edgeId) {
-    adjacentEdges.erase(edgeId);
+    incomingEdges.push_back(edge);
 }
 
 inline void Vertex::setId(int newId) {
@@ -220,6 +217,23 @@ inline bool Vertex::isProcessing() const {
 
 inline void Vertex::setProcessing(const bool & _processing) {
     this->processing = _processing;
+}
+
+inline int Vertex::getDegree() const {
+    return indegree + outdegree;
+}
+
+inline void Vertex::setAdj(std::vector<Edge *> newAdj) {
+    this->adjacentEdges.clear();
+    this->adjacentEdges.assign(newAdj.begin(), newAdj.end());
+}
+
+inline int Vertex::getTentativas() const {
+    return tentativas;
+}
+
+inline void Vertex::setTentativas(int newTentativas) {
+    this->tentativas = newTentativas;
 }
 
 /********************** Edge  ****************************/
@@ -410,11 +424,42 @@ inline bool Graph::removeEdge(int sourceId, int destId) const {
     }
 
     for (auto it = source->getAdj().begin(); it != source->getAdj().end(); ++it) {
-        auto edges = *it;
-        if (it->second->getDestination()->getId() == destId) {
-            dest->deleteIncEdge(it->second->getId());
-            delete it->second;
-            source->getAdj().erase(it);
+        Edge * edge = *it;
+
+        if (edge->getSource()->getId() == sourceId && edge->getDestination()->getId() == destId) {
+
+            for(auto it2 = dest->getInc().begin() ; it2 != dest->getInc().end() ; it2++){
+                Edge * e = *it2;
+                if(e->getId() == edge->getId()){
+                    it2 = dest->getInc().erase(it2);
+                    break;
+                }
+            }
+
+            for(auto it2 = dest->getAdj().begin() ; it2 != dest->getInc().end() ; it2++){
+                Edge * e = *it2;
+                if(e->getId() == edge->getId()){
+                    it2 = dest->getInc().erase(it2);
+                    break;
+                }
+            }
+
+            for(auto it2 = source->getInc().begin() ; it2 != source->getInc().end() ; it2++){
+                Edge * e = *it2;
+                if(e->getId() == edge->getId()){
+                    it2 = dest->getInc().erase(it2);
+                    break;
+                }
+            }
+
+            for(auto it2 = source->getAdj().begin() ; it2 != source->getInc().end() ; it2++){
+                Edge * e = *it2;
+                if(e->getId() == edge->getId()){
+                    it2 = dest->getInc().erase(it2);
+                    break;
+                }
+            }
+
             return true;
         }
     }
@@ -479,8 +524,8 @@ inline void Graph::printNodesContente() const {
         std::cout << "Latitude: " << vertex->getLatitude() << std::endl;
         std::cout << "Adjacent Edges:" << std::endl;
         for (const auto& adjPair : vertex->getAdj()) {
-            std::cout << "    Destination ID: " << adjPair.second->getDestination()->getId() << std::endl;
-            std::cout << "    Weight: " << adjPair.second->getWeight() << std::endl;
+            std::cout << "    Destination ID: " << adjPair->getDestination()->getId() << std::endl;
+            std::cout << "    Weight: " << adjPair->getWeight() << std::endl;
         }
         std::cout << std::endl;
     }
@@ -492,6 +537,15 @@ inline Clock Graph::getClock() {
 
 inline bool Graph::makeFullyConnected() {
     std::unordered_map<int, Vertex*> vertices = getVertexSet();
+    std::unordered_map<int , Edge * > egdes = getEdgeSet();
+
+    if(egdes.size() == (getNumVertex() * (getNumVertex() - 1))){
+        return true;
+    }
+
+    if(egdes.size() == (getNumVertex() * (getNumVertex() - 1))/2){
+        return true;
+    }
 
     for(auto v : vertices){
         if(v.second->getLatitude() == DBL_MAX || v.second->getLongitude() == DBL_MAX && v.second->getInc().size() != (getNumVertex()-1) && v.second->getAdj().size() != (getNumVertex()-1)){
@@ -509,8 +563,7 @@ inline bool Graph::makeFullyConnected() {
             Vertex * v2 = findVertex(destId);
             Edge * e = nullptr;
 
-            for(auto pair : v1->getAdj()){
-                Edge * tempE = pair.second;
+            for(Edge * tempE : v1->getAdj()){
                 if(tempE->getDestination() == v2){
                     e = tempE;
                     continue;
@@ -554,10 +607,10 @@ inline void Graph::populate_in_and_out_degree() {
     }
 
     for (const auto& pair: vertexSet){
-        for (auto& e: pair.second->getAdj()){
-            if (e.second->isSelected()){
-                e.second->getSource()->setOutdegree(e.second->getSource()->getOutdegree() + 1);
-                e.second->getDestination()->setIndegree(e.second->getDestination()->getIndegree() + 1);
+        for (Edge * e: pair.second->getAdj()){
+            if (e->isSelected()){
+                e->getSource()->setOutdegree(e->getSource()->getOutdegree() + 1);
+                e->getDestination()->setIndegree(e->getDestination()->getIndegree() + 1);
             }
         }
     }
