@@ -855,19 +855,24 @@ void orderEdges(Vertex * v) {
 bool nn_backtracking(Graph * g , Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
     s->setVisited(true);
     path.push_back(s);
+    std::cout << "Current Node: " << s->getId() << std::endl;
+    std::cout << "Current Path size: " << path.size() << std::endl;
     for (Edge * e : s->getAdj()){
         if (!e->getDestination()->isVisited()){
             if (nn_backtracking(g ,  e->getDestination(), d, path)) return true;
         }
-        else if (path.size() == g->getVertexSet().size() and e->getDestination()->getId() == d->getId()){ /// Check if the vertex is connected to the destination
-            path.push_back(d);
-            return true;
+        else if (path.size() == g->getVertexSet().size()){ /// Check if the vertex is connected to the destination
+            std::cout <<"Full Path" << std::endl ;
+            if (e->getDestination()->getId() == d->getId()){
+                path.push_back(d);
+                std::cout << "Node pushed: " << d->getId() << std::endl;
+                return true;
+            }
         }
     }
-    if(s->getTentativas() < 0){
-        path.pop_back();
-        s->setTentativas(s->getTentativas() + 1);
-    }
+
+    s->setVisited(false);
+    path.pop_back();
     return false;
 }
 
@@ -882,6 +887,8 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
         orderEdges(v);
         v->setVisited(false);
     }
+
+    std::cout << "VertexSize : " << g->getVertexSet().size() << std::endl;
 
     hamiltonian.clear();
     std::cout << "Enter\n";
