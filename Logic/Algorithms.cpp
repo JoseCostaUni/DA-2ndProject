@@ -508,7 +508,7 @@ void tspBruteForce(Graph* g){
 
     start->setVisited(true);
 
-    double cost = INT32_MAX;
+    double cost = std::numeric_limits<double>::max();
 
     tspBacktrackingBruteForce(g,start,0,1,cost,path);
 
@@ -578,7 +578,7 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
     }
 }
 
-double twoOpt(std::vector<Vertex*>& path, Graph* g,int max_iterations) {
+double twoOpt(std::vector<Vertex*>& path, Graph* g, int max_iterations) {
     int n = path.size();
     bool improvement = true;
     double total_cost = 0.0;
@@ -594,22 +594,30 @@ double twoOpt(std::vector<Vertex*>& path, Graph* g,int max_iterations) {
                 Edge* edge_4 = g->findEdge(path[j]->getId(), path[(j + 1) % n]->getId());
 
                 if (edge_1 && edge_2 && edge_3 && edge_4) {
-                    double delta = edge_1->getWeight() + edge_2->getWeight() - edge_3->getWeight() - edge_4->getWeight();
+                    double delta = (edge_1->getWeight() + edge_2->getWeight()) - (edge_3->getWeight() + edge_4->getWeight());
+
                     if (delta < 0) {
                         std::reverse(path.begin() + i + 1, path.begin() + j + 1);
                         improvement = true;
+                        break;
                     }
                 }
             }
+            if (improvement) break;
         }
         iteration_count++;
     }
 
-    for (int i = 0; i < n - 1 ; ++i) {
+    for (int i = 0; i < n - 1; ++i) {
         int edge_cost = g->findEdge(path[i]->getId(), path[i + 1]->getId())->getWeight();
         std::cout << path[i]->getId() << " - " << path[i + 1]->getId() << " : " << edge_cost << std::endl;
-        total_cost += g->findEdge(path[i]->getId(), path[i + 1]->getId())->getWeight();
+        total_cost += edge_cost;
     }
+
+
+    total_cost += g->findEdge(path[n - 1]->getId(), path[0]->getId())->getWeight();
+    std::cout << path[n - 1]->getId() << " - " << path[0]->getId() << " : " << g->findEdge(path[n - 1]->getId(), path[0]->getId())->getWeight() << std::endl;
+
     return total_cost;
 }
 
@@ -901,7 +909,7 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
 
     clock1.elapsed();
 
-    twoOpt(hamiltonian , g , 10);
+    // twoOpt(hamiltonian , g , 10);
 
 
     std::set<uint32_t> set;

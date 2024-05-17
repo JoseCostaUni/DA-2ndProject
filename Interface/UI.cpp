@@ -360,24 +360,24 @@ void UI::changeDataSet(){
  */
 void UI::menu_start() {
     char op;
-    std::cout << "######################################################################" << std::endl
-         << "@ @ @  @@@@@  @@@@@  @@@@@  @@@@@           @@@@@   @@@    @@@   @    " << std::endl
-         << "@ @ @  @   @    @    @@     @  @@             @    @   @  @   @  @    " << std::endl
-         << "@ @ @  @@@@@    @    @@@@@  @@@@              @    @   @  @   @  @    " << std::endl
-         << "@ @ @  @   @    @    @@     @@ @@             @    @   @  @   @  @    " << std::endl
-         << " @@@   @   @    @    @@@@@  @@ @@             @     @@@    @@@   @@@@@" << std::endl
-         << "######################################################################" << std::endl << '\n'
-         << "Welcome to the Analysis Tool for Water Supply Management, what would you like to do?" << std::endl
-         << "A. Proceed to the application" << std::endl
-         << "C. Close the application" << std::endl
-         << "Insert the letter: " ;
+    std::cout << "##############################################################################" << std::endl
+              << "#  @@@@@   @@@@@   @@@@@       @@@@@   @@@@@   @       @   @  @@@@@   @@@@   #" << std::endl
+              << "#    @     @       @   @       @       @   @   @       @   @  @       @   @  #" << std::endl
+              << "#    @     @@@@@   @@@@@       @@@@@   @   @   @       @   @  @@@@@   @@@@   #" << std::endl
+              << "#    @         @   @               @   @   @   @        @ @   @       @  @   #" << std::endl
+              << "#    @     @@@@@   @           @@@@@   @@@@@   @@@@@     @    @@@@@   @   @  #" << std::endl
+              << "##############################################################################" << std::endl << '\n'
+              << "Welcome to the Routing Algorithms App for Ocean Shipping and Urban Deliveries (TSP), what would you like to do?" << std::endl
+              << "A. Proceed to the application" << std::endl
+              << "C. Close the application" << std::endl
+              << "Insert the letter: " ;
     validate_input(op,'A','B');
     switch(op){
         case 'A':
             main_menu();
             break;
         case 'B':
-            std::cout << "Thanks for using our analysis tool for water supply management!" << std::endl << "\n"
+            std::cout << "Thanks for using our Routing Algorithms App!" << std::endl << "\n"
                  << "Made by: " << std::endl
                  << "Ângelo Oliveira || 202207798" << std::endl
                  << "José Costa      || 202207871" << std::endl
@@ -406,7 +406,7 @@ void UI::main_menu(){
               << "G. Try N.N algo" << std::endl
              << "H. Try cristofides algo" << std::endl
              << "I Exit the program" << std::endl
-                << "J. Try NN with backtracking" << std::endl
+             << "J. Try NN with backtracking" << std::endl
              << "Insert your choice:";
 
     validate_input(op, 'A', 'J');
@@ -436,8 +436,7 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'D':
-            simulatedAnnealing(&g, 1000, 0.999, 1000);
-            // tspBruteForce(&g);
+            tspBruteForce(&g);
             main_menu();
             break;
         case 'E':
