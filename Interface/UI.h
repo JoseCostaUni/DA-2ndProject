@@ -40,6 +40,8 @@ public:
     */
     static bool validate_input(char &op, const char lower_bound, const char upper_bound);
 
+    void GraphOptionsMenu();
+
     static bool validate_int_input(int &index);
      /**
      * @brief Displays the main menu options.
@@ -49,6 +51,7 @@ public:
      * @brief Executes the max flow algorithm.
      */
     void back_menu();
+    void back_menu_GraphOptions();
 
     Graph getGraph() const;
 private:

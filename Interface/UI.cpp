@@ -388,6 +388,69 @@ void UI::menu_start() {
     }
 }
 
+void UI::GraphOptionsMenu() {
+    char op;
+    std::cout << "What would you like to know?" << std::endl;
+    std::cout << "A. Print all Nodes information (Not Recommended for large graphs)" << std::endl
+              << "B. Print Graph basic information (Number of nodes and edges)" << std::endl
+              << "C. Calculate Harverstein Distance between two nodes" << std::endl
+              << "D. Go back to the main menu" << std::endl
+              << "Insert your choice:";
+
+    validate_input(op, 'A', 'D');
+    int index = 0, index2 = 0;
+    Vertex *testV1;
+    Vertex *testV2;
+    switch (op) {
+        case 'A':
+            g.printNodesContente();
+            back_menu_GraphOptions();
+            break;
+        case 'B':
+            g.printGraphInfo();
+            back_menu_GraphOptions();
+            break;
+        case 'C':
+
+            std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
+
+            while (true){
+                validate_int_input(index);
+                if(index < 0 || index >= g.getVertexSet().size()){
+                    std::cout << "Please introduce a valid index [0 - " << g.getVertexSet().size() - 1 << "]: ";
+                }else{
+                    break;
+                }
+            }
+
+            std::cout << "Please introduce the index of the destination vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
+
+            while (true){
+                validate_int_input(index2);
+                if(index < 0 || index >= g.getVertexSet().size()){
+                    std::cout << "Please introduce a valid index [0 - " << g.getVertexSet().size() - 1 << "]: ";
+                }else{
+                    break;
+                }
+            }
+
+            testV1 = g.findVertex(index);
+            testV2 = g.findVertex(index2);
+
+            std::cout << "Distance = "
+                      << Harverstein(testV1->getLongitude(), testV1->getLatitude(), testV2->getLongitude(),
+                                     testV2->getLatitude()) << std::endl;
+
+            back_menu_GraphOptions();
+            break;
+        case 'D':
+            main_menu();
+            break;
+        default:
+            std::cerr << "Error";
+    }
+}
+
 /**
  * @brief Displays the main menu of the program after clearing the screen.
  *
@@ -398,22 +461,17 @@ void UI::main_menu(){
     char op;
     std::cout << "What would you like to know?" <<std::endl;
     std::cout << "A. Switch Data Set" <<std::endl
-              << "B. Print all Nodes information" << std::endl
-              << "C. Print Graph information" << std::endl
-              << "D. Calculate TSP with Backtracking Brute Force" << std::endl
-              << "E. Calculate TSP with Triangular Aprox" << std::endl
-              << "F. Calculate Distance between two nodes" << std::endl
-              << "G. Try N.N algo" << std::endl
-             << "H. Try cristofides algo" << std::endl
-             << "I Exit the program" << std::endl
-             << "J. Try NN with backtracking" << std::endl
+              << "B. Graph Information Options" << std::endl
+              << "C. Calculate TSP with Backtracking Brute Force" << std::endl
+              << "D. Calculate TSP with Triangular Aprox" << std::endl
+              << "E. Calculate TSP with Nearest Neighbour algorithm" << std::endl
+              << "F. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs" << std::endl
+             << "G Exit the program" << std::endl
              << "Insert your choice:";
 
-    validate_input(op, 'A', 'J');
+    validate_input(op, 'A', 'G');
 
     int index = 0 , index2 = 0;
-    auto a = 0, b = 0 , i = 0;
-    auto graphSize = g.getVertexSet().size();
     Vertex * testV1 ;
     Vertex * testeV2;
     double weight = 0 , lastWeight = DBL_MAX;
@@ -428,116 +486,76 @@ void UI::main_menu(){
             main_menu();
             break;
         case 'B':
-            g.printNodesContente();
-            main_menu();
+            GraphOptionsMenu();
             break;
         case 'C':
-            g.printGraphInfo();
-            main_menu();
+            tspBruteForce(&g);
+            back_menu();
             break;
         case 'D':
-            tspBruteForce(&g);
-            main_menu();
+            source = g.findVertex(0);
+
+            TSP = TriangularApproximationHeuristic(&g , source , nullptr);
+            std::cout << source->getId() ;
+            std::cout << " -------> ";
+            for(Edge * e : TSP){
+                weight += e->getWeight();
+                std::cout << e->getDestination()->getId() ;
+                if(e->getDestination()->getId() != 0){
+                    std::cout << "-------> ";
+                }
+            }
+            std::cout << std::endl;
+            std::cout << std::fixed;
+            std::cout << std::setprecision(2);
+            std::cout << "Weight :" << weight << std::endl;
+
+            back_menu();
             break;
         case 'E':
 
-            //std::cout << "What is the index of the node where you want to start? " << std::endl;
-
-            //validate_int_input(index);
-            source = g.findVertex(0);
-
-            if(source != nullptr){
-                TSP = TriangularApproximationHeuristic(&g , source , nullptr);
-                std::cout << source->getId() << std::endl;
-                std::cout << "-------> ";
-                for(Edge * e : TSP){
-                    weight += e->getWeight();
-                    std::cout << e->getDestination()->getId() << "-------> " ;
-                }
-                std::cout << std::endl;
-                std::cout << std::fixed;
-                std::cout << std::setprecision(2);
-                std::cout << "Weight :" << weight << std::endl;
-            }else{
-                std::cout << "Invalid Node index!" << std::endl;
-            }
-
-            main_menu();
-        case 'F':
-            std::cout << "Introduce the id of the first node\n";
-
-            std::cin >> index;
-
-            std::cout << "Introduce the id of the second node\n";
-
-            std::cin >> index2;
-
-            testV1=  g.findVertex(index);
-            testeV2 =  g.findVertex(index2);
-
-            std::cout << "Distance = " << Harverstein(testV1->getLongitude() , testV1->getLatitude() , testeV2->getLongitude() , testeV2->getLatitude()) << std::endl;
-
-            main_menu();
-        case 'G':
-            /*
-            for(int k = 0 ; k <= 50 ; k++){
-                source = g.findVertex(k);
-
-                TSP = NearestNeighbour(&g , source);
-
-                if(TSP.size() == g.getNumVertex() -1 || TSP.size() == g.getNumVertex() +1 || TSP.size() == g.getNumVertex()){
-                    i++;
-                    std::cout << "Index: " << i << "Size: " << TSP.size() << std::endl;
-                }
-            }
-
-            std::cout << "NUmber of nodes with hamilton paths: " << i << std::endl;
-            */
             source = g.findVertex(0);
 
             TSP = NearestNeighbour(&g , source);
 
-            std::cout << source->getId() << std::endl;
-            std::cout << "-------> ";
+            std::cout << source->getId() ;
+            std::cout << " -------> ";
             for(Edge * e : TSP){
                 weight += e->getWeight();
-                std::cout << e->getDestination()->getId() << "-------> " ;
+                std::cout << e->getDestination()->getId() ;
+                if(e->getDestination()->getId() != 0){
+                    std::cout << "-------> ";
+                }
             }
             std::cout << std::endl;
+            std::cout << std::fixed;
+            std::cout << std::setprecision(2);
             std::cout << "Weight :" << weight << std::endl;
 
-            main_menu();
-        case 'H':
+            back_menu();
+            break;
+        case 'F':
 
-            source = g.findVertex(6);
+            std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
 
-            TSP = ChristofidesAlgo(&g , source);
-
-            std::cout << source->getId() << std::endl;
-            std::cout << "-------> ";
-            a = TSP.size();
-            b = g.getVertexSet().size();
-            for(Edge * e : TSP){
-                i += 1;
-                if(e == nullptr){
-                    std::cout << "No Path Found. Null edge on " << i << std::endl;
+            while (true){
+                validate_int_input(index);
+                if(index < 0 || index >= g.getVertexSet().size()){
+                    std::cout << "Please introduce a valid index [0 - " << g.getVertexSet().size() - 1 << "]: ";
+                }else{
                     break;
                 }
-                weight += e->getWeight();
-                //std::cout << e->getDestination()->getId() << "-------> " ;
             }
-            std::cout << std::endl;
-            std::cout << "Weight : " << weight << std::endl;
 
-            main_menu();
-        case 'J':
-            source = g.findVertex(0);
+            source = g.findVertex(index);
+
             articulationPoints.clear();
             nn_with_backtracking(&g , source , articulationPoints);
 
-            main_menu();
-        case 'I':
-            std::cout << "Thanks for using our water management tool!" <<std::endl << "\n"
+            back_menu();
+            break;
+        case 'G':
+            std::cout << "Thanks for using our TSP solver tool!" <<std::endl << "\n"
                       << "Made by: " <<std::endl
                       << "Ângelo Oliveira || 202207798" <<std::endl
                       << "José Costa      || 202207871" <<std::endl
@@ -565,6 +583,13 @@ void UI::back_menu(){
     std::cout << "Press A to go back to the menu: ";
     validate_input(op,'A','A');
     main_menu();
+}
+
+void UI::back_menu_GraphOptions() {
+    char op;
+    std::cout << "Press A to go back to the menu: ";
+    validate_input(op,'A','A');
+    GraphOptionsMenu();
 }
 
 

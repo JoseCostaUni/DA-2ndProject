@@ -522,8 +522,21 @@ inline void Graph::printNodesContente() const {
     for (const auto& pair : vertexSet) {
         Vertex* vertex = pair.second;
         std::cout << "Vertex ID: " << vertex->getId() << std::endl;
-        std::cout << "intitude: " << vertex->getLongitude() << std::endl;
-        std::cout << "Latitude: " << vertex->getLatitude() << std::endl;
+
+        if(vertex->getLongitude() == DBL_MAX){
+            std::cout << "Longitude: Not defined" << std::endl;
+        }
+        else{
+            std::cout << "Longitude: " << vertex->getLongitude() << std::endl;
+        }
+
+        if(vertex->getLatitude() == DBL_MAX){
+            std::cout << "Longitude: Not defined" << std::endl;
+        }
+        else{
+            std::cout << "Longitude: " << vertex->getLongitude() << std::endl;
+        }
+
         std::cout << "Adjacent Edges:" << std::endl;
         for (const auto& adjPair : vertex->getAdj()) {
             std::cout << "    Destination ID: " << adjPair->getDestination()->getId() << std::endl;
