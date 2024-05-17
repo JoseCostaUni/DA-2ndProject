@@ -41,6 +41,7 @@ public:
     static bool validate_input(char &op, const char lower_bound, const char upper_bound);
 
     void GraphOptionsMenu();
+    void BackTrackMenu();
 
     static bool validate_int_input(int &index);
      /**
@@ -52,11 +53,13 @@ public:
      */
     void back_menu();
     void back_menu_GraphOptions();
+    void back_menu_BacktrackingOptions();
 
     Graph getGraph() const;
 private:
     Graph g;
     std::vector<Edge *> TSP;
+    std::string file_path;
 };
 
 

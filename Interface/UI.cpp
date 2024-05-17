@@ -463,9 +463,9 @@ void UI::main_menu(){
     std::cout << "A. Switch Data Set" <<std::endl
               << "B. Graph Information Options" << std::endl
               << "C. Calculate TSP with Backtracking Brute Force" << std::endl
-              << "D. Calculate TSP with Triangular Aprox" << std::endl
-              << "E. Calculate TSP with Nearest Neighbour algorithm" << std::endl
-              << "F. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs" << std::endl
+              << "D. Calculate TSP with Triangular Approximation (Beware that this will make the graph fully connected which may take some time)" << std::endl
+              << "E. Calculate TSP with Nearest Neighbour algorithm (Beware that this will make the graph fully connected which may take some time)" << std::endl
+              << "F. Calculate TSP for incomplete Graphs" << std::endl
              << "G Exit the program" << std::endl
              << "Insert your choice:";
 
@@ -536,23 +536,7 @@ void UI::main_menu(){
             break;
         case 'F':
 
-            std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
-
-            while (true){
-                validate_int_input(index);
-                if(index < 0 || index >= g.getVertexSet().size()){
-                    std::cout << "Please introduce a valid index [0 - " << g.getVertexSet().size() - 1 << "]: ";
-                }else{
-                    break;
-                }
-            }
-
-            source = g.findVertex(index);
-
-            articulationPoints.clear();
-            nn_with_backtracking(&g , source , articulationPoints);
-
-            back_menu();
+            BackTrackMenu();
             break;
         case 'G':
             std::cout << "Thanks for using our TSP solver tool!" <<std::endl << "\n"
@@ -590,6 +574,72 @@ void UI::back_menu_GraphOptions() {
     std::cout << "Press A to go back to the menu: ";
     validate_input(op,'A','A');
     GraphOptionsMenu();
+}
+
+void UI::BackTrackMenu() {
+    char op;
+    std::cout << "Which one would you like to use?" << std::endl;
+    std::cout << "A. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs without Two Opt Optimization " << std::endl
+              << "B. A. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs with Two Opt Optimization(Beware that this will take 10x more than the previous)" << std::endl
+              << "C. Go back to the main menu" << std::endl
+              << "Insert your choice:";
+
+    validate_input(op, 'A', 'C');
+    int index = 0, index2 = 0;
+    Vertex *source;
+    std::vector<Vertex * > path;
+    switch (op) {
+        case 'A':
+            std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
+
+            while (true){
+                validate_int_input(index);
+                if(index < 0 || index >= g.getVertexSet().size()){
+                    std::cout << "Please introduce a valid index [0 - " << g.getVertexSet().size() - 1 << "]: ";
+                }else{
+                    break;
+                }
+            }
+
+            source = g.findVertex(index);
+
+            path.clear();
+            nn_with_backtracking(&g , source , path);
+
+            back_menu_BacktrackingOptions();
+            break;
+        case 'B':
+            std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
+
+            while (true){
+                validate_int_input(index);
+                if(index < 0 || index >= g.getVertexSet().size()){
+                    std::cout << "Please introduce a valid index [0 - " << g.getVertexSet().size() - 1 << "]: ";
+                }else{
+                    break;
+                }
+            }
+
+            source = g.findVertex(index);
+
+            path.clear();
+            nn_with_backtrackingAndTwoOpt(&g , source , path);
+
+            back_menu_BacktrackingOptions();
+            break;
+        case 'C':
+            main_menu();
+            break;
+        default:
+            std::cerr << "Error";
+    }
+}
+
+void UI::back_menu_BacktrackingOptions() {
+    char op;
+    std::cout << "Press A to go back to the BackTrack menu: ";
+    validate_input(op,'A','A');
+    BackTrackMenu();
 }
 
 

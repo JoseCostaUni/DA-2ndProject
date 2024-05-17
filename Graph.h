@@ -551,47 +551,53 @@ inline Clock Graph::getClock() {
 }
 
 inline bool Graph::makeFullyConnected() {
+    // Get all vertices and edges
     std::unordered_map<int, Vertex*> vertices = getVertexSet();
-    std::unordered_map<int , Edge * > egdes = getEdgeSet();
+    std::unordered_map<int, Edge*> edges = getEdgeSet();
 
-    if(egdes.size() == (getNumVertex() * (getNumVertex() - 1))){
+    // Check if the graph is already fully connected
+    int numVertices = getNumVertex();
+    int expectedEdges = numVertices * (numVertices - 1);
+    if (edges.size() == expectedEdges || edges.size() == expectedEdges / 2) {
         return true;
     }
 
-    if(egdes.size() == (getNumVertex() * (getNumVertex() - 1))/2){
-        return true;
-    }
-
-    for(auto v : vertices){
-        if(v.second->getLatitude() == DBL_MAX || v.second->getLongitude() == DBL_MAX && v.second->getInc().size() != (getNumVertex()-1) && v.second->getAdj().size() != (getNumVertex()-1)){
+    // Check if all vertices have defined coordinates
+    for (const auto& v : vertices) {
+        if (v.second->getLatitude() == DBL_MAX || v.second->getLongitude() == DBL_MAX) {
             return false;
         }
     }
 
-    // Iterate through all pairs of vertices
+    // Create a set to store unique pairs of connected vertices
+    std::unordered_map<int, std::unordered_map<int, bool>> connections;
+    for (const auto& e : edges) {
+        int sourceId = e.second->getSource()->getId();
+        int destId = e.second->getDestination()->getId();
+        connections[sourceId][destId] = true;
+        connections[destId][sourceId] = true; // Because of bidirectional edges
+    }
+
+    // Iterate through all pairs of vertices to add missing edges
     for (auto it1 = vertices.begin(); it1 != vertices.end(); ++it1) {
         for (auto it2 = std::next(it1); it2 != vertices.end(); ++it2) {
             int sourceId = it1->first;
             int destId = it2->first;
 
-            Vertex * v1 = findVertex(sourceId);
-            Vertex * v2 = findVertex(destId);
-            Edge * e = nullptr;
-
-            for(Edge * tempE : v1->getAdj()){
-                if(tempE->getDestination() == v2){
-                    e = tempE;
-                    continue;
-                }
-            }
-
-            if(e == nullptr){
-                addBidirectionalEdge(sourceId, destId, edgeSet.size() + 1, Harverstein(v1->getLongitude() , v1->getLatitude() , v2->getLongitude() , v2->getLatitude()));
+            // If there is no edge between sourceId and destId, add it
+            if (connections[sourceId].find(destId) == connections[sourceId].end()) {
+                Vertex* v1 = it1->second;
+                Vertex* v2 = it2->second;
+                double weight = Harverstein(v1->getLongitude(), v1->getLatitude(), v2->getLongitude(), v2->getLatitude());
+                addBidirectionalEdge(sourceId, destId, edgeSet.size() + 1, weight);
+                connections[sourceId][destId] = true;
+                connections[destId][sourceId] = true;
             }
         }
     }
     return true;
 }
+
 
 inline double Graph::Harverstein(double longitude1, double latitude1, double longitude2, double latitude2) const{
     double lon1_rad = longitude1 * M_PI / 180.0;
