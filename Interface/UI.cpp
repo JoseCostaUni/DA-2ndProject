@@ -4,6 +4,8 @@
 #include <thread>
 #include <chrono>
 #include <iomanip>
+#include "map"
+#include <functional>
 
 UI::UI() {}
 
@@ -105,15 +107,19 @@ void UI::loading_stuff(UI &ui) {
             switch (secondOp) {
                 case 'A':
                     LoadToyGraphs(&g , path , 0);
+                    file_path = path + "/shipping.csv";
                     break;
                 case 'B':
                     LoadToyGraphs(&g , path , 1);
+                    file_path = path + "/stadiums.csv";
                     break;
                 case 'C':
                     LoadToyGraphs(&g , path , 2);
+                    file_path = path + "/tourism.csv";
                     break;
                 case 'D':
                     LoadToyGraphs(&g , path , 3);
+                    file_path = path + "/myGraph.csv";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -191,12 +197,15 @@ void UI::loading_stuff(UI &ui) {
             switch (secondOp) {
                 case 'A':
                     LoadRealWorldGraphs(&g , path , 0);
+                    file_path = path + "/Graph1";
                     break;
                 case 'B':
                     LoadRealWorldGraphs(&g , path , 1);
+                    file_path = path + "/Graph2";
                     break;
                 case 'C':
                     LoadRealWorldGraphs(&g , path , 2);
+                    file_path = path + "/Graph3";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -242,15 +251,19 @@ void UI::changeDataSet(){
             switch (secondOp) {
                 case 'A':
                     LoadToyGraphs(&g , path , 0);
+                    file_path = path + "/shipping.csv";
                     break;
                 case 'B':
                     LoadToyGraphs(&g , path , 1);
+                    file_path = path + "/stadiums.csv";
                     break;
                 case 'C':
                     LoadToyGraphs(&g , path , 2);
+                    file_path = path + "/tourism.csv";
                     break;
                 case 'D':
                     LoadToyGraphs(&g , path , 3);
+                    file_path = path + "/myGraph.csv";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -277,39 +290,51 @@ void UI::changeDataSet(){
             switch (secondOp) {
                 case 'A':
                     LoadMediumGraphs(&g , path , 0);
+                    file_path = path + "/edges25.csv";
                     break;
                 case 'B':
                     LoadMediumGraphs(&g , path , 1);
+                    file_path = path + "/edges50.csv";
                     break;
                 case 'C':
                     LoadMediumGraphs(&g , path , 2);
+                    file_path = path + "/edges75.csv";
                     break;
                 case 'D':
                     LoadMediumGraphs(&g , path , 3);
+                    file_path = path + "/edges100.csv";
                     break;
                 case 'E':
                     LoadMediumGraphs(&g , path , 4);
+                    file_path = path + "/edges200.csv";
                     break;
                 case 'F':
                     LoadMediumGraphs(&g , path , 5);
+                    file_path = path + "/edges300.csv";
                     break;
                 case 'G':
                     LoadMediumGraphs(&g , path , 6);
+                    file_path = path + "/edges400.csv";
                     break;
                 case 'H':
                     LoadMediumGraphs(&g , path , 7);
+                    file_path = path + "/edges500.csv";
                     break;
                 case 'I':
                     LoadMediumGraphs(&g , path , 8);
+                    file_path = path + "/edges600.csv";
                     break;
                 case 'J':
                     LoadMediumGraphs(&g , path , 9);
+                    file_path = path + "/edges700.csv";
                     break;
                 case 'K':
                     LoadMediumGraphs(&g , path , 10);
+                    file_path = path + "/edges800.csv";
                     break;
                 case 'L':
                     LoadMediumGraphs(&g , path , 11);
+                    file_path = path + "/edges900.csv";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -328,12 +353,15 @@ void UI::changeDataSet(){
             switch (secondOp) {
                 case 'A':
                     LoadRealWorldGraphs(&g , path , 0);
+                    file_path = path + "/Graph1";
                     break;
                 case 'B':
                     LoadRealWorldGraphs(&g , path , 1);
+                    file_path = path + "/Graph2";
                     break;
                 case 'C':
                     LoadRealWorldGraphs(&g , path , 2);
+                    file_path = path + "/Graph3";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -471,15 +499,12 @@ void UI::main_menu(){
 
     validate_input(op, 'A', 'G');
 
-    int index = 0 , index2 = 0;
-    Vertex * testV1 ;
-    Vertex * testeV2;
     double weight = 0 , lastWeight = DBL_MAX;
     std::vector<Vertex *> articulationPoints;
     std::vector<std::vector<Vertex *>> scc;
-    double bestValue1 = 0.0 , bestValue2 = 0.0;
     Vertex * source;
     Vertex * dest;
+    bool isFullyConnected = false;
     switch(op){
         case 'A':
             changeDataSet();
@@ -494,6 +519,13 @@ void UI::main_menu(){
             break;
         case 'D':
             source = g.findVertex(0);
+
+            if(g.makeFullyConnected()){
+                isFullyConnected = true;
+            }else {
+                std::cout << "Not possible to make fully connected\n";
+                back_menu();
+            }
 
             TSP = TriangularApproximationHeuristic(&g , source , nullptr);
             std::cout << source->getId() ;
@@ -510,9 +542,21 @@ void UI::main_menu(){
             std::cout << std::setprecision(2);
             std::cout << "Weight :" << weight << std::endl;
 
+            if(isFullyConnected){
+                pathSelector();
+                isFullyConnected = false;
+            }
+
             back_menu();
             break;
         case 'E':
+
+            if(g.makeFullyConnected()){
+                isFullyConnected = true;
+            }else {
+                std::cout << "Not possible to make fully connected\n";
+                back_menu();
+            }
 
             source = g.findVertex(0);
 
@@ -531,6 +575,11 @@ void UI::main_menu(){
             std::cout << std::fixed;
             std::cout << std::setprecision(2);
             std::cout << "Weight :" << weight << std::endl;
+
+            if(isFullyConnected){
+                pathSelector();
+                isFullyConnected = false;
+            }
 
             back_menu();
             break;
@@ -580,7 +629,7 @@ void UI::BackTrackMenu() {
     char op;
     std::cout << "Which one would you like to use?" << std::endl;
     std::cout << "A. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs without Two Opt Optimization " << std::endl
-              << "B. A. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs with Two Opt Optimization(Beware that this will take 10x more than the previous)" << std::endl
+              << "B. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs with Two Opt Optimization(Beware that this will take 10x more than the previous)" << std::endl
               << "C. Go back to the main menu" << std::endl
               << "Insert your choice:";
 
@@ -641,5 +690,60 @@ void UI::back_menu_BacktrackingOptions() {
     validate_input(op,'A','A');
     BackTrackMenu();
 }
+
+
+void UI::pathSelector() {
+
+    if(file_path.empty()){
+        std::cerr << "No file path was loaded" << std::endl;
+        return;
+    }
+
+    std::size_t lastSlashPos = file_path.find_last_of('/');
+    std::string command;
+    if (lastSlashPos != std::string::npos) {
+        command = file_path.substr(lastSlashPos + 1);
+        std::cout << "Last word: " << command << std::endl;
+    } else {
+        command = "error";
+        std::cout << "No '/' found in the path" << std::endl;
+    }
+
+    std::string path;
+    std::map<std::string, std::function<void()>> commandMap;
+
+    if(command.empty()){
+        std::cerr << "Invalid file path" << std::endl;
+        return;
+    }else if(command == "Graph1"){
+        g.clear();
+        path = "../Graphs/Real-world Graphs/Real-world Graphs";
+        LoadRealWorldGraphs(&g , path , 0);
+    }else if(command == "Graph2") {
+        g.clear();
+        path = "../Graphs/Real-world Graphs/Real-world Graphs";
+        LoadRealWorldGraphs(&g, path, 1);
+    }else if(command == "Graph3") {
+        g.clear();
+        path = "../Graphs/Real-world Graphs/Real-world Graphs";
+        LoadRealWorldGraphs(&g, path, 2);
+    }else if(command == "shipping") {
+        g.clear();
+        path = "../Graphs/Toy-Graphs/Toy-Graphs";
+        LoadToyGraphs(&g , path , 0);
+    }else if(command == "stadiums") {
+        g.clear();
+        path = "../Graphs/Toy-Graphs/Toy-Graphs";
+        LoadToyGraphs(&g, path, 1);
+    }else if(command == "tourism") {
+        g.clear();
+        path = "../Graphs/Toy-Graphs/Toy-Graphs";
+        LoadToyGraphs(&g, path, 2);
+    }else{
+        std::cerr << "Invalid file path" << std::endl;
+    }
+
+}
+
 
 

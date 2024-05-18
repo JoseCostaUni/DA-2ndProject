@@ -559,7 +559,7 @@ inline bool Graph::makeFullyConnected() {
     int numVertices = getNumVertex();
     int expectedEdges = numVertices * (numVertices - 1);
     if (edges.size() == expectedEdges || edges.size() == expectedEdges / 2) {
-        return true;
+        return false;
     }
 
     // Check if all vertices have defined coordinates
@@ -570,7 +570,7 @@ inline bool Graph::makeFullyConnected() {
     }
 
     // Create a set to store unique pairs of connected vertices
-    std::unordered_map<int, std::unordered_map<int, bool>> connections;
+    std::vector<std::vector<bool>> connections(numVertices, std::vector<bool>(numVertices, false));
     for (const auto& e : edges) {
         int sourceId = e.second->getSource()->getId();
         int destId = e.second->getDestination()->getId();
@@ -581,11 +581,11 @@ inline bool Graph::makeFullyConnected() {
     // Iterate through all pairs of vertices to add missing edges
     for (auto it1 = vertices.begin(); it1 != vertices.end(); ++it1) {
         for (auto it2 = std::next(it1); it2 != vertices.end(); ++it2) {
-            int sourceId = it1->first;
-            int destId = it2->first;
+            int sourceId = it1->second->getId();
+            int destId = it2->second->getId();
 
             // If there is no edge between sourceId and destId, add it
-            if (connections[sourceId].find(destId) == connections[sourceId].end()) {
+            if(!connections[sourceId][destId]){
                 Vertex* v1 = it1->second;
                 Vertex* v2 = it2->second;
                 double weight = Harverstein(v1->getLongitude(), v1->getLatitude(), v2->getLongitude(), v2->getLatitude());

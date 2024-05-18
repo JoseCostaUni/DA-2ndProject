@@ -56,6 +56,7 @@ public:
     void back_menu_BacktrackingOptions();
 
     Graph getGraph() const;
+    void pathSelector();
 private:
     Graph g;
     std::vector<Edge *> TSP;

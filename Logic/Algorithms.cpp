@@ -38,11 +38,6 @@ void dfs(Graph & graph , Vertex * source , std::vector<Vertex *>& path){
 
 std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
 
-    if(!graph->makeFullyConnected()){
-        std::cout << "Not possible to make fully connected\n";
-        return {};
-    }
-
     std::unordered_map<int, Vertex *> vertexSet = graph->getVertexSet();
 
     std::vector<Edge * > optimalPath;
@@ -245,12 +240,6 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
 */
 
 std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * source , Vertex * dest){
-
-    if(!graph->makeFullyConnected()){
-        std::cout << "Not possible to make fully connected\n";
-        return {};
-    }
-
 
     std::vector<Vertex * > path = PrimMst(graph , source);
 
@@ -597,7 +586,7 @@ bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * 
         }
     }
 
-    twoOpt(hamiltonian , 10 , edgeMatrix);
+    twoOpt(hamiltonian , 1000 , edgeMatrix);
 
     std::set<uint32_t> set;
     double cost = 0;
