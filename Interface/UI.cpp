@@ -9,6 +9,13 @@
 
 UI::UI() {}
 
+/**
+ * @brief Clears the console screen by outputting multiple newline characters.
+ *
+ * @note Time complexity: O(1)
+ */
+
+
 void UI::clear_screen() {
     int i = 0;
     while(i != 100) {
@@ -49,6 +56,14 @@ bool UI::validate_input(char &op, const char lower_bound, const char upper_bound
 }
 
 
+/**
+ * @brief Validates user input to ensure it contains only digits.
+ *
+ * @param index Reference to the integer variable where the input will be stored.
+ * @return true if input is valid, false otherwise.
+ *
+ * @note Time complexity: O(n), where n is the number of characters in the input.
+ */
 bool UI::validate_int_input(int &index) {
     std::string tempValue;
     char op;
@@ -78,11 +93,14 @@ bool UI::validate_int_input(int &index) {
     return true;
 }
 /**
- * @brief Loads data and initializes the program.
+ * @brief Loads the required dataset for analysis and starts the program.
  *
- * @param ui Reference to the UI object.
+ * This function prompts the user to choose a dataset for analysis and loads the corresponding data.
+ * It then waits for the user to press 'A' to start the program.
  *
- * @note Time complexity: Depends on the loading process, including file I/O and graph creation.
+ * @param ui The UI object to perform operations on.
+ *
+ * @note Time complexity: O(1)
  */
 void UI::loading_stuff(UI &ui) {
     char op , secondOp;
@@ -225,6 +243,14 @@ void UI::loading_stuff(UI &ui) {
     menu_start();
 }
 
+/**
+ * @brief Allows the user to change the dataset being used.
+ *
+ * This function clears the current graph data and prompts the user to choose a new dataset
+ * for analysis. It then loads the corresponding data and starts the program again.
+ *
+ * @note Time complexity: O(1)
+ */
 void UI::changeDataSet(){
 
     this->g.clear();
@@ -382,7 +408,10 @@ void UI::changeDataSet(){
 }
 
 /**
- * @brief Displays the main menu of the program.
+ * @brief Displays the startup menu of the program.
+ *
+ * This function displays the startup menu of the program, prompting the user to either proceed
+ * to the application or close it.
  *
  * @note Time complexity: O(1)
  */
@@ -416,6 +445,14 @@ void UI::menu_start() {
     }
 }
 
+/**
+ * @brief Displays options related to graph information and handles user input.
+ *
+ * This function displays options related to graph information, such as printing node information,
+ * graph basic information, calculating Harverstein distance, or returning to the main menu.
+ *
+ * @note Time complexity: O(1)
+ */
 void UI::GraphOptionsMenu() {
     char op;
     std::cout << "What would you like to know?" << std::endl;
@@ -480,9 +517,14 @@ void UI::GraphOptionsMenu() {
 }
 
 /**
- * @brief Displays the main menu of the program after clearing the screen.
+ * @brief Displays the main menu options and handles user input.
  *
- * @note Time complexity: O(1)
+ * This function displays the main menu options and waits for user input to select an action.
+ * Depending on the user's choice, it performs various operations such as changing the dataset,
+ * accessing graph information options, calculating the Traveling Salesman Problem (TSP) using different algorithms,
+ * or exiting the program.
+ *
+ * Time Complexity: O(N + E), where N is the number of vertices and E is the number of edges in the graph.
  */
 void UI::main_menu(){
     clear_screen();
@@ -599,16 +641,26 @@ void UI::main_menu(){
 }
 
 /**
- * @brief Retrieves the graph associated with the UI object.
+ * @brief Retrieves the current graph stored in the UI.
  *
- * @return The graph object.
+ * This function returns the current graph stored in the UI.
  *
- * @note Time complexity: O(1)
+ * @return The current graph stored in the UI.
+ *
+ * Time Complexity: O(1).
  */
 Graph UI::getGraph() const {
     return g;
 }
 
+/**
+ * @brief Displays an option to go back to the main menu.
+ *
+ * This function prompts the user to press 'A' to go back to the main menu.
+ * Upon user input, it redirects to the main menu.
+ *
+ * Time Complexity: O(1).
+ */
 void UI::back_menu(){
     char op;
     std::cout << "Press A to go back to the menu: ";
@@ -616,6 +668,14 @@ void UI::back_menu(){
     main_menu();
 }
 
+/**
+ * @brief Displays an option to go back to the Graph Options menu.
+ *
+ * This function prompts the user to press 'A' to go back to the Graph Options menu.
+ * Upon user input, it redirects to the Graph Options menu.
+ *
+ * Time Complexity: O(1).
+ */
 void UI::back_menu_GraphOptions() {
     char op;
     std::cout << "Press A to go back to the menu: ";
@@ -623,6 +683,19 @@ void UI::back_menu_GraphOptions() {
     GraphOptionsMenu();
 }
 
+/**
+ * @brief Displays the BackTrack menu and prompts the user to choose an option.
+ *
+ * This function presents the user with options to perform TSP calculations using different algorithms.
+ * The user can select either:
+ * - A. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs without Two Opt Optimization.
+ * - B. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs with Two Opt Optimization (Beware that this will take 10x more than the previous).
+ * - C. Go back to the main menu.
+ *
+ * Upon user selection, the function performs the corresponding action.
+ *
+ * Time Complexity: O(n), where n is the size of the vertex set in the graph.
+ */
 void UI::BackTrackMenu() {
     char op;
     std::cout << "Which one would you like to use?" << std::endl;
@@ -694,6 +767,14 @@ void UI::BackTrackMenu() {
     }
 }
 
+/**
+ * @brief Navigates back to the BackTrack menu upon user input.
+ *
+ * This function prompts the user to press 'A' to return to the BackTrack menu.
+ * It validates the input and calls the BackTrackMenu function accordingly.
+ *
+ * Time Complexity: O(1)
+ */
 void UI::back_menu_BacktrackingOptions() {
     char op;
     std::cout << "Press A to go back to the BackTrack menu: ";
@@ -701,7 +782,20 @@ void UI::back_menu_BacktrackingOptions() {
     BackTrackMenu();
 }
 
-
+/**
+ * @brief Selects the appropriate action based on the file path loaded.
+ *
+ * If the file path is empty, it prints an error message and returns.
+ * Otherwise, it extracts the last word from the file path and determines the action
+ * based on this word.
+ *
+ * If the last word corresponds to a specific command (e.g., "Graph1", "shipping"),
+ * it clears the graph, loads the corresponding data set, and performs the associated action.
+ *
+ * @note This function assumes that the file path has been previously loaded.
+ *
+ * @note Time complexity: O(n), where n is the length of the file path.
+ */
 void UI::pathSelector() {
 
     if(file_path.empty()){
