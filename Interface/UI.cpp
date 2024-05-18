@@ -514,6 +514,12 @@ void UI::main_menu(){
             GraphOptionsMenu();
             break;
         case 'C':
+
+            if(fullyConnected){
+                pathSelector();
+                fullyConnected = false;
+            }
+
             tspBruteForce(&g);
             back_menu();
             break;
@@ -542,20 +548,17 @@ void UI::main_menu(){
             std::cout << std::setprecision(2);
             std::cout << "Weight :" << weight << std::endl;
 
-            if(isFullyConnected){
-                pathSelector();
-                isFullyConnected = false;
-            }
-
             back_menu();
             break;
         case 'E':
 
-            if(g.makeFullyConnected()){
-                isFullyConnected = true;
-            }else {
-                std::cout << "Not possible to make fully connected\n";
-                back_menu();
+            if(!fullyConnected){
+                if(g.makeFullyConnected()){
+                    fullyConnected = true;
+                }else {
+                    std::cout << "Not possible to make fully connected\n";
+                    back_menu();
+                }
             }
 
             source = g.findVertex(0);
@@ -575,11 +578,6 @@ void UI::main_menu(){
             std::cout << std::fixed;
             std::cout << std::setprecision(2);
             std::cout << "Weight :" << weight << std::endl;
-
-            if(isFullyConnected){
-                pathSelector();
-                isFullyConnected = false;
-            }
 
             back_menu();
             break;
@@ -639,6 +637,12 @@ void UI::BackTrackMenu() {
     std::vector<Vertex * > path;
     switch (op) {
         case 'A':
+
+            if(fullyConnected){
+                pathSelector();
+                fullyConnected = false;
+            }
+
             std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
 
             while (true){
@@ -658,6 +662,12 @@ void UI::BackTrackMenu() {
             back_menu_BacktrackingOptions();
             break;
         case 'B':
+
+            if(fullyConnected){
+                pathSelector();
+                fullyConnected = false;
+            }
+
             std::cout << "Please introduce the index of the source vertex [0 - " << g.getVertexSet().size() - 1 << "]: ";
 
             while (true){

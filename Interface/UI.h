@@ -61,6 +61,7 @@ private:
     Graph g;
     std::vector<Edge *> TSP;
     std::string file_path;
+    bool fullyConnected = false;
 };
 
 
