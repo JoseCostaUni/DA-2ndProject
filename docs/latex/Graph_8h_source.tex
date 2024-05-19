@@ -1,0 +1,705 @@
+\hypertarget{Graph_8h_source}{}\doxysection{/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\+Graph.h}
+\mbox{\hyperlink{Graph_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{// Original code by Gonçalo Leão}}
+\DoxyCodeLine{2 \textcolor{comment}{// Updated by LEIC5 Grupo X In 2024-\/2025}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#ifndef DA\_TP\_CLASSES\_GRAPH}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#define DA\_TP\_CLASSES\_GRAPH}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <queue>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <limits>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <cfloat>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <cstdint>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{Clock_8h}{Logic/Clock.h}}"{}}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include "{}data\_structures/MutablePriorityQueue.h"{}}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{class }\mbox{\hyperlink{classEdge}{Edge}};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define INF std::numeric\_limits<double>::max()}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{comment}{/************************* Vertex  **************************/}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{34 \textcolor{keyword}{class }\mbox{\hyperlink{classVertex}{Vertex}} \{}
+\DoxyCodeLine{35 \textcolor{keyword}{public}:}
+\DoxyCodeLine{42     \mbox{\hyperlink{classVertex_a4ad72b646dd28d50537cf1555f1a8363}{Vertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}{intitude}}, \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_af733d6c48db17a4409b9f74b22b72c81}{latitude}});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{48     \mbox{\hyperlink{classVertex_a4ad72b646dd28d50537cf1555f1a8363}{Vertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{56     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_afd1d78d4b08162c2c470db5c7b1386f6}{getIndegree}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_aa3e3936a9656094749dd4716ef790e46}{getOutdegree}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{80     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a16309448211a55f97cdee17aee714c40}{getDegree}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{88     \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{getLongitude}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_a7455a09de51b274867edae2254cef38d}{getLatitude}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{104     \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_aa36ca926de23a6e7283be42e2930957c}{getDist}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{112     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_af65c843649e89097b38e8d108327c34a}{getNum}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{120     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a7acb7c0857c03cf23db677ad3618a04e}{getLow}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{128     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a7da007553567fcca206c5b0cef680a12}{getTentativas}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{136     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_aa4bd82105b85ee53a917391f4811cd8a}{isVisited}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{144     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_a126e306f0534b99cd97aa864fdb243d4}{isProcessing}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{152     \mbox{\hyperlink{classEdge}{Edge}} * \mbox{\hyperlink{classVertex_a6e120e57da6af94892fae44e05868794}{getPath}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{160     std::vector<Edge*> \mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{168     std::vector<Edge*> \mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{176     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a7b4a88e60059faef38f44729873ee6cc}{addAdjEdge}}(\textcolor{keywordtype}{int} edgeId ,\mbox{\hyperlink{classEdge}{Edge}}* edge);}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{184     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_af00d3d6101082e7c92b2079e8066315f}{addIncEdge}}(\textcolor{keywordtype}{int} edgeId ,\mbox{\hyperlink{classEdge}{Edge}}* edge);}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{191     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a133cd706a1799e316888324f14193dd2}{deleteIncEdge}}(\textcolor{keywordtype}{int} edgeId);}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{198     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_acd4454a0f9a828536600459b9a03a87b}{deleteAdjEdge}}(\textcolor{keywordtype}{int} edgeId);}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{205     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a9fb0f2482cb3b96e39f417baa7a956d7}{setDist}}(\textcolor{keywordtype}{double} newDist);}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{212     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a022e5d3151c7525ca5663b9fcd62ea52}{setId}}(\textcolor{keywordtype}{int} newId);}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{219     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_adcd2536ea7b83e8823bb601c26e6da9a}{setintitude}}(\textcolor{keywordtype}{double} newintitude);}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{226     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a8144db72e16f01cc0953f0bcf8fafba6}{setLatitude}}(\textcolor{keywordtype}{double} newLatitude);}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{233     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a6999bad0d12b2f55b7d3ce06df21d6b1}{setTentativas}}(\textcolor{keywordtype}{int} newTentativas);}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{240     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a9f3eb3b75eafb790880f4a510c341828}{setAdj}}(std::vector<Edge*> newAdj);}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{247     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a15eeabbbb6d517af746ae137c6d5b595}{setVisited}}(\textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}{visited}});}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{254     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a0b59a1ae0392cdf016c99bc3882a4763}{setPath}}(\mbox{\hyperlink{classEdge}{Edge}} * e);}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{261     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a08766d56f48e9b2d3e19c2f648e916dc}{setOutdegree}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}});}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{268     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a15d5d88e6de6faccfa17d8c02753072f}{setIndegree}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}});}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{275     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_ab02fd1a0a7ad1d18f3834e4d0842dc65}{setNum}}(\textcolor{keywordtype}{int} i);}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{282     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_afd9743c1b5b705d6324faf779b27cb89}{setLow}}(\textcolor{keywordtype}{int} i);}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{289     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_af6cdb3adcda7600d235b1f7a827373de}{setProcessing}}(\textcolor{keyword}{const} \textcolor{keywordtype}{bool} \& \_processing);}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{296     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_ad4ccd48170a1530ec1db5eb306357a74}{operator<}}(\mbox{\hyperlink{classVertex}{Vertex}} \& vertex) \textcolor{keyword}{const};}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{304     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_a395cfa7824806a13581872e329651d09}{operator==}}(\mbox{\hyperlink{classVertex}{Vertex}} \& vertex) \textcolor{keyword}{const};}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{311     std::vector<Edge*> \mbox{\hyperlink{classVertex_a5d2eade4dc1f1c7bcf0c49f2c0053b03}{orderEdges}}();}
+\DoxyCodeLine{312 }
+\DoxyCodeLine{318     \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_aec13348815c681445e81d76505ea13c8}{updateDegrees}}();}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{325     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classMutablePriorityQueue}{MutablePriorityQueue}}<\mbox{\hyperlink{classVertex}{Vertex}}>;}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{328     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a2e69697726190f50c7fc040fb1ddac7a}{id}};                            }
+\DoxyCodeLine{329     \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}{intitude}};                   }
+\DoxyCodeLine{330     \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_af733d6c48db17a4409b9f74b22b72c81}{latitude}};                   }
+\DoxyCodeLine{331     std::vector<Edge*> \mbox{\hyperlink{classVertex_a47d0d19c8f0f13666379f55fa7e7ddba}{incomingEdges}};  }
+\DoxyCodeLine{332     std::vector<Edge*> \mbox{\hyperlink{classVertex_a66b1a944ac438896fe9252ef5256157d}{adjacentEdges}};  }
+\DoxyCodeLine{333     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}{visited}} = \textcolor{keyword}{false};              }
+\DoxyCodeLine{334     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_a305dc8fcad6e4c7ef2491409ca7ddaa4}{processing}} = \textcolor{keyword}{false};           }
+\DoxyCodeLine{335     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}} = 0;         }
+\DoxyCodeLine{336     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}} = 0;        }
+\DoxyCodeLine{337     \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_a11d98611f5101fe7f46785d8b9c53f44}{dist}} = 0;                   }
+\DoxyCodeLine{338     \mbox{\hyperlink{classEdge}{Edge}}* \mbox{\hyperlink{classVertex_a4e83821f961f6eb63ad210260ba0e1e2}{path}} = \textcolor{keyword}{nullptr};              }
+\DoxyCodeLine{339     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a78ba760e405ba9f66129b3870065b48f}{queueIndex}} = 0;                }
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a40712a3999a39b60763c1bb85c791e34}{tentativas}} = 0;                }
+\DoxyCodeLine{342     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a426e62928803a13f734083c3eb9b05ed}{num}} = 0;                       }
+\DoxyCodeLine{343     \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_aa9783976d034b309b455e181be01b379}{low}} = 0;                       }
+\DoxyCodeLine{344 \};}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347 \textcolor{keyword}{inline} \mbox{\hyperlink{classVertex_a4ad72b646dd28d50537cf1555f1a8363}{Vertex::Vertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{double} intitude, \textcolor{keywordtype}{double} latitude)}
+\DoxyCodeLine{348         : id(id), intitude(intitude), latitude(latitude) \{\}}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350 \textcolor{keyword}{inline} \mbox{\hyperlink{classVertex_a4ad72b646dd28d50537cf1555f1a8363}{Vertex::Vertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}) : id(id) \{\}}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{Vertex::getId}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{353     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a2e69697726190f50c7fc040fb1ddac7a}{id}};}
+\DoxyCodeLine{354 \}}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356 \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{Vertex::getLongitude}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{357     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}{intitude}};}
+\DoxyCodeLine{358 \}}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360 \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_a7455a09de51b274867edae2254cef38d}{Vertex::getLatitude}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{361     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_af733d6c48db17a4409b9f74b22b72c81}{latitude}};}
+\DoxyCodeLine{362 \}}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_afd1d78d4b08162c2c470db5c7b1386f6}{Vertex::getIndegree}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{365     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}};}
+\DoxyCodeLine{366 \}}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_aa3e3936a9656094749dd4716ef790e46}{Vertex::getOutdegree}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{369     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}};}
+\DoxyCodeLine{370 \}}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372 \textcolor{keyword}{inline} std::vector<Edge*> \mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{Vertex::getAdj}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{373     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a66b1a944ac438896fe9252ef5256157d}{adjacentEdges}};}
+\DoxyCodeLine{374 \}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376 \textcolor{keyword}{inline} std::vector<Edge*> \mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{Vertex::getInc}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{377     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a47d0d19c8f0f13666379f55fa7e7ddba}{incomingEdges}};}
+\DoxyCodeLine{378 \}}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a7b4a88e60059faef38f44729873ee6cc}{Vertex::addAdjEdge}}(\textcolor{keywordtype}{int} edgeId , \mbox{\hyperlink{classEdge}{Edge}}* edge) \{}
+\DoxyCodeLine{381     \mbox{\hyperlink{classVertex_a66b1a944ac438896fe9252ef5256157d}{adjacentEdges}}.push\_back(edge);}
+\DoxyCodeLine{382 \}}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_af00d3d6101082e7c92b2079e8066315f}{Vertex::addIncEdge}}(\textcolor{keywordtype}{int} edgeId , \mbox{\hyperlink{classEdge}{Edge}}* edge) \{}
+\DoxyCodeLine{385     \mbox{\hyperlink{classVertex_a47d0d19c8f0f13666379f55fa7e7ddba}{incomingEdges}}.push\_back(edge);}
+\DoxyCodeLine{386 \}}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a022e5d3151c7525ca5663b9fcd62ea52}{Vertex::setId}}(\textcolor{keywordtype}{int} newId) \{}
+\DoxyCodeLine{389     \textcolor{keywordtype}{id} = newId;}
+\DoxyCodeLine{390 \}}
+\DoxyCodeLine{391 }
+\DoxyCodeLine{392 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_adcd2536ea7b83e8823bb601c26e6da9a}{Vertex::setintitude}}(\textcolor{keywordtype}{double} newintitude) \{}
+\DoxyCodeLine{393     \mbox{\hyperlink{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}{intitude}} = newintitude;}
+\DoxyCodeLine{394 \}}
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a8144db72e16f01cc0953f0bcf8fafba6}{Vertex::setLatitude}}(\textcolor{keywordtype}{double} newLatitude) \{}
+\DoxyCodeLine{397     \mbox{\hyperlink{classVertex_af733d6c48db17a4409b9f74b22b72c81}{latitude}} = newLatitude;}
+\DoxyCodeLine{398 \}}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a15d5d88e6de6faccfa17d8c02753072f}{Vertex::setIndegree}}(\textcolor{keywordtype}{int} indegree) \{}
+\DoxyCodeLine{401    this-\/>indegree = \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}};}
+\DoxyCodeLine{402 \}}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a08766d56f48e9b2d3e19c2f648e916dc}{Vertex::setOutdegree}}(\textcolor{keywordtype}{int} outdegree) \{}
+\DoxyCodeLine{405     this-\/>outdegree = \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}};}
+\DoxyCodeLine{406 \}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408 \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classVertex_aa36ca926de23a6e7283be42e2930957c}{Vertex::getDist}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{409     \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classVertex_a11d98611f5101fe7f46785d8b9c53f44}{dist}};}
+\DoxyCodeLine{410 \}}
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a9fb0f2482cb3b96e39f417baa7a956d7}{Vertex::setDist}}(\textcolor{keywordtype}{double} newDist) \{}
+\DoxyCodeLine{413     this-\/>\mbox{\hyperlink{classVertex_a11d98611f5101fe7f46785d8b9c53f44}{dist}} = newDist;}
+\DoxyCodeLine{414 \}}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_aa4bd82105b85ee53a917391f4811cd8a}{Vertex::isVisited}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{417     \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}{visited}};}
+\DoxyCodeLine{418 \}}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a15eeabbbb6d517af746ae137c6d5b595}{Vertex::setVisited}}(\textcolor{keywordtype}{bool} visited) \{}
+\DoxyCodeLine{421     this-\/>visited = \mbox{\hyperlink{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}{visited}};}
+\DoxyCodeLine{422 \}}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_ad4ccd48170a1530ec1db5eb306357a74}{Vertex::operator<}}(\mbox{\hyperlink{classVertex}{Vertex}} \&vertex)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{425     \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classVertex_a11d98611f5101fe7f46785d8b9c53f44}{dist}} < vertex.\mbox{\hyperlink{classVertex_a11d98611f5101fe7f46785d8b9c53f44}{dist}};}
+\DoxyCodeLine{426 \}}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428 \textcolor{keyword}{inline} \mbox{\hyperlink{classEdge}{Edge}} *\mbox{\hyperlink{classVertex_a6e120e57da6af94892fae44e05868794}{Vertex::getPath}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{429     \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classVertex_a4e83821f961f6eb63ad210260ba0e1e2}{path}};}
+\DoxyCodeLine{430 \}}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a0b59a1ae0392cdf016c99bc3882a4763}{Vertex::setPath}}(\mbox{\hyperlink{classEdge}{Edge}} *e) \{}
+\DoxyCodeLine{433     this-\/>\mbox{\hyperlink{classVertex_a4e83821f961f6eb63ad210260ba0e1e2}{path}} = e;}
+\DoxyCodeLine{434 \}}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_a395cfa7824806a13581872e329651d09}{Vertex::operator==}}(\mbox{\hyperlink{classVertex}{Vertex}} \&vertex)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{437     \textcolor{keywordflow}{return} this-\/>\textcolor{keywordtype}{id} == vertex.\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}();}
+\DoxyCodeLine{438 \}}
+\DoxyCodeLine{439 }
+\DoxyCodeLine{440 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_aec13348815c681445e81d76505ea13c8}{Vertex::updateDegrees}}() \{}
+\DoxyCodeLine{441     \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}} = \mbox{\hyperlink{classVertex_a47d0d19c8f0f13666379f55fa7e7ddba}{incomingEdges}}.size();}
+\DoxyCodeLine{442     \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}} = \mbox{\hyperlink{classVertex_a66b1a944ac438896fe9252ef5256157d}{adjacentEdges}}.size();}
+\DoxyCodeLine{443 \}}
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_ab02fd1a0a7ad1d18f3834e4d0842dc65}{Vertex::setNum}}(\textcolor{keywordtype}{int} i) \{}
+\DoxyCodeLine{446     this-\/>\mbox{\hyperlink{classVertex_a426e62928803a13f734083c3eb9b05ed}{num}} = i;}
+\DoxyCodeLine{447 \}}
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_af65c843649e89097b38e8d108327c34a}{Vertex::getNum}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{450     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a426e62928803a13f734083c3eb9b05ed}{num}};}
+\DoxyCodeLine{451 \}}
+\DoxyCodeLine{452 }
+\DoxyCodeLine{453 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a7acb7c0857c03cf23db677ad3618a04e}{Vertex::getLow}}()\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{454     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_aa9783976d034b309b455e181be01b379}{low}};}
+\DoxyCodeLine{455 \}}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_afd9743c1b5b705d6324faf779b27cb89}{Vertex::setLow}}(\textcolor{keywordtype}{int} i) \{}
+\DoxyCodeLine{458     this-\/>\mbox{\hyperlink{classVertex_aa9783976d034b309b455e181be01b379}{low}} = i;}
+\DoxyCodeLine{459 \}}
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classVertex_a126e306f0534b99cd97aa864fdb243d4}{Vertex::isProcessing}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{462     \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classVertex_a305dc8fcad6e4c7ef2491409ca7ddaa4}{processing}};}
+\DoxyCodeLine{463 \}}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_af6cdb3adcda7600d235b1f7a827373de}{Vertex::setProcessing}}(\textcolor{keyword}{const} \textcolor{keywordtype}{bool} \& \_processing) \{}
+\DoxyCodeLine{466     this-\/>\mbox{\hyperlink{classVertex_a305dc8fcad6e4c7ef2491409ca7ddaa4}{processing}} = \_processing;}
+\DoxyCodeLine{467 \}}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a16309448211a55f97cdee17aee714c40}{Vertex::getDegree}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{470     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}} + \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}};}
+\DoxyCodeLine{471 \}}
+\DoxyCodeLine{472 }
+\DoxyCodeLine{473 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a9f3eb3b75eafb790880f4a510c341828}{Vertex::setAdj}}(std::vector<Edge*> newAdj) \{}
+\DoxyCodeLine{474     this-\/>\mbox{\hyperlink{classVertex_a66b1a944ac438896fe9252ef5256157d}{adjacentEdges}} = std::move(newAdj);}
+\DoxyCodeLine{475 \}}
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classVertex_a7da007553567fcca206c5b0cef680a12}{Vertex::getTentativas}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{478     \textcolor{keywordflow}{return} \mbox{\hyperlink{classVertex_a40712a3999a39b60763c1bb85c791e34}{tentativas}};}
+\DoxyCodeLine{479 \}}
+\DoxyCodeLine{480 }
+\DoxyCodeLine{481 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classVertex_a6999bad0d12b2f55b7d3ce06df21d6b1}{Vertex::setTentativas}}(\textcolor{keywordtype}{int} newTentativas) \{}
+\DoxyCodeLine{482     this-\/>\mbox{\hyperlink{classVertex_a40712a3999a39b60763c1bb85c791e34}{tentativas}} = newTentativas;}
+\DoxyCodeLine{483 \}}
+\DoxyCodeLine{484 }
+\DoxyCodeLine{485 \textcolor{comment}{/********************** Edge  ****************************/}}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{491 \textcolor{keyword}{class }\mbox{\hyperlink{classEdge}{Edge}} \{}
+\DoxyCodeLine{492 \textcolor{keyword}{public}:}
+\DoxyCodeLine{500     \mbox{\hyperlink{classEdge_ac9b58f8c133b2304e7083ef3df07d67d}{Edge}}(\mbox{\hyperlink{classVertex}{Vertex}}* source, \mbox{\hyperlink{classVertex}{Vertex}}* destination, \textcolor{keywordtype}{int} edgeId , \textcolor{keywordtype}{double} weight);}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{508     [[nodiscard]] \mbox{\hyperlink{classVertex}{Vertex}}* \mbox{\hyperlink{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}{getSource}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{509 }
+\DoxyCodeLine{516     [[nodiscard]] \mbox{\hyperlink{classVertex}{Vertex}}* \mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{getDestination}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{517 }
+\DoxyCodeLine{524     [[nodiscard]] \textcolor{keywordtype}{double} \mbox{\hyperlink{classEdge_a1caaffca117bab3ff5b7387623a356f8}{getWeight}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{525 }
+\DoxyCodeLine{532     [[nodiscard]] \textcolor{keywordtype}{double} \mbox{\hyperlink{classEdge_a334ee86a1b82f94aba138781b1b36ce5}{getPheromones}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{533 }
+\DoxyCodeLine{540     [[nodiscard]] \textcolor{keywordtype}{int} \mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{541 }
+\DoxyCodeLine{548     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classEdge_a52967cf488bb7185a512cd111420215d}{isSelected}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{549 }
+\DoxyCodeLine{555     \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a3ccb2627902b1a3fbb38106f69d3ca76}{setSource}}(\mbox{\hyperlink{classVertex}{Vertex}}* newSource);}
+\DoxyCodeLine{556 }
+\DoxyCodeLine{562     \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_adbe14d81759ea2307ee247a3236d8147}{setDestination}}(\mbox{\hyperlink{classVertex}{Vertex}}* newDestination);}
+\DoxyCodeLine{563 }
+\DoxyCodeLine{569     \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_aaed6c3ce63930d1e2fc075f4e1bed789}{setWeight}}(\textcolor{keywordtype}{double} newWeight);}
+\DoxyCodeLine{570 }
+\DoxyCodeLine{576     \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a793e1b4d07e5a709550afcadc657b250}{setId}}(\textcolor{keywordtype}{int} newId);}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{583     \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a8ab1cf2fe7fd16152d1dba3822853894}{setSelected}}(\textcolor{keywordtype}{bool} selected);}
+\DoxyCodeLine{584 }
+\DoxyCodeLine{590     \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a02830791de181513f4de8306cf28a60e}{setPheromones}}(\textcolor{keywordtype}{double} pheromones);}
+\DoxyCodeLine{591 \textcolor{keyword}{private}:}
+\DoxyCodeLine{592     \mbox{\hyperlink{classVertex}{Vertex}}* source;         }
+\DoxyCodeLine{593     \mbox{\hyperlink{classVertex}{Vertex}}* destination;    }
+\DoxyCodeLine{594     \textcolor{keywordtype}{double} weight;          }
+\DoxyCodeLine{595     \textcolor{keywordtype}{int} id;                 }
+\DoxyCodeLine{596     \textcolor{keywordtype}{bool} selected;          }
+\DoxyCodeLine{597     \textcolor{keywordtype}{double} pheromones;      }
+\DoxyCodeLine{598 \};}
+\DoxyCodeLine{599 }
+\DoxyCodeLine{600 \textcolor{comment}{/********************** Graph  ****************************/}}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{606 \textcolor{keyword}{class }\mbox{\hyperlink{classGraph}{Graph}} \{}
+\DoxyCodeLine{607 \textcolor{keyword}{public}:}
+\DoxyCodeLine{611     \mbox{\hyperlink{classGraph_a902c5b3eacb66d60752525ab23297a95}{\string~Graph}}();}
+\DoxyCodeLine{612 }
+\DoxyCodeLine{619     \mbox{\hyperlink{classEdge}{Edge}}* \mbox{\hyperlink{classGraph_afb430401620ecaec70b18b252f55a220}{findEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId) \textcolor{keyword}{const};}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{627     \mbox{\hyperlink{classVertex}{Vertex}}* \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}) \textcolor{keyword}{const};}
+\DoxyCodeLine{628 }
+\DoxyCodeLine{637     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a480675e98227b5cea4d990d301d43eee}{addVertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id} , \textcolor{keywordtype}{double} longitude , \textcolor{keywordtype}{double} latitude);}
+\DoxyCodeLine{638 }
+\DoxyCodeLine{645     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a88e2a04e9f0974b36d6ac8cdd6f9fc28}{removeVertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{646 }
+\DoxyCodeLine{656     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_ad2acf070646765e317847a9ae7e540d7}{addEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId,\textcolor{keywordtype}{int} edgeId, \textcolor{keywordtype}{double} weight) ;}
+\DoxyCodeLine{657 }
+\DoxyCodeLine{665     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a27e490b6976d8da44cf9b7bb004e03d0}{removeEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId) \textcolor{keyword}{const};}
+\DoxyCodeLine{666 }
+\DoxyCodeLine{676     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_af3d3c367ccf2ef6d852481a5b3bffcc9}{addBidirectionalEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId,\textcolor{keywordtype}{int} edgeId, \textcolor{keywordtype}{double} weight) ;}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{684     \textcolor{keywordtype}{int} \mbox{\hyperlink{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}{getNumVertex}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{685 }
+\DoxyCodeLine{692     \mbox{\hyperlink{classClock}{Clock}} \mbox{\hyperlink{classGraph_ad5160609c45eb367a9db50a0dd5f286c}{getClock}}();}
+\DoxyCodeLine{693 }
+\DoxyCodeLine{700     std::unordered\_map<int, Vertex*> \mbox{\hyperlink{classGraph_a34dc8268e703217705d6ba9ac8b02170}{getVertexSet}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{701 }
+\DoxyCodeLine{708     std::unordered\_map<int, Edge*> \mbox{\hyperlink{classGraph_ab5dd6c3f53e38ecd198d59a8a92bda54}{getEdgeSet}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{709 }
+\DoxyCodeLine{719     \textcolor{keywordtype}{double} \mbox{\hyperlink{classGraph_a7c8895e24312d578e1c8c5f8767c8513}{Harverstein}}(\textcolor{keywordtype}{double} longitude1, \textcolor{keywordtype}{double} latitude1, \textcolor{keywordtype}{double} longitude2, \textcolor{keywordtype}{double} latitude2) \textcolor{keyword}{const};}
+\DoxyCodeLine{720 }
+\DoxyCodeLine{726     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_ac6192a41101102ca8aa6acca607c84f3}{clear}}();}
+\DoxyCodeLine{727 }
+\DoxyCodeLine{733     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_aa60b060b106945913be46eb9cc11d698}{printNodesContente}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{740     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_a557582628bd7cf460de68e954ed47a87}{printGraphInfo}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{741 }
+\DoxyCodeLine{747     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_a43037a326921adde0f94320aa161740a}{populate\_in\_and\_out\_degree}}();}
+\DoxyCodeLine{748 }
+\DoxyCodeLine{754     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a19737b754b3384221e533111ba3b126b}{makeFullyConnected}}() ;}
+\DoxyCodeLine{755 }
+\DoxyCodeLine{761     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_a3b67d4aae0ec29037ede078c3c88999d}{orderVertexAdj}}(\mbox{\hyperlink{classVertex}{Vertex}} * v);}
+\DoxyCodeLine{762 }
+\DoxyCodeLine{763 \textcolor{keyword}{private}:}
+\DoxyCodeLine{764     std::unordered\_map<int, Vertex*> vertexSet;   }
+\DoxyCodeLine{765     std::unordered\_map<int, Edge*> edgeSet;       }
+\DoxyCodeLine{766     \mbox{\hyperlink{classClock}{Clock}} clock;                                  }
+\DoxyCodeLine{767 \};}
+\DoxyCodeLine{768 }
+\DoxyCodeLine{769 \textcolor{comment}{/********************** Edge  ****************************/}}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{778 \textcolor{keyword}{inline} \mbox{\hyperlink{classEdge_ac9b58f8c133b2304e7083ef3df07d67d}{Edge::Edge}}(\mbox{\hyperlink{classVertex}{Vertex}}* source, \mbox{\hyperlink{classVertex}{Vertex}}* destination, \textcolor{keywordtype}{int} edgeId , \textcolor{keywordtype}{double} weight)}
+\DoxyCodeLine{779         : source(source), destination(destination), id(edgeId) , weight(weight) \{\}}
+\DoxyCodeLine{780 }
+\DoxyCodeLine{788 \textcolor{keyword}{inline} \mbox{\hyperlink{classVertex}{Vertex}}* \mbox{\hyperlink{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}{Edge::getSource}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{789     \textcolor{keywordflow}{return} source;}
+\DoxyCodeLine{790 \}}
+\DoxyCodeLine{791 }
+\DoxyCodeLine{798 \textcolor{keyword}{inline} \mbox{\hyperlink{classVertex}{Vertex}}* \mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{Edge::getDestination}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{799     \textcolor{keywordflow}{return} destination;}
+\DoxyCodeLine{800 \}}
+\DoxyCodeLine{801 }
+\DoxyCodeLine{808 \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classEdge_a1caaffca117bab3ff5b7387623a356f8}{Edge::getWeight}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{809     \textcolor{keywordflow}{return} weight;}
+\DoxyCodeLine{810 \}}
+\DoxyCodeLine{811 }
+\DoxyCodeLine{817 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a3ccb2627902b1a3fbb38106f69d3ca76}{Edge::setSource}}(\mbox{\hyperlink{classVertex}{Vertex}}* newSource) \{}
+\DoxyCodeLine{818     source = newSource;}
+\DoxyCodeLine{819 \}}
+\DoxyCodeLine{820 }
+\DoxyCodeLine{826 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_adbe14d81759ea2307ee247a3236d8147}{Edge::setDestination}}(\mbox{\hyperlink{classVertex}{Vertex}}* newDestination) \{}
+\DoxyCodeLine{827     destination = newDestination;}
+\DoxyCodeLine{828 \}}
+\DoxyCodeLine{829 }
+\DoxyCodeLine{835 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_aaed6c3ce63930d1e2fc075f4e1bed789}{Edge::setWeight}}(\textcolor{keywordtype}{double} newWeight) \{}
+\DoxyCodeLine{836     weight = newWeight;}
+\DoxyCodeLine{837 \}}
+\DoxyCodeLine{838 }
+\DoxyCodeLine{845 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{Edge::getId}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{846     \textcolor{keywordflow}{return} id;}
+\DoxyCodeLine{847 \}}
+\DoxyCodeLine{848 }
+\DoxyCodeLine{854 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a793e1b4d07e5a709550afcadc657b250}{Edge::setId}}(\textcolor{keywordtype}{int} newId) \{}
+\DoxyCodeLine{855     \textcolor{keywordtype}{id} = newId;}
+\DoxyCodeLine{856 \}}
+\DoxyCodeLine{857 }
+\DoxyCodeLine{864 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classEdge_a52967cf488bb7185a512cd111420215d}{Edge::isSelected}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{865     \textcolor{keywordflow}{return} selected;}
+\DoxyCodeLine{866 \}}
+\DoxyCodeLine{867 }
+\DoxyCodeLine{873 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a8ab1cf2fe7fd16152d1dba3822853894}{Edge::setSelected}}(\textcolor{keywordtype}{bool} newSelected)\{}
+\DoxyCodeLine{874     this-\/>selected = newSelected;}
+\DoxyCodeLine{875 \}}
+\DoxyCodeLine{876 }
+\DoxyCodeLine{883 \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classEdge_a334ee86a1b82f94aba138781b1b36ce5}{Edge::getPheromones}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{884     \textcolor{keywordflow}{return} pheromones;}
+\DoxyCodeLine{885 \}}
+\DoxyCodeLine{886 }
+\DoxyCodeLine{892 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classEdge_a02830791de181513f4de8306cf28a60e}{Edge::setPheromones}}(\textcolor{keywordtype}{double} pheromones) \{}
+\DoxyCodeLine{893     this-\/>pheromones = pheromones;}
+\DoxyCodeLine{894 \}}
+\DoxyCodeLine{895 }
+\DoxyCodeLine{896 \textcolor{comment}{/********************** Graph  ****************************/}}
+\DoxyCodeLine{897 }
+\DoxyCodeLine{903 \textcolor{keyword}{inline} \mbox{\hyperlink{classGraph_a902c5b3eacb66d60752525ab23297a95}{Graph::\string~Graph}}() \{}
+\DoxyCodeLine{904     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& pair : vertexSet) \{}
+\DoxyCodeLine{905         \textcolor{keyword}{delete} pair.second;}
+\DoxyCodeLine{906     \}}
+\DoxyCodeLine{907     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& pair : edgeSet) \{}
+\DoxyCodeLine{908         \textcolor{keyword}{delete} pair.second;}
+\DoxyCodeLine{909     \}}
+\DoxyCodeLine{910 \}}
+\DoxyCodeLine{911 }
+\DoxyCodeLine{918 \textcolor{keyword}{inline} \mbox{\hyperlink{classVertex}{Vertex}}* \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{Graph::findVertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{919     \textcolor{keyword}{auto} it = vertexSet.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{920 }
+\DoxyCodeLine{921     \textcolor{keywordflow}{if}(it != vertexSet.end())\{}
+\DoxyCodeLine{922         \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{923     \}}
+\DoxyCodeLine{924 }
+\DoxyCodeLine{925     \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{926 \}}
+\DoxyCodeLine{927 }
+\DoxyCodeLine{935 \textcolor{keyword}{inline} \mbox{\hyperlink{classEdge}{Edge}}* \mbox{\hyperlink{classGraph_afb430401620ecaec70b18b252f55a220}{Graph::findEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{936     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& pair : edgeSet) \{}
+\DoxyCodeLine{937         \mbox{\hyperlink{classEdge}{Edge}}* edge = pair.second;}
+\DoxyCodeLine{938         \textcolor{keywordflow}{if} (edge-\/>\mbox{\hyperlink{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}{getSource}}()-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}() == sourceId \&\& edge-\/>\mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{getDestination}}()-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}() == destId) \{}
+\DoxyCodeLine{939             \textcolor{keywordflow}{return} edge;}
+\DoxyCodeLine{940         \}}
+\DoxyCodeLine{941     \}}
+\DoxyCodeLine{942     \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};  \textcolor{comment}{// Edge not found}}
+\DoxyCodeLine{943 \}}
+\DoxyCodeLine{944 }
+\DoxyCodeLine{953 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a480675e98227b5cea4d990d301d43eee}{Graph::addVertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id} , \textcolor{keywordtype}{double} longitude , \textcolor{keywordtype}{double} latitude) \{}
+\DoxyCodeLine{954     \mbox{\hyperlink{classVertex}{Vertex}} * vertex = \textcolor{keyword}{new} \mbox{\hyperlink{classVertex}{Vertex}}(\textcolor{keywordtype}{id} , longitude , latitude);}
+\DoxyCodeLine{955     \textcolor{keywordflow}{if} (\mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(vertex-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}()) != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{956         \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// Vertex with given id already exists}}
+\DoxyCodeLine{957     \}}
+\DoxyCodeLine{958     vertexSet[vertex-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}()] = vertex;}
+\DoxyCodeLine{959     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{960 \}}
+\DoxyCodeLine{961 }
+\DoxyCodeLine{968 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a88e2a04e9f0974b36d6ac8cdd6f9fc28}{Graph::removeVertex}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{969     \textcolor{keyword}{auto} it = vertexSet.find(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{970     \textcolor{keywordflow}{if} (it != vertexSet.end()) \{}
+\DoxyCodeLine{971         \textcolor{keyword}{delete} it-\/>second;}
+\DoxyCodeLine{972         vertexSet.erase(it);}
+\DoxyCodeLine{973         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{974     \}}
+\DoxyCodeLine{975     \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// Vertex with given id not found}}
+\DoxyCodeLine{976 \}}
+\DoxyCodeLine{977 }
+\DoxyCodeLine{987 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_ad2acf070646765e317847a9ae7e540d7}{Graph::addEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId, \textcolor{keywordtype}{int} edgeId , \textcolor{keywordtype}{double} weight)  \{}
+\DoxyCodeLine{988     \mbox{\hyperlink{classVertex}{Vertex}}* source = \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(sourceId);}
+\DoxyCodeLine{989     \mbox{\hyperlink{classVertex}{Vertex}}* dest = \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(destId);}
+\DoxyCodeLine{990     \textcolor{keywordflow}{if} (source == \textcolor{keyword}{nullptr} || dest == \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{991         \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// Source or destination vertex not found}}
+\DoxyCodeLine{992     \}}
+\DoxyCodeLine{993     \mbox{\hyperlink{classEdge}{Edge}}* edge = \textcolor{keyword}{new} \mbox{\hyperlink{classEdge}{Edge}}(source, dest, edgeId, weight);}
+\DoxyCodeLine{994 }
+\DoxyCodeLine{995     source-\/>\mbox{\hyperlink{classVertex_a7b4a88e60059faef38f44729873ee6cc}{addAdjEdge}}(edgeId ,  edge);}
+\DoxyCodeLine{996     dest-\/>\mbox{\hyperlink{classVertex_af00d3d6101082e7c92b2079e8066315f}{addIncEdge}}(edgeId , edge);}
+\DoxyCodeLine{997 }
+\DoxyCodeLine{998     edgeSet[edge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}()] = edge;}
+\DoxyCodeLine{999     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{1000 \}}
+\DoxyCodeLine{1001 }
+\DoxyCodeLine{1009 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a27e490b6976d8da44cf9b7bb004e03d0}{Graph::removeEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{1010     \mbox{\hyperlink{classVertex}{Vertex}}* source = \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(sourceId);}
+\DoxyCodeLine{1011     \mbox{\hyperlink{classVertex}{Vertex}}* dest = \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(destId);}
+\DoxyCodeLine{1012 }
+\DoxyCodeLine{1013     \textcolor{keywordflow}{if} (source == \textcolor{keyword}{nullptr} || dest == \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{1014         \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// Source or destination vertex not found}}
+\DoxyCodeLine{1015     \}}
+\DoxyCodeLine{1016 }
+\DoxyCodeLine{1017     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} it = source-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}().begin(); it != source-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}().end(); ++it) \{}
+\DoxyCodeLine{1018         \mbox{\hyperlink{classEdge}{Edge}} * edge = *it;}
+\DoxyCodeLine{1019 }
+\DoxyCodeLine{1020         \textcolor{keywordflow}{if} (edge-\/>\mbox{\hyperlink{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}{getSource}}()-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}() == sourceId \&\& edge-\/>\mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{getDestination}}()-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}() == destId) \{}
+\DoxyCodeLine{1021 }
+\DoxyCodeLine{1022             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it2 = dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().begin() ; it2 != dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().end() ; it2++)\{}
+\DoxyCodeLine{1023                 \mbox{\hyperlink{classEdge}{Edge}} * e = *it2;}
+\DoxyCodeLine{1024                 \textcolor{keywordflow}{if}(e-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}() == edge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}())\{}
+\DoxyCodeLine{1025                     it2 = dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().erase(it2);}
+\DoxyCodeLine{1026                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1027                 \}}
+\DoxyCodeLine{1028             \}}
+\DoxyCodeLine{1029 }
+\DoxyCodeLine{1030             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it2 = dest-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}().begin() ; it2 != dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().end() ; it2++)\{}
+\DoxyCodeLine{1031                 \mbox{\hyperlink{classEdge}{Edge}} * e = *it2;}
+\DoxyCodeLine{1032                 \textcolor{keywordflow}{if}(e-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}() == edge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}())\{}
+\DoxyCodeLine{1033                     it2 = dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().erase(it2);}
+\DoxyCodeLine{1034                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1035                 \}}
+\DoxyCodeLine{1036             \}}
+\DoxyCodeLine{1037 }
+\DoxyCodeLine{1038             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it2 = source-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().begin() ; it2 != source-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().end() ; it2++)\{}
+\DoxyCodeLine{1039                 \mbox{\hyperlink{classEdge}{Edge}} * e = *it2;}
+\DoxyCodeLine{1040                 \textcolor{keywordflow}{if}(e-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}() == edge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}())\{}
+\DoxyCodeLine{1041                     it2 = dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().erase(it2);}
+\DoxyCodeLine{1042                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1043                 \}}
+\DoxyCodeLine{1044             \}}
+\DoxyCodeLine{1045 }
+\DoxyCodeLine{1046             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it2 = source-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}().begin() ; it2 != source-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().end() ; it2++)\{}
+\DoxyCodeLine{1047                 \mbox{\hyperlink{classEdge}{Edge}} * e = *it2;}
+\DoxyCodeLine{1048                 \textcolor{keywordflow}{if}(e-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}() == edge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}())\{}
+\DoxyCodeLine{1049                     it2 = dest-\/>\mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{getInc}}().erase(it2);}
+\DoxyCodeLine{1050                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{1051                 \}}
+\DoxyCodeLine{1052             \}}
+\DoxyCodeLine{1053 }
+\DoxyCodeLine{1054             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{1055         \}}
+\DoxyCodeLine{1056     \}}
+\DoxyCodeLine{1057     \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// Edge not found}}
+\DoxyCodeLine{1058 \}}
+\DoxyCodeLine{1059 }
+\DoxyCodeLine{1069 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_af3d3c367ccf2ef6d852481a5b3bffcc9}{Graph::addBidirectionalEdge}}(\textcolor{keywordtype}{int} sourceId, \textcolor{keywordtype}{int} destId, \textcolor{keywordtype}{int} edgeId , \textcolor{keywordtype}{double} weight)  \{}
+\DoxyCodeLine{1070 }
+\DoxyCodeLine{1071     \mbox{\hyperlink{classVertex}{Vertex}}* source = \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(sourceId);}
+\DoxyCodeLine{1072     \mbox{\hyperlink{classVertex}{Vertex}}* dest = \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{findVertex}}(destId);}
+\DoxyCodeLine{1073     \textcolor{keywordflow}{if} (source == \textcolor{keyword}{nullptr} || dest == \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{1074         \textcolor{keywordflow}{return} \textcolor{keyword}{false};  \textcolor{comment}{// Source or destination vertex not found}}
+\DoxyCodeLine{1075     \}}
+\DoxyCodeLine{1076 }
+\DoxyCodeLine{1077     \mbox{\hyperlink{classEdge}{Edge}}* edge = \textcolor{keyword}{new} \mbox{\hyperlink{classEdge}{Edge}}(source, dest, edgeId, weight);}
+\DoxyCodeLine{1078     edgeId++;}
+\DoxyCodeLine{1079     \mbox{\hyperlink{classEdge}{Edge}}* reveresEdge = \textcolor{keyword}{new} \mbox{\hyperlink{classEdge}{Edge}}(dest , source , edgeId , weight);}
+\DoxyCodeLine{1080 }
+\DoxyCodeLine{1081     source-\/>\mbox{\hyperlink{classVertex_a7b4a88e60059faef38f44729873ee6cc}{addAdjEdge}}(edgeId ,  edge);}
+\DoxyCodeLine{1082     dest-\/>\mbox{\hyperlink{classVertex_af00d3d6101082e7c92b2079e8066315f}{addIncEdge}}(edgeId , edge);}
+\DoxyCodeLine{1083 }
+\DoxyCodeLine{1084     source-\/>\mbox{\hyperlink{classVertex_af00d3d6101082e7c92b2079e8066315f}{addIncEdge}}(edgeId , reveresEdge);}
+\DoxyCodeLine{1085     dest-\/>\mbox{\hyperlink{classVertex_a7b4a88e60059faef38f44729873ee6cc}{addAdjEdge}}(edgeId , reveresEdge);}
+\DoxyCodeLine{1086 }
+\DoxyCodeLine{1087     edgeSet[edge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}()] = edge;}
+\DoxyCodeLine{1088     edgeSet[reveresEdge-\/>\mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{getId}}()] = reveresEdge;}
+\DoxyCodeLine{1089 }
+\DoxyCodeLine{1090     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{1091 \}}
+\DoxyCodeLine{1092 }
+\DoxyCodeLine{1099 \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}{Graph::getNumVertex}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{1100     \textcolor{keywordflow}{return} vertexSet.size();}
+\DoxyCodeLine{1101 \}}
+\DoxyCodeLine{1102 }
+\DoxyCodeLine{1109 \textcolor{keyword}{inline} std::unordered\_map<int, Vertex*> \mbox{\hyperlink{classGraph_a34dc8268e703217705d6ba9ac8b02170}{Graph::getVertexSet}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{1110     \textcolor{keywordflow}{return} vertexSet;}
+\DoxyCodeLine{1111 \}}
+\DoxyCodeLine{1112 }
+\DoxyCodeLine{1119 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_ac6192a41101102ca8aa6acca607c84f3}{Graph::clear}}() \{}
+\DoxyCodeLine{1120     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& pair : vertexSet) \{}
+\DoxyCodeLine{1121         \textcolor{keyword}{delete} pair.second;}
+\DoxyCodeLine{1122     \}}
+\DoxyCodeLine{1123     vertexSet.clear();}
+\DoxyCodeLine{1124     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& pair : edgeSet) \{}
+\DoxyCodeLine{1125         \textcolor{keyword}{delete} pair.second;}
+\DoxyCodeLine{1126     \}}
+\DoxyCodeLine{1127     edgeSet.clear();}
+\DoxyCodeLine{1128 \}}
+\DoxyCodeLine{1129 }
+\DoxyCodeLine{1135 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_a557582628bd7cf460de68e954ed47a87}{Graph::printGraphInfo}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{1136     std::cout << \textcolor{stringliteral}{"{}Number of nodes: "{}} << vertexSet.size() << std::endl;}
+\DoxyCodeLine{1137     std::cout << \textcolor{stringliteral}{"{}Number of Edges: "{}} << edgeSet.size() << std::endl;}
+\DoxyCodeLine{1138 \}}
+\DoxyCodeLine{1139 }
+\DoxyCodeLine{1145 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_aa60b060b106945913be46eb9cc11d698}{Graph::printNodesContente}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{1146     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& pair : vertexSet) \{}
+\DoxyCodeLine{1147         \mbox{\hyperlink{classVertex}{Vertex}}* vertex = pair.second;}
+\DoxyCodeLine{1148         std::cout << \textcolor{stringliteral}{"{}Vertex ID: "{}} << vertex-\/>\mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{getId}}() << std::endl;}
+\DoxyCodeLine{1149 }
+\DoxyCodeLine{1150         \textcolor{keywordflow}{if}(vertex-\/>\mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{getLongitude}}() == DBL\_MAX)\{}
+\DoxyCodeLine{1151             std::cout << \textcolor{stringliteral}{"{}Longitude: Not defined"{}} << std::endl;}
+\DoxyCodeLine{1152         \}}
+\DoxyCodeLine{1153         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{1154             std::cout << \textcolor{stringliteral}{"{}Longitude: "{}} << vertex-\/>\mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{getLongitude}}() << std::endl;}
+\DoxyCodeLine{1155         \}}
+\DoxyCodeLine{1156 }
+\DoxyCodeLine{1157         \textcolor{keywordflow}{if}(vertex-\/>\mbox{\hyperlink{classVertex_a7455a09de51b274867edae2254cef38d}{getLatitude}}() == DBL\_MAX)\{}
+\DoxyCodeLine{1158             std::cout << \textcolor{stringliteral}{"{}Longitude: Not defined"{}} << std::endl;}
+\DoxyCodeLine{1159         \}}
+\DoxyCodeLine{1160         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{1161             std::cout << \textcolor{stringliteral}{"{}Longitude: "{}} << vertex-\/>\mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{getLongitude}}() << std::endl;}
+\DoxyCodeLine{1162         \}}
+\DoxyCodeLine{1163 }
+\DoxyCodeLine{1164         std::cout << \textcolor{stringliteral}{"{}Adjacent Edges:"{}} << std::endl;}
+\DoxyCodeLine{1165         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& adjPair : vertex-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}()) \{}
+\DoxyCodeLine{1166             std::cout << \textcolor{stringliteral}{"{}    Destination ID: "{}} << adjPair-\/>getDestination()-\/>getId() << std::endl;}
+\DoxyCodeLine{1167             std::cout << \textcolor{stringliteral}{"{}    Weight: "{}} << adjPair-\/>getWeight() << std::endl;}
+\DoxyCodeLine{1168         \}}
+\DoxyCodeLine{1169         std::cout << std::endl;}
+\DoxyCodeLine{1170     \}}
+\DoxyCodeLine{1171 \}}
+\DoxyCodeLine{1172 }
+\DoxyCodeLine{1173 }
+\DoxyCodeLine{1180 \textcolor{keyword}{inline} \mbox{\hyperlink{classClock}{Clock}} \mbox{\hyperlink{classGraph_ad5160609c45eb367a9db50a0dd5f286c}{Graph::getClock}}() \{}
+\DoxyCodeLine{1181     \textcolor{keywordflow}{return} this-\/>clock;}
+\DoxyCodeLine{1182 \}}
+\DoxyCodeLine{1183 }
+\DoxyCodeLine{1189 \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classGraph_a19737b754b3384221e533111ba3b126b}{Graph::makeFullyConnected}}() \{}
+\DoxyCodeLine{1190     \textcolor{comment}{// Get all vertices and edges}}
+\DoxyCodeLine{1191     std::unordered\_map<int, Vertex*> vertices = \mbox{\hyperlink{classGraph_a34dc8268e703217705d6ba9ac8b02170}{getVertexSet}}();}
+\DoxyCodeLine{1192     std::unordered\_map<int, Edge*> edges = \mbox{\hyperlink{classGraph_ab5dd6c3f53e38ecd198d59a8a92bda54}{getEdgeSet}}();}
+\DoxyCodeLine{1193 }
+\DoxyCodeLine{1194     \textcolor{comment}{// Check if the graph is already fully connected}}
+\DoxyCodeLine{1195     \textcolor{keywordtype}{int} numVertices = \mbox{\hyperlink{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}{getNumVertex}}();}
+\DoxyCodeLine{1196     \textcolor{keywordtype}{int} expectedEdges = numVertices * (numVertices -\/ 1);}
+\DoxyCodeLine{1197     \textcolor{keywordflow}{if} (edges.size() == expectedEdges || edges.size() == expectedEdges / 2) \{}
+\DoxyCodeLine{1198         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{1199     \}}
+\DoxyCodeLine{1200 }
+\DoxyCodeLine{1201     \textcolor{comment}{// Check if all vertices have defined coordinates}}
+\DoxyCodeLine{1202     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& v : vertices) \{}
+\DoxyCodeLine{1203         \textcolor{keywordflow}{if} (v.second-\/>getLatitude() == DBL\_MAX || v.second-\/>getLongitude() == DBL\_MAX) \{}
+\DoxyCodeLine{1204             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{1205         \}}
+\DoxyCodeLine{1206     \}}
+\DoxyCodeLine{1207 }
+\DoxyCodeLine{1208     \textcolor{comment}{// Create a set to store unique pairs of connected vertices}}
+\DoxyCodeLine{1209     std::vector<std::vector<bool>> connections(numVertices, std::vector<bool>(numVertices, \textcolor{keyword}{false}));}
+\DoxyCodeLine{1210     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& e : edges) \{}
+\DoxyCodeLine{1211         \textcolor{keywordtype}{int} sourceId = e.second-\/>getSource()-\/>getId();}
+\DoxyCodeLine{1212         \textcolor{keywordtype}{int} destId = e.second-\/>getDestination()-\/>getId();}
+\DoxyCodeLine{1213         connections[sourceId][destId] = \textcolor{keyword}{true};}
+\DoxyCodeLine{1214         connections[destId][sourceId] = \textcolor{keyword}{true}; \textcolor{comment}{// Because of bidirectional edges}}
+\DoxyCodeLine{1215     \}}
+\DoxyCodeLine{1216 }
+\DoxyCodeLine{1217     \textcolor{comment}{// Iterate through all pairs of vertices to add missing edges}}
+\DoxyCodeLine{1218     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} it1 = vertices.begin(); it1 != vertices.end(); ++it1) \{}
+\DoxyCodeLine{1219         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} it2 = std::next(it1); it2 != vertices.end(); ++it2) \{}
+\DoxyCodeLine{1220             \textcolor{keywordtype}{int} sourceId = it1-\/>second-\/>getId();}
+\DoxyCodeLine{1221             \textcolor{keywordtype}{int} destId = it2-\/>second-\/>getId();}
+\DoxyCodeLine{1222 }
+\DoxyCodeLine{1223             \textcolor{comment}{// If there is no edge between sourceId and destId, add it}}
+\DoxyCodeLine{1224             \textcolor{keywordflow}{if}(!connections[sourceId][destId])\{}
+\DoxyCodeLine{1225                 \mbox{\hyperlink{classVertex}{Vertex}}* v1 = it1-\/>second;}
+\DoxyCodeLine{1226                 \mbox{\hyperlink{classVertex}{Vertex}}* v2 = it2-\/>second;}
+\DoxyCodeLine{1227                 \textcolor{keywordtype}{double} weight = \mbox{\hyperlink{classGraph_a7c8895e24312d578e1c8c5f8767c8513}{Harverstein}}(v1-\/>\mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{getLongitude}}(), v1-\/>\mbox{\hyperlink{classVertex_a7455a09de51b274867edae2254cef38d}{getLatitude}}(), v2-\/>\mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{getLongitude}}(), v2-\/>\mbox{\hyperlink{classVertex_a7455a09de51b274867edae2254cef38d}{getLatitude}}());}
+\DoxyCodeLine{1228                 \mbox{\hyperlink{classGraph_af3d3c367ccf2ef6d852481a5b3bffcc9}{addBidirectionalEdge}}(sourceId, destId, edgeSet.size() + 1, weight);}
+\DoxyCodeLine{1229                 connections[sourceId][destId] = \textcolor{keyword}{true};}
+\DoxyCodeLine{1230                 connections[destId][sourceId] = \textcolor{keyword}{true};}
+\DoxyCodeLine{1231             \}}
+\DoxyCodeLine{1232         \}}
+\DoxyCodeLine{1233     \}}
+\DoxyCodeLine{1234     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{1235 \}}
+\DoxyCodeLine{1236 }
+\DoxyCodeLine{1246 \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classGraph_a7c8895e24312d578e1c8c5f8767c8513}{Graph::Harverstein}}(\textcolor{keywordtype}{double} longitude1, \textcolor{keywordtype}{double} latitude1, \textcolor{keywordtype}{double} longitude2, \textcolor{keywordtype}{double} latitude2)\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{1247     \textcolor{keywordtype}{double} lon1\_rad = longitude1 * M\_PI / 180.0;}
+\DoxyCodeLine{1248     \textcolor{keywordtype}{double} lat1\_rad = latitude1 * M\_PI / 180.0;}
+\DoxyCodeLine{1249     \textcolor{keywordtype}{double} lon2\_rad = longitude2 * M\_PI / 180.0;}
+\DoxyCodeLine{1250     \textcolor{keywordtype}{double} lat2\_rad = latitude2 * M\_PI / 180.0;}
+\DoxyCodeLine{1251 }
+\DoxyCodeLine{1252     \textcolor{keywordtype}{double} dlon = lon2\_rad -\/ lon1\_rad;}
+\DoxyCodeLine{1253     \textcolor{keywordtype}{double} dlat = lat2\_rad -\/ lat1\_rad;}
+\DoxyCodeLine{1254     \textcolor{keywordtype}{double} a = pow(sin(dlat / 2), 2) + cos(lat1\_rad) * cos(lat2\_rad) * pow(sin(dlon / 2), 2);}
+\DoxyCodeLine{1255     \textcolor{keywordtype}{double} c = 2 * atan2(sqrt(a), sqrt(1 -\/ a));}
+\DoxyCodeLine{1256 }
+\DoxyCodeLine{1257     \textcolor{keyword}{const} \textcolor{keywordtype}{double} earth\_radius\_km = 6371000.0;}
+\DoxyCodeLine{1258 }
+\DoxyCodeLine{1259     \textcolor{keywordtype}{double} distance = earth\_radius\_km * c;}
+\DoxyCodeLine{1260     \textcolor{keywordflow}{return} distance;}
+\DoxyCodeLine{1261 \}}
+\DoxyCodeLine{1262 }
+\DoxyCodeLine{1269 \textcolor{keyword}{inline} std::unordered\_map<int, Edge *> \mbox{\hyperlink{classGraph_ab5dd6c3f53e38ecd198d59a8a92bda54}{Graph::getEdgeSet}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{1270     \textcolor{keywordflow}{return} edgeSet;}
+\DoxyCodeLine{1271 \}}
+\DoxyCodeLine{1272 }
+\DoxyCodeLine{1278 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_a43037a326921adde0f94320aa161740a}{Graph::populate\_in\_and\_out\_degree}}() \{}
+\DoxyCodeLine{1279     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& pair: vertexSet)\{}
+\DoxyCodeLine{1280         pair.second-\/>setVisited(\textcolor{keyword}{false});}
+\DoxyCodeLine{1281         pair.second-\/>setIndegree(0);}
+\DoxyCodeLine{1282         pair.second-\/>setOutdegree(0);}
+\DoxyCodeLine{1283     \}}
+\DoxyCodeLine{1284 }
+\DoxyCodeLine{1285     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& pair: vertexSet)\{}
+\DoxyCodeLine{1286         \textcolor{keywordflow}{for} (\mbox{\hyperlink{classEdge}{Edge}} * e: pair.second-\/>getAdj())\{}
+\DoxyCodeLine{1287             \textcolor{keywordflow}{if} (e-\/>isSelected())\{}
+\DoxyCodeLine{1288                 e-\/>getSource()-\/>setOutdegree(e-\/>getSource()-\/>getOutdegree() + 1);}
+\DoxyCodeLine{1289                 e-\/>getDestination()-\/>setIndegree(e-\/>getDestination()-\/>getIndegree() + 1);}
+\DoxyCodeLine{1290             \}}
+\DoxyCodeLine{1291         \}}
+\DoxyCodeLine{1292     \}}
+\DoxyCodeLine{1293 \}}
+\DoxyCodeLine{1294 }
+\DoxyCodeLine{1300 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classGraph_a3b67d4aae0ec29037ede078c3c88999d}{Graph::orderVertexAdj}}(\mbox{\hyperlink{classVertex}{Vertex}} * v)\{}
+\DoxyCodeLine{1301     \textcolor{keyword}{auto} comp = [] (\mbox{\hyperlink{classEdge}{Edge}} * e1, \mbox{\hyperlink{classEdge}{Edge}} * e2)\{}
+\DoxyCodeLine{1302         \textcolor{keywordflow}{if} (e1-\/>\mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{getDestination}}()-\/>\mbox{\hyperlink{classVertex_a16309448211a55f97cdee17aee714c40}{getDegree}}() < e2-\/>getDestination()-\/>getDegree()) \{}
+\DoxyCodeLine{1303             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{1304         \}}
+\DoxyCodeLine{1305         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e1-\/>\mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{getDestination}}()-\/>\mbox{\hyperlink{classVertex_a16309448211a55f97cdee17aee714c40}{getDegree}}() == e2-\/>getDestination()-\/>getDegree() and e1-\/>\mbox{\hyperlink{classEdge_a1caaffca117bab3ff5b7387623a356f8}{getWeight}}() < e2-\/>getWeight())\{}
+\DoxyCodeLine{1306             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{1307         \}}
+\DoxyCodeLine{1308         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{1309     \};}
+\DoxyCodeLine{1310 }
+\DoxyCodeLine{1311     std::sort(v-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}().begin(), v-\/>\mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{getAdj}}().end(), comp);}
+\DoxyCodeLine{1312 \}}
+\DoxyCodeLine{1313 }
+\DoxyCodeLine{1314 }
+\DoxyCodeLine{1315 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* DA\_TP\_CLASSES\_GRAPH */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

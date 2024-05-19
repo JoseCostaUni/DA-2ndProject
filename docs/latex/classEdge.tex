@@ -1,0 +1,362 @@
+\hypertarget{classEdge}{}\doxysection{Edge Class Reference}
+\label{classEdge}\index{Edge@{Edge}}
+
+
+Represents an edge in the graph.  
+
+
+
+
+{\ttfamily \#include $<$Graph.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classEdge_ac9b58f8c133b2304e7083ef3df07d67d}{Edge}} (\mbox{\hyperlink{classVertex}{Vertex}} $\ast$source, \mbox{\hyperlink{classVertex}{Vertex}} $\ast$destination, int edge\+Id, double weight)
+\begin{DoxyCompactList}\small\item\em Constructs an \mbox{\hyperlink{classEdge}{Edge}} with the given source, destination, ID, and weight. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVertex}{Vertex}} $\ast$ \mbox{\hyperlink{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}{get\+Source}} () const
+\begin{DoxyCompactList}\small\item\em Returns the source vertex. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVertex}{Vertex}} $\ast$ \mbox{\hyperlink{classEdge_a52e497c19432c539ed9343ffe61d7e69}{get\+Destination}} () const
+\begin{DoxyCompactList}\small\item\em Returns the destination vertex. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classEdge_a1caaffca117bab3ff5b7387623a356f8}{get\+Weight}} () const
+\begin{DoxyCompactList}\small\item\em Returns the weight of the edge. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classEdge_a334ee86a1b82f94aba138781b1b36ce5}{get\+Pheromones}} () const
+\begin{DoxyCompactList}\small\item\em Returns the pheromones of the edge. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Returns the ID of the edge. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classEdge_a52967cf488bb7185a512cd111420215d}{is\+Selected}} () const
+\begin{DoxyCompactList}\small\item\em Returns the selection status of the edge. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEdge_a3ccb2627902b1a3fbb38106f69d3ca76}{set\+Source}} (\mbox{\hyperlink{classVertex}{Vertex}} $\ast$new\+Source)
+\begin{DoxyCompactList}\small\item\em Sets the source vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEdge_adbe14d81759ea2307ee247a3236d8147}{set\+Destination}} (\mbox{\hyperlink{classVertex}{Vertex}} $\ast$new\+Destination)
+\begin{DoxyCompactList}\small\item\em Sets the destination vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEdge_aaed6c3ce63930d1e2fc075f4e1bed789}{set\+Weight}} (double new\+Weight)
+\begin{DoxyCompactList}\small\item\em Sets the weight of the edge. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEdge_a793e1b4d07e5a709550afcadc657b250}{set\+Id}} (int new\+Id)
+\begin{DoxyCompactList}\small\item\em Sets the ID of the edge. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEdge_a8ab1cf2fe7fd16152d1dba3822853894}{set\+Selected}} (bool selected)
+\begin{DoxyCompactList}\small\item\em Sets the selection status of the edge. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEdge_a02830791de181513f4de8306cf28a60e}{set\+Pheromones}} (double pheromones)
+\begin{DoxyCompactList}\small\item\em Sets the pheromones of the edge. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an edge in the graph. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classEdge_ac9b58f8c133b2304e7083ef3df07d67d}\label{classEdge_ac9b58f8c133b2304e7083ef3df07d67d}} 
+\index{Edge@{Edge}!Edge@{Edge}}
+\index{Edge@{Edge}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{Edge()}{Edge()}}
+{\footnotesize\ttfamily Edge\+::\+Edge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertex}{Vertex}} $\ast$}]{source,  }\item[{\mbox{\hyperlink{classVertex}{Vertex}} $\ast$}]{destination,  }\item[{int}]{edge\+Id,  }\item[{double}]{weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs an \mbox{\hyperlink{classEdge}{Edge}} with the given source, destination, ID, and weight. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Source vertex. \\
+\hline
+{\em destination} & Destination vertex. \\
+\hline
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em weight} & Weight of the edge.\\
+\hline
+{\em source} & \\
+\hline
+{\em destination} & \\
+\hline
+{\em edge\+Id} & \\
+\hline
+{\em weight} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEdge_a52e497c19432c539ed9343ffe61d7e69}\label{classEdge_a52e497c19432c539ed9343ffe61d7e69}} 
+\index{Edge@{Edge}!getDestination@{getDestination}}
+\index{getDestination@{getDestination}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{getDestination()}{getDestination()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVertex}{Vertex}} $\ast$ Edge\+::get\+Destination (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the destination vertex. 
+
+returns the destination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the destination vertex. @complexity O(1)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the destination of the edge. @complexity O(1). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}\label{classEdge_aeb7a132666d4ff2da7043e9e86e51a1e}} 
+\index{Edge@{Edge}!getId@{getId}}
+\index{getId@{getId}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily int Edge\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the ID of the edge. 
+
+sets the weight.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ID of the edge. @complexity O(1)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Weight} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEdge_a334ee86a1b82f94aba138781b1b36ce5}\label{classEdge_a334ee86a1b82f94aba138781b1b36ce5}} 
+\index{Edge@{Edge}!getPheromones@{getPheromones}}
+\index{getPheromones@{getPheromones}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{getPheromones()}{getPheromones()}}
+{\footnotesize\ttfamily double Edge\+::get\+Pheromones (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the pheromones of the edge. 
+
+returns the pheromones.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pheromones of the edge. @complexity O(1)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the pheromones of the edge. @complexity O(1). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}\label{classEdge_a58c9ca09b7487d92e22ed1dd4e284f19}} 
+\index{Edge@{Edge}!getSource@{getSource}}
+\index{getSource@{getSource}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{getSource()}{getSource()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVertex}{Vertex}} $\ast$ Edge\+::get\+Source (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the source vertex. 
+
+returns the source.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the source vertex. @complexity O(1)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the source of the edge. @complexity O(1). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEdge_a1caaffca117bab3ff5b7387623a356f8}\label{classEdge_a1caaffca117bab3ff5b7387623a356f8}} 
+\index{Edge@{Edge}!getWeight@{getWeight}}
+\index{getWeight@{getWeight}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{getWeight()}{getWeight()}}
+{\footnotesize\ttfamily double Edge\+::get\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the weight of the edge. 
+
+returns the weight.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Weight of the edge. @complexity O(1)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the weight of the edge. @complexity O(1). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEdge_a52967cf488bb7185a512cd111420215d}\label{classEdge_a52967cf488bb7185a512cd111420215d}} 
+\index{Edge@{Edge}!isSelected@{isSelected}}
+\index{isSelected@{isSelected}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{isSelected()}{isSelected()}}
+{\footnotesize\ttfamily bool Edge\+::is\+Selected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the selection status of the edge. 
+
+returns the selection status.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge is selected, false otherwise. @complexity O(1)
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the selection status of the edge. @complexity O(1). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEdge_adbe14d81759ea2307ee247a3236d8147}\label{classEdge_adbe14d81759ea2307ee247a3236d8147}} 
+\index{Edge@{Edge}!setDestination@{setDestination}}
+\index{setDestination@{setDestination}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{setDestination()}{setDestination()}}
+{\footnotesize\ttfamily void Edge\+::set\+Destination (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertex}{Vertex}} $\ast$}]{new\+Destination }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the destination vertex. 
+
+sets the destination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Destination} & Pointer to the new destination vertex. @complexity O(1)\\
+\hline
+{\em new\+Destination} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEdge_a793e1b4d07e5a709550afcadc657b250}\label{classEdge_a793e1b4d07e5a709550afcadc657b250}} 
+\index{Edge@{Edge}!setId@{setId}}
+\index{setId@{setId}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void Edge\+::set\+Id (\begin{DoxyParamCaption}\item[{int}]{new\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the ID of the edge. 
+
+sets the weight.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Id} & New ID of the edge. @complexity O(1)\\
+\hline
+{\em new\+Weight} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEdge_a02830791de181513f4de8306cf28a60e}\label{classEdge_a02830791de181513f4de8306cf28a60e}} 
+\index{Edge@{Edge}!setPheromones@{setPheromones}}
+\index{setPheromones@{setPheromones}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{setPheromones()}{setPheromones()}}
+{\footnotesize\ttfamily void Edge\+::set\+Pheromones (\begin{DoxyParamCaption}\item[{double}]{pheromones }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the pheromones of the edge. 
+
+sets the pheromones.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pheromones} & New pheromones of the edge. @complexity O(1)\\
+\hline
+{\em pheromones} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEdge_a8ab1cf2fe7fd16152d1dba3822853894}\label{classEdge_a8ab1cf2fe7fd16152d1dba3822853894}} 
+\index{Edge@{Edge}!setSelected@{setSelected}}
+\index{setSelected@{setSelected}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{setSelected()}{setSelected()}}
+{\footnotesize\ttfamily void Edge\+::set\+Selected (\begin{DoxyParamCaption}\item[{bool}]{new\+Selected }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the selection status of the edge. 
+
+sets the selection status.
+
+
+\begin{DoxyParams}{Parameters}
+{\em selected} & New selection status. @complexity O(1)\\
+\hline
+{\em new\+Selected} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEdge_a3ccb2627902b1a3fbb38106f69d3ca76}\label{classEdge_a3ccb2627902b1a3fbb38106f69d3ca76}} 
+\index{Edge@{Edge}!setSource@{setSource}}
+\index{setSource@{setSource}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{setSource()}{setSource()}}
+{\footnotesize\ttfamily void Edge\+::set\+Source (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertex}{Vertex}} $\ast$}]{new\+Source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the source vertex. 
+
+sets the source.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Source} & Pointer to the new source vertex. @complexity O(1)\\
+\hline
+{\em new\+Source} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEdge_aaed6c3ce63930d1e2fc075f4e1bed789}\label{classEdge_aaed6c3ce63930d1e2fc075f4e1bed789}} 
+\index{Edge@{Edge}!setWeight@{setWeight}}
+\index{setWeight@{setWeight}!Edge@{Edge}}
+\doxysubsubsection{\texorpdfstring{setWeight()}{setWeight()}}
+{\footnotesize\ttfamily void Edge\+::set\+Weight (\begin{DoxyParamCaption}\item[{double}]{new\+Weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the weight of the edge. 
+
+sets the weight.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Weight} & New weight of the edge. @complexity O(1)\\
+\hline
+{\em new\+Weight} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\mbox{\hyperlink{Graph_8h}{Graph.\+h}}\end{DoxyCompactItemize}

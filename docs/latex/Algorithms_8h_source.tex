@@ -1,0 +1,50 @@
+\hypertarget{Algorithms_8h_source}{}\doxysection{Algorithms.\+h}
+\label{Algorithms_8h_source}\index{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/Algorithms.h@{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/Algorithms.h}}
+\mbox{\hyperlink{Algorithms_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}../stdafx.h"{}}}
+\DoxyCodeLine{9 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{21 \textcolor{keywordtype}{double} \mbox{\hyperlink{Algorithms_8h_a06cac9d29050bb0904d8ef7afad19e30}{Harverstein}}(\textcolor{keywordtype}{double} longitude1, \textcolor{keywordtype}{double} latitude1, \textcolor{keywordtype}{double} longitude2, \textcolor{keywordtype}{double} latitude2);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{31 std::vector<Vertex*> \mbox{\hyperlink{Algorithms_8h_aa31bcf90248f2f00efd21771a274ff57}{PrimMst}}(\textcolor{keyword}{const} \mbox{\hyperlink{classGraph}{Graph}}* graph , \mbox{\hyperlink{classVertex}{Vertex}} * sourceVertex);}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{41 \mbox{\hyperlink{classEdge}{Edge}} * \mbox{\hyperlink{Algorithms_8h_a06593601859d14b9d86f06924c2551b5}{findEdgeTo}}(\mbox{\hyperlink{classVertex}{Vertex}} * source , \mbox{\hyperlink{classVertex}{Vertex}} * dest);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{51 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_acaa30eb2bd51cbe6e1bc19d10087ea5c}{dfs}}(\textcolor{keyword}{const} \mbox{\hyperlink{classGraph}{Graph}} \& graph , \mbox{\hyperlink{classVertex}{Vertex}} * source , std::vector<Vertex *>\& path);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{61 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_ae4d75b2ad5150aaae8ae312a712aed5e}{dfsAux}}(\textcolor{keyword}{const} \mbox{\hyperlink{classGraph}{Graph}} \& graph , \mbox{\hyperlink{classVertex}{Vertex}} * current , std::vector<Vertex *> \&path);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{71 std::vector<Edge * > \mbox{\hyperlink{Algorithms_8h_aa02e6307a3a77725945ae68c7df166b6}{NearestNeighbour}}(\mbox{\hyperlink{classGraph}{Graph}} * graph , \mbox{\hyperlink{classVertex}{Vertex}}* startVertex);}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{81 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_a0c4e709572255e2fa6112fe3bda81958}{twoOptSwap}}(std::vector<Vertex *> \&path, \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} k);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{94 \textcolor{keywordtype}{double} \mbox{\hyperlink{Algorithms_8h_a2a338c9e6046f888ced24dff750fd834}{calculateCostDifference}}(\mbox{\hyperlink{classVertex}{Vertex}} *a, \mbox{\hyperlink{classVertex}{Vertex}} *b, \mbox{\hyperlink{classVertex}{Vertex}} *c, \mbox{\hyperlink{classVertex}{Vertex}} *d, std::vector<std::vector<double>> \&edgeMatrix);}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{104 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_a91616912ae89b7e6e9678c79523039ff}{twoOpt}}(std::vector<Vertex *> \&path, \textcolor{keywordtype}{int} maxIterations, std::vector<std::vector<double>> \&edgeMatrix);}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{112 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_a7e59e94f55b883d53ca641339dd89ca1}{orderEdges}}(\mbox{\hyperlink{classVertex}{Vertex}} * v);}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{124 \textcolor{keywordtype}{bool} \mbox{\hyperlink{Algorithms_8h_a3af9dc4792402cd464a36599bb981ef9}{nn\_with\_backtracking}}(\mbox{\hyperlink{classGraph}{Graph}} * g , \mbox{\hyperlink{classVertex}{Vertex}} * s, std::vector<Vertex * > \&hamiltonian) ;}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{134 \textcolor{keywordtype}{bool} \mbox{\hyperlink{Algorithms_8h_ab91112c468628bbd14a4867cd6d0e4a3}{nn\_with\_backtrackingAndTwoOpt}}(\mbox{\hyperlink{classGraph}{Graph}} * g , \mbox{\hyperlink{classVertex}{Vertex}} * s, std::vector<Vertex * > \&hamiltonian);}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{145 \textcolor{keywordtype}{bool} \mbox{\hyperlink{Algorithms_8h_a92b0d1cdb3ffb066c6c95ff068c80b1c}{nn\_backtracking}}(\textcolor{keywordtype}{int} \& size , \mbox{\hyperlink{classVertex}{Vertex}} * s, \mbox{\hyperlink{classVertex}{Vertex}} * d, std::vector<Vertex *>\& path);}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{155 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_a60f35510baf8e48cedbf8338115c029e}{tspBruteForce}}(\mbox{\hyperlink{classGraph}{Graph}}* g);}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{168 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_ac7281603eaae832e8b687088d82c39d8}{tspBacktrackingBruteForce}}(\mbox{\hyperlink{classGraph}{Graph}}* g,\mbox{\hyperlink{classVertex}{Vertex}}* curr,\textcolor{keywordtype}{double} curr\_cost,\textcolor{keywordtype}{int} n\_visited,\textcolor{keywordtype}{double}\&min\_cost,std::vector<Vertex*> \&path);}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170 }
+\DoxyCodeLine{179 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_adb7c059257f5d1ee7615ac3f5f10102c}{preOrderDFSAux}}(\textcolor{keyword}{const} \mbox{\hyperlink{classGraph}{Graph}} *graph, \mbox{\hyperlink{classVertex}{Vertex}} *current, std::vector<Vertex *> \&path);}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{189 \textcolor{keywordtype}{void} \mbox{\hyperlink{Algorithms_8h_a7088ec47a2283adea7f9c3b18abd8123}{preOrder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classGraph}{Graph}} *graph, \mbox{\hyperlink{classVertex}{Vertex}} *source, std::vector<Vertex *> \&path);}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{201 std::vector<Edge *> \mbox{\hyperlink{Algorithms_8h_a03e0b25733745ce2ce58fcbdd0f588ec}{TriangularApproximationHeuristic}}(\mbox{\hyperlink{classGraph}{Graph}} * graph , \mbox{\hyperlink{classVertex}{Vertex}} * source , \mbox{\hyperlink{classVertex}{Vertex}} * dest);}
+\DoxyCodeLine{202 }
+
+\end{DoxyCode}

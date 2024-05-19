@@ -1,0 +1,368 @@
+\hypertarget{classUI}{}\doxysection{UI Class Reference}
+\label{classUI}\index{UI@{UI}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classUI_a675985a56b5e87ebdc8e5884b9f2ee09}\label{classUI_a675985a56b5e87ebdc8e5884b9f2ee09}} 
+{\bfseries UI} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for the \mbox{\hyperlink{classUI}{UI}} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_aa4f5f0000b864a5019c797b8a7da8891}{menu\+\_\+start}} ()
+\begin{DoxyCompactList}\small\item\em Displays the main menu and handles user input. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a19639c490c34c5b0c66684c2670b7076}{loading\+\_\+stuff}} (\mbox{\hyperlink{classUI}{UI}} \&ui)
+\begin{DoxyCompactList}\small\item\em Loads necessary data and settings for the \mbox{\hyperlink{classUI}{UI}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a9fb619daf6b6c6cea7888622f7d3a40a}{change\+Data\+Set}} ()
+\begin{DoxyCompactList}\small\item\em Displays the options to change the data set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a7b1b994477bd9b6feb8668aede1d7cda}{Graph\+Options\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Displays options related to graph information and handles user input. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a18740cf7515ae0c7530de0c9cb916e52}{Back\+Track\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Displays the Back\+Track menu and prompts the user to choose an option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_ae6e6f8381ec34388c4bd8811c4e86e1c}{main\+\_\+menu}} ()
+\begin{DoxyCompactList}\small\item\em Displays the main menu options. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a7400f4d4e0b03b04121de9208070aa6b}{back\+\_\+menu}} ()
+\begin{DoxyCompactList}\small\item\em Displays the back menu options. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a397e0a110cc341b9060d8868cdf6df68}{back\+\_\+menu\+\_\+\+Graph\+Options}} ()
+\begin{DoxyCompactList}\small\item\em Displays the \mbox{\hyperlink{classGraph}{Graph}} Options menu options. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a4212469fffb76e4d920ce0886ab57877}{back\+\_\+menu\+\_\+\+Backtracking\+Options}} ()
+\begin{DoxyCompactList}\small\item\em Displays the Back\+Tracking Options menu options. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGraph}{Graph}} \mbox{\hyperlink{classUI_a6d289b0fadefcf26386f7d8b6723fa1c}{get\+Graph}} () const
+\begin{DoxyCompactList}\small\item\em returns the graph. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUI_a286d85cc02e152ae284a4428efb0a942}{path\+Selector}} ()
+\begin{DoxyCompactList}\small\item\em Selects the appropriate action based on the file path loaded. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classUI_a298d81ef3106436a00bed98330d4c5a8}{clear\+\_\+screen}} ()
+\begin{DoxyCompactList}\small\item\em Clears the console screen. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{classUI_a83fba9739cde5eda8391c2020ab3dcff}{validate\+\_\+input}} (char \&op, const char lower\+\_\+bound, const char upper\+\_\+bound)
+\begin{DoxyCompactList}\small\item\em Validates user input within a specified range. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{classUI_ad24beddee815f5f1feeadd7084ae0bf8}{validate\+\_\+int\+\_\+input}} (int \&index)
+\begin{DoxyCompactList}\small\item\em Validates user input as an integer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classUI_a7400f4d4e0b03b04121de9208070aa6b}\label{classUI_a7400f4d4e0b03b04121de9208070aa6b}} 
+\index{UI@{UI}!back\_menu@{back\_menu}}
+\index{back\_menu@{back\_menu}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{back\_menu()}{back\_menu()}}
+{\footnotesize\ttfamily void UI\+::back\+\_\+menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the back menu options. 
+
+Displays an option to go back to the main menu.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none. @complexity O(1).
+\end{DoxyReturn}
+This function prompts the user to press \textquotesingle{}A\textquotesingle{} to go back to the main menu. Upon user input, it redirects to the main menu.
+
+Time Complexity\+: O(1). \mbox{\Hypertarget{classUI_a4212469fffb76e4d920ce0886ab57877}\label{classUI_a4212469fffb76e4d920ce0886ab57877}} 
+\index{UI@{UI}!back\_menu\_BacktrackingOptions@{back\_menu\_BacktrackingOptions}}
+\index{back\_menu\_BacktrackingOptions@{back\_menu\_BacktrackingOptions}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{back\_menu\_BacktrackingOptions()}{back\_menu\_BacktrackingOptions()}}
+{\footnotesize\ttfamily void UI\+::back\+\_\+menu\+\_\+\+Backtracking\+Options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the Back\+Tracking Options menu options. 
+
+Navigates back to the Back\+Track menu upon user input.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none. @complexity O(1).
+\end{DoxyReturn}
+This function prompts the user to press \textquotesingle{}A\textquotesingle{} to return to the Back\+Track menu. It validates the input and calls the Back\+Track\+Menu function accordingly.
+
+Time Complexity\+: O(1) \mbox{\Hypertarget{classUI_a397e0a110cc341b9060d8868cdf6df68}\label{classUI_a397e0a110cc341b9060d8868cdf6df68}} 
+\index{UI@{UI}!back\_menu\_GraphOptions@{back\_menu\_GraphOptions}}
+\index{back\_menu\_GraphOptions@{back\_menu\_GraphOptions}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{back\_menu\_GraphOptions()}{back\_menu\_GraphOptions()}}
+{\footnotesize\ttfamily void UI\+::back\+\_\+menu\+\_\+\+Graph\+Options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the \mbox{\hyperlink{classGraph}{Graph}} Options menu options. 
+
+Displays an option to go back to the \mbox{\hyperlink{classGraph}{Graph}} Options menu.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none. @complexity O(1).
+\end{DoxyReturn}
+This function prompts the user to press \textquotesingle{}A\textquotesingle{} to go back to the \mbox{\hyperlink{classGraph}{Graph}} Options menu. Upon user input, it redirects to the \mbox{\hyperlink{classGraph}{Graph}} Options menu.
+
+Time Complexity\+: O(1). \mbox{\Hypertarget{classUI_a18740cf7515ae0c7530de0c9cb916e52}\label{classUI_a18740cf7515ae0c7530de0c9cb916e52}} 
+\index{UI@{UI}!BackTrackMenu@{BackTrackMenu}}
+\index{BackTrackMenu@{BackTrackMenu}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{BackTrackMenu()}{BackTrackMenu()}}
+{\footnotesize\ttfamily void UI\+::\+Back\+Track\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the Back\+Track menu and prompts the user to choose an option. 
+
+This function presents the user with options to perform TSP calculations using different algorithms. The user can select either\+:
+\begin{DoxyItemize}
+\item A. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs without Two Opt Optimization.
+\item B. Calculate TSP with Nearest Neighbour with Backtrack algorithm for incomplete Graphs with Two Opt Optimization (Beware that this will take 10x more than the previous).
+\item C. Go back to the main menu.
+\end{DoxyItemize}
+
+Upon user selection, the function performs the corresponding action.
+
+Time Complexity\+: O(n), where n is the size of the vertex set in the graph. \mbox{\Hypertarget{classUI_a9fb619daf6b6c6cea7888622f7d3a40a}\label{classUI_a9fb619daf6b6c6cea7888622f7d3a40a}} 
+\index{UI@{UI}!changeDataSet@{changeDataSet}}
+\index{changeDataSet@{changeDataSet}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{changeDataSet()}{changeDataSet()}}
+{\footnotesize\ttfamily void UI\+::change\+Data\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the options to change the data set. 
+
+Allows the user to change the dataset being used.
+
+\begin{DoxyReturn}{Returns}
+none. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1).\\
+\hline
+\end{DoxyParams}
+This function clears the current graph data and prompts the user to choose a new dataset for analysis. It then loads the corresponding data and starts the program again.
+
+\begin{DoxyNote}{Note}
+Time complexity\+: O(1) 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_a298d81ef3106436a00bed98330d4c5a8}\label{classUI_a298d81ef3106436a00bed98330d4c5a8}} 
+\index{UI@{UI}!clear\_screen@{clear\_screen}}
+\index{clear\_screen@{clear\_screen}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{clear\_screen()}{clear\_screen()}}
+{\footnotesize\ttfamily void UI\+::clear\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Clears the console screen. 
+
+Clears the console screen by outputting multiple newline characters.
+
+\begin{DoxyNote}{Note}
+Time complexity\+: O(1) 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_a6d289b0fadefcf26386f7d8b6723fa1c}\label{classUI_a6d289b0fadefcf26386f7d8b6723fa1c}} 
+\index{UI@{UI}!getGraph@{getGraph}}
+\index{getGraph@{getGraph}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{getGraph()}{getGraph()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGraph}{Graph}} UI\+::get\+Graph (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+returns the graph. 
+
+Retrieves the current graph stored in the \mbox{\hyperlink{classUI}{UI}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the graph. @complexity O(1).
+\end{DoxyReturn}
+This function returns the current graph stored in the \mbox{\hyperlink{classUI}{UI}}.
+
+\begin{DoxyReturn}{Returns}
+The current graph stored in the \mbox{\hyperlink{classUI}{UI}}.
+\end{DoxyReturn}
+Time Complexity\+: O(1). \mbox{\Hypertarget{classUI_a7b1b994477bd9b6feb8668aede1d7cda}\label{classUI_a7b1b994477bd9b6feb8668aede1d7cda}} 
+\index{UI@{UI}!GraphOptionsMenu@{GraphOptionsMenu}}
+\index{GraphOptionsMenu@{GraphOptionsMenu}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{GraphOptionsMenu()}{GraphOptionsMenu()}}
+{\footnotesize\ttfamily void UI\+::\+Graph\+Options\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays options related to graph information and handles user input. 
+
+This function displays options related to graph information, such as printing node information, graph basic information, calculating Harverstein distance, or returning to the main menu.
+
+\begin{DoxyNote}{Note}
+Time complexity\+: O(1) 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_a19639c490c34c5b0c66684c2670b7076}\label{classUI_a19639c490c34c5b0c66684c2670b7076}} 
+\index{UI@{UI}!loading\_stuff@{loading\_stuff}}
+\index{loading\_stuff@{loading\_stuff}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{loading\_stuff()}{loading\_stuff()}}
+{\footnotesize\ttfamily void UI\+::loading\+\_\+stuff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classUI}{UI}} \&}]{ui }\end{DoxyParamCaption})}
+
+
+
+Loads necessary data and settings for the \mbox{\hyperlink{classUI}{UI}}. 
+
+Loads the required dataset for analysis and starts the program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ui} & Reference to the \mbox{\hyperlink{classUI}{UI}} object.\\
+\hline
+\end{DoxyParams}
+This function prompts the user to choose a dataset for analysis and loads the corresponding data. It then waits for the user to press \textquotesingle{}A\textquotesingle{} to start the program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ui} & The \mbox{\hyperlink{classUI}{UI}} object to perform operations on.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Time complexity\+: O(1) 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_ae6e6f8381ec34388c4bd8811c4e86e1c}\label{classUI_ae6e6f8381ec34388c4bd8811c4e86e1c}} 
+\index{UI@{UI}!main\_menu@{main\_menu}}
+\index{main\_menu@{main\_menu}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{main\_menu()}{main\_menu()}}
+{\footnotesize\ttfamily void UI\+::main\+\_\+menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the main menu options. 
+
+Displays the main menu options and handles user input.
+
+\begin{DoxyReturn}{Returns}
+none. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1).\\
+\hline
+\end{DoxyParams}
+This function displays the main menu options and waits for user input to select an action. Depending on the user\textquotesingle{}s choice, it performs various operations such as changing the dataset, accessing graph information options, calculating the Traveling Salesman Problem (TSP) using different algorithms, or exiting the program.
+
+Time Complexity\+: O(N + E), where N is the number of vertices and E is the number of edges in the graph. \mbox{\Hypertarget{classUI_aa4f5f0000b864a5019c797b8a7da8891}\label{classUI_aa4f5f0000b864a5019c797b8a7da8891}} 
+\index{UI@{UI}!menu\_start@{menu\_start}}
+\index{menu\_start@{menu\_start}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{menu\_start()}{menu\_start()}}
+{\footnotesize\ttfamily void UI\+::menu\+\_\+start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays the main menu and handles user input. 
+
+Displays the startup menu of the program.
+
+This function displays the startup menu of the program, prompting the user to either proceed to the application or close it.
+
+\begin{DoxyNote}{Note}
+Time complexity\+: O(1) 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_a286d85cc02e152ae284a4428efb0a942}\label{classUI_a286d85cc02e152ae284a4428efb0a942}} 
+\index{UI@{UI}!pathSelector@{pathSelector}}
+\index{pathSelector@{pathSelector}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{pathSelector()}{pathSelector()}}
+{\footnotesize\ttfamily void UI\+::path\+Selector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Selects the appropriate action based on the file path loaded. 
+
+If the file path is empty, it prints an error message and returns. Otherwise, it extracts the last word from the file path and determines the action based on this word.
+
+If the last word corresponds to a specific command (e.\+g., \char`\"{}\+Graph1\char`\"{}, \char`\"{}shipping\char`\"{}), it clears the graph, loads the corresponding data set, and performs the associated action.
+
+\begin{DoxyNote}{Note}
+This function assumes that the file path has been previously loaded.
+
+Time complexity\+: O(n), where n is the length of the file path. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_a83fba9739cde5eda8391c2020ab3dcff}\label{classUI_a83fba9739cde5eda8391c2020ab3dcff}} 
+\index{UI@{UI}!validate\_input@{validate\_input}}
+\index{validate\_input@{validate\_input}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{validate\_input()}{validate\_input()}}
+{\footnotesize\ttfamily bool UI\+::validate\+\_\+input (\begin{DoxyParamCaption}\item[{char \&}]{op,  }\item[{const char}]{lower\+\_\+bound,  }\item[{const char}]{upper\+\_\+bound }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Validates user input within a specified range. 
+
+Validates user input to ensure it is within a specified range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em op} & Reference to the input character to be validated. \\
+\hline
+{\em lower\+\_\+bound} & The lower bound of the valid range. \\
+\hline
+{\em upper\+\_\+bound} & The upper bound of the valid range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if input is valid, False otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em op} & Reference to the character variable where the input will be stored. \\
+\hline
+{\em lower\+\_\+bound} & Lower bound of the valid input range. \\
+\hline
+{\em upper\+\_\+bound} & Upper bound of the valid input range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if input is valid, false otherwise.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Time complexity\+: O(1) 
+\end{DoxyNote}
+\mbox{\Hypertarget{classUI_ad24beddee815f5f1feeadd7084ae0bf8}\label{classUI_ad24beddee815f5f1feeadd7084ae0bf8}} 
+\index{UI@{UI}!validate\_int\_input@{validate\_int\_input}}
+\index{validate\_int\_input@{validate\_int\_input}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{validate\_int\_input()}{validate\_int\_input()}}
+{\footnotesize\ttfamily bool UI\+::validate\+\_\+int\+\_\+input (\begin{DoxyParamCaption}\item[{int \&}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Validates user input as an integer. 
+
+Validates user input to ensure it contains only digits.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Reference to the input integer to be validated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if input is valid, False otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Reference to the integer variable where the input will be stored. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if input is valid, false otherwise.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Time complexity\+: O(n), where n is the number of characters in the input. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\+Interface/\mbox{\hyperlink{UI_8h}{UI.\+h}}\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\+Interface/UI.\+cpp\end{DoxyCompactItemize}

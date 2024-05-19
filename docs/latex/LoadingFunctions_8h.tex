@@ -1,0 +1,135 @@
+\hypertarget{LoadingFunctions_8h}{}\doxysection{/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\+Logic/\+Loading\+Functions.h File Reference}
+\label{LoadingFunctions_8h}\index{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/LoadingFunctions.h@{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/LoadingFunctions.h}}
+
+
+Declaration of all loading Functions used during the Project.  
+
+
+{\ttfamily \#include \char`\"{}../stdafx.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Graph.\+h\char`\"{}}\newline
+Include dependency graph for Loading\+Functions.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{LoadingFunctions_8h_a06acaf3fa6b898126108d73f9188399f}{Remove\+\_\+terminations}} (std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Removes termination characters (e.\+g., \textquotesingle{}\textbackslash{}r\textquotesingle{}, \textquotesingle{}~\newline
+\textquotesingle{}, \textquotesingle{}\textbackslash{}0\textquotesingle{}) from the given string. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{LoadingFunctions_8h_a1a0e5822fc438ac410b594b28c0b8373}\label{LoadingFunctions_8h_a1a0e5822fc438ac410b594b28c0b8373}} 
+double {\bfseries Harvestein\+Formula} (double latitude1, double longitude1, double latitude2, double longitude2)
+\item 
+void \mbox{\hyperlink{LoadingFunctions_8h_a4496494a81f2ab79a2aad8d598e2767f}{Load\+Toy\+Graphs}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g, const std\+::string \&path, const int \&graph)
+\begin{DoxyCompactList}\small\item\em Loads cities data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{LoadingFunctions_8h_af4e6b881a4e46f343770126024bbccc1}{Load\+Real\+World\+Graphs}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g, const std\+::string \&path, const int \&graph)
+\begin{DoxyCompactList}\small\item\em Loads pipes data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{LoadingFunctions_8h_af53b6177d4bbc14dc390f39ce7c191dc}{Load\+Medium\+Graphs}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g, const std\+::string \&path, const int \&graph)
+\begin{DoxyCompactList}\small\item\em Loads water reservoirs data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{LoadingFunctions_8h_a39e5e5f646466e2b888369955f33ea86}{create\+Graph}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g)
+\begin{DoxyCompactList}\small\item\em Creates a graph based on the loaded data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Declaration of all loading Functions used during the Project. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{LoadingFunctions_8h_a39e5e5f646466e2b888369955f33ea86}\label{LoadingFunctions_8h_a39e5e5f646466e2b888369955f33ea86}} 
+\index{LoadingFunctions.h@{LoadingFunctions.h}!createGraph@{createGraph}}
+\index{createGraph@{createGraph}!LoadingFunctions.h@{LoadingFunctions.h}}
+\doxysubsubsection{\texorpdfstring{createGraph()}{createGraph()}}
+{\footnotesize\ttfamily bool create\+Graph (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g }\end{DoxyParamCaption})}
+
+
+
+Creates a graph based on the loaded data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph to be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the graph creation is successful, false otherwise. @complexity O(m + n), where m is the number of edges (pipes) and n is the number of vertices (delivery sites). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{LoadingFunctions_8h_af53b6177d4bbc14dc390f39ce7c191dc}\label{LoadingFunctions_8h_af53b6177d4bbc14dc390f39ce7c191dc}} 
+\index{LoadingFunctions.h@{LoadingFunctions.h}!LoadMediumGraphs@{LoadMediumGraphs}}
+\index{LoadMediumGraphs@{LoadMediumGraphs}!LoadingFunctions.h@{LoadingFunctions.h}}
+\doxysubsubsection{\texorpdfstring{LoadMediumGraphs()}{LoadMediumGraphs()}}
+{\footnotesize\ttfamily void Load\+Medium\+Graphs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g,  }\item[{const std\+::string \&}]{path,  }\item[{const int \&}]{graph }\end{DoxyParamCaption})}
+
+
+
+Loads water reservoirs data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file. 
+
+Loads water reservoirs data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph object. \\
+\hline
+{\em path} & The path to the directory containing the CSV files. \\
+\hline
+{\em graph} & The identifier for selecting the specific graph to load. @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{LoadingFunctions_8h_af4e6b881a4e46f343770126024bbccc1}\label{LoadingFunctions_8h_af4e6b881a4e46f343770126024bbccc1}} 
+\index{LoadingFunctions.h@{LoadingFunctions.h}!LoadRealWorldGraphs@{LoadRealWorldGraphs}}
+\index{LoadRealWorldGraphs@{LoadRealWorldGraphs}!LoadingFunctions.h@{LoadingFunctions.h}}
+\doxysubsubsection{\texorpdfstring{LoadRealWorldGraphs()}{LoadRealWorldGraphs()}}
+{\footnotesize\ttfamily void Load\+Real\+World\+Graphs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g,  }\item[{const std\+::string \&}]{path,  }\item[{const int \&}]{graph }\end{DoxyParamCaption})}
+
+
+
+Loads pipes data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file. 
+
+Loads pipes data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph object. \\
+\hline
+{\em path} & The path to the directory containing the CSV files. \\
+\hline
+{\em graph} & The identifier for selecting the specific graph to load. @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{LoadingFunctions_8h_a4496494a81f2ab79a2aad8d598e2767f}\label{LoadingFunctions_8h_a4496494a81f2ab79a2aad8d598e2767f}} 
+\index{LoadingFunctions.h@{LoadingFunctions.h}!LoadToyGraphs@{LoadToyGraphs}}
+\index{LoadToyGraphs@{LoadToyGraphs}!LoadingFunctions.h@{LoadingFunctions.h}}
+\doxysubsubsection{\texorpdfstring{LoadToyGraphs()}{LoadToyGraphs()}}
+{\footnotesize\ttfamily void Load\+Toy\+Graphs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g,  }\item[{const std\+::string \&}]{path,  }\item[{const int \&}]{graph }\end{DoxyParamCaption})}
+
+
+
+Loads cities data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file. 
+
+Loads cities data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph object. \\
+\hline
+{\em path} & The path to the directory containing the CSV files. \\
+\hline
+{\em graph} & The identifier for selecting the specific graph to load. @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{LoadingFunctions_8h_a06acaf3fa6b898126108d73f9188399f}\label{LoadingFunctions_8h_a06acaf3fa6b898126108d73f9188399f}} 
+\index{LoadingFunctions.h@{LoadingFunctions.h}!Remove\_terminations@{Remove\_terminations}}
+\index{Remove\_terminations@{Remove\_terminations}!LoadingFunctions.h@{LoadingFunctions.h}}
+\doxysubsubsection{\texorpdfstring{Remove\_terminations()}{Remove\_terminations()}}
+{\footnotesize\ttfamily void Remove\+\_\+terminations (\begin{DoxyParamCaption}\item[{std\+::string \&}]{str }\end{DoxyParamCaption})}
+
+
+
+Removes termination characters (e.\+g., \textquotesingle{}\textbackslash{}r\textquotesingle{}, \textquotesingle{}~\newline
+\textquotesingle{}, \textquotesingle{}\textbackslash{}0\textquotesingle{}) from the given string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string from which to remove termination characters. @complexity O(n), where n is the length of the string. \\
+\hline
+\end{DoxyParams}

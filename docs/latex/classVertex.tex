@@ -1,0 +1,805 @@
+\hypertarget{classVertex}{}\doxysection{Vertex Class Reference}
+\label{classVertex}\index{Vertex@{Vertex}}
+
+
+Represents a vertex in the graph.  
+
+
+
+
+{\ttfamily \#include $<$Graph.\+h$>$}
+
+
+
+Collaboration diagram for Vertex\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVertex_a4ad72b646dd28d50537cf1555f1a8363}{Vertex}} (int \mbox{\hyperlink{classVertex_a2e69697726190f50c7fc040fb1ddac7a}{id}}, double \mbox{\hyperlink{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}{intitude}}, double \mbox{\hyperlink{classVertex_af733d6c48db17a4409b9f74b22b72c81}{latitude}})
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classVertex}{Vertex}} with the given ID, longitude, and latitude. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVertex_af2d4681f3cb6deeeed264950bf2d4a9e}{Vertex}} (int \mbox{\hyperlink{classVertex_a2e69697726190f50c7fc040fb1ddac7a}{id}})
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classVertex}{Vertex}} with the given ID. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Returns the ID of the vertex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_afd1d78d4b08162c2c470db5c7b1386f6}{get\+Indegree}} () const
+\begin{DoxyCompactList}\small\item\em Returns the longitude of the vertex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_aa3e3936a9656094749dd4716ef790e46}{get\+Outdegree}} () const
+\begin{DoxyCompactList}\small\item\em Returns the latitude of the vertex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_a16309448211a55f97cdee17aee714c40}{get\+Degree}} () const
+\begin{DoxyCompactList}\small\item\em Returns the degree of the vertex. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classVertex_af1a2bee6c38f511cbfea082eb7149537}{get\+Longitude}} () const
+\begin{DoxyCompactList}\small\item\em Returns the longitude of the vertex. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classVertex_a7455a09de51b274867edae2254cef38d}{get\+Latitude}} () const
+\begin{DoxyCompactList}\small\item\em Returns the latitude of the vertex. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classVertex_aa36ca926de23a6e7283be42e2930957c}{get\+Dist}} () const
+\begin{DoxyCompactList}\small\item\em Returns the distance of the vertex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_af65c843649e89097b38e8d108327c34a}{get\+Num}} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of the vertex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_a7acb7c0857c03cf23db677ad3618a04e}{get\+Low}} () const
+\begin{DoxyCompactList}\small\item\em Returns the low of the vertex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classVertex_a7da007553567fcca206c5b0cef680a12}{get\+Tentativas}} () const
+\begin{DoxyCompactList}\small\item\em Returns the tentativas of the vertex. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classVertex_aa4bd82105b85ee53a917391f4811cd8a}{is\+Visited}} () const
+\begin{DoxyCompactList}\small\item\em Returns the visited status of the vertex. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classVertex_a126e306f0534b99cd97aa864fdb243d4}{is\+Processing}} () const
+\begin{DoxyCompactList}\small\item\em Returns the processing status of the vertex. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classEdge}{Edge}} $\ast$ \mbox{\hyperlink{classVertex_a6e120e57da6af94892fae44e05868794}{get\+Path}} () const
+\begin{DoxyCompactList}\small\item\em Returns the path of the vertex. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}{get\+Adj}} () const
+\begin{DoxyCompactList}\small\item\em Returns the adjacent edges of the vertex. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{classVertex_a63b37d32a7cfac1405d38b1100aaee63}{get\+Inc}} () const
+\begin{DoxyCompactList}\small\item\em Returns the incoming edges of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a7b4a88e60059faef38f44729873ee6cc}{add\+Adj\+Edge}} (int edge\+Id, \mbox{\hyperlink{classEdge}{Edge}} $\ast$edge)
+\begin{DoxyCompactList}\small\item\em Adds an adjacent edge to the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_af00d3d6101082e7c92b2079e8066315f}{add\+Inc\+Edge}} (int edge\+Id, \mbox{\hyperlink{classEdge}{Edge}} $\ast$edge)
+\begin{DoxyCompactList}\small\item\em Adds an incoming edge to the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a133cd706a1799e316888324f14193dd2}{delete\+Inc\+Edge}} (int edge\+Id)
+\begin{DoxyCompactList}\small\item\em Deletes an incoming edge from the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_acd4454a0f9a828536600459b9a03a87b}{delete\+Adj\+Edge}} (int edge\+Id)
+\begin{DoxyCompactList}\small\item\em Deletes an adjacent edge from the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a9fb0f2482cb3b96e39f417baa7a956d7}{set\+Dist}} (double new\+Dist)
+\begin{DoxyCompactList}\small\item\em Sets the distance of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a022e5d3151c7525ca5663b9fcd62ea52}{set\+Id}} (int new\+Id)
+\begin{DoxyCompactList}\small\item\em Sets the visited status of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_adcd2536ea7b83e8823bb601c26e6da9a}{setintitude}} (double newintitude)
+\begin{DoxyCompactList}\small\item\em Sets the longitude of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a8144db72e16f01cc0953f0bcf8fafba6}{set\+Latitude}} (double new\+Latitude)
+\begin{DoxyCompactList}\small\item\em Sets the latitude of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a6999bad0d12b2f55b7d3ce06df21d6b1}{set\+Tentativas}} (int new\+Tentativas)
+\begin{DoxyCompactList}\small\item\em Sets the tentativas of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a9f3eb3b75eafb790880f4a510c341828}{set\+Adj}} (std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ new\+Adj)
+\begin{DoxyCompactList}\small\item\em Sets the adjacent edges of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a15eeabbbb6d517af746ae137c6d5b595}{set\+Visited}} (bool \mbox{\hyperlink{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}{visited}})
+\begin{DoxyCompactList}\small\item\em Sets the visited status of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a0b59a1ae0392cdf016c99bc3882a4763}{set\+Path}} (\mbox{\hyperlink{classEdge}{Edge}} $\ast$e)
+\begin{DoxyCompactList}\small\item\em Sets the path of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a08766d56f48e9b2d3e19c2f648e916dc}{set\+Outdegree}} (int \mbox{\hyperlink{classVertex_a6c64be11980cfb338384cdb67934780c}{outdegree}})
+\begin{DoxyCompactList}\small\item\em Sets the indegree of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_a15d5d88e6de6faccfa17d8c02753072f}{set\+Indegree}} (int \mbox{\hyperlink{classVertex_a94ae99aae9b1a426feda5ecda70c598b}{indegree}})
+\begin{DoxyCompactList}\small\item\em Sets the outdegree of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_ab02fd1a0a7ad1d18f3834e4d0842dc65}{set\+Num}} (int i)
+\begin{DoxyCompactList}\small\item\em Sets the number of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_afd9743c1b5b705d6324faf779b27cb89}{set\+Low}} (int i)
+\begin{DoxyCompactList}\small\item\em Sets the low of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_af6cdb3adcda7600d235b1f7a827373de}{set\+Processing}} (const bool \&\+\_\+processing)
+\begin{DoxyCompactList}\small\item\em Sets the processing status of the vertex. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classVertex_ad4ccd48170a1530ec1db5eb306357a74}{operator$<$}} (\mbox{\hyperlink{classVertex}{Vertex}} \&vertex) const
+\begin{DoxyCompactList}\small\item\em Updates the indegree and outdegree of the vertex. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classVertex_a395cfa7824806a13581872e329651d09}{operator==}} (\mbox{\hyperlink{classVertex}{Vertex}} \&vertex) const
+\begin{DoxyCompactList}\small\item\em Compares two vertices. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{classVertex_a5d2eade4dc1f1c7bcf0c49f2c0053b03}{order\+Edges}} ()
+\begin{DoxyCompactList}\small\item\em Orders the adjacent edges of the vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVertex_aec13348815c681445e81d76505ea13c8}{update\+Degrees}} ()
+\begin{DoxyCompactList}\small\item\em Orders the adjacent edges of the vertex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classVertex_a2e69697726190f50c7fc040fb1ddac7a}\label{classVertex_a2e69697726190f50c7fc040fb1ddac7a}} 
+int {\bfseries id}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classVertex}{Vertex}} ID. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}\label{classVertex_a1f0ef4437efa7f51b79bcb06844f2fc5}} 
+double {\bfseries intitude}
+\begin{DoxyCompactList}\small\item\em Longitude. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_af733d6c48db17a4409b9f74b22b72c81}\label{classVertex_af733d6c48db17a4409b9f74b22b72c81}} 
+double {\bfseries latitude}
+\begin{DoxyCompactList}\small\item\em Latitude. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a47d0d19c8f0f13666379f55fa7e7ddba}\label{classVertex_a47d0d19c8f0f13666379f55fa7e7ddba}} 
+std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ {\bfseries incoming\+Edges}
+\begin{DoxyCompactList}\small\item\em Incoming edges. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a66b1a944ac438896fe9252ef5256157d}\label{classVertex_a66b1a944ac438896fe9252ef5256157d}} 
+std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ {\bfseries adjacent\+Edges}
+\begin{DoxyCompactList}\small\item\em Adjacent edges. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}\label{classVertex_aaef9f7de91b4b8f1752d391a1aae9c2e}} 
+bool {\bfseries visited} = false
+\begin{DoxyCompactList}\small\item\em Visit status. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a305dc8fcad6e4c7ef2491409ca7ddaa4}\label{classVertex_a305dc8fcad6e4c7ef2491409ca7ddaa4}} 
+bool {\bfseries processing} = false
+\begin{DoxyCompactList}\small\item\em Processing status. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a94ae99aae9b1a426feda5ecda70c598b}\label{classVertex_a94ae99aae9b1a426feda5ecda70c598b}} 
+unsigned int {\bfseries indegree} = 0
+\begin{DoxyCompactList}\small\item\em Indegree. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a6c64be11980cfb338384cdb67934780c}\label{classVertex_a6c64be11980cfb338384cdb67934780c}} 
+unsigned int {\bfseries outdegree} = 0
+\begin{DoxyCompactList}\small\item\em Outdegree. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a11d98611f5101fe7f46785d8b9c53f44}\label{classVertex_a11d98611f5101fe7f46785d8b9c53f44}} 
+double {\bfseries dist} = 0
+\begin{DoxyCompactList}\small\item\em Distance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a4e83821f961f6eb63ad210260ba0e1e2}\label{classVertex_a4e83821f961f6eb63ad210260ba0e1e2}} 
+\mbox{\hyperlink{classEdge}{Edge}} $\ast$ {\bfseries path} = nullptr
+\begin{DoxyCompactList}\small\item\em Path edge. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a78ba760e405ba9f66129b3870065b48f}\label{classVertex_a78ba760e405ba9f66129b3870065b48f}} 
+int {\bfseries queue\+Index} = 0
+\begin{DoxyCompactList}\small\item\em Queue index. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a40712a3999a39b60763c1bb85c791e34}\label{classVertex_a40712a3999a39b60763c1bb85c791e34}} 
+int {\bfseries tentativas} = 0
+\begin{DoxyCompactList}\small\item\em Tentativas. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_a426e62928803a13f734083c3eb9b05ed}\label{classVertex_a426e62928803a13f734083c3eb9b05ed}} 
+int {\bfseries num} = 0
+\begin{DoxyCompactList}\small\item\em Num. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classVertex_aa9783976d034b309b455e181be01b379}\label{classVertex_aa9783976d034b309b455e181be01b379}} 
+int {\bfseries low} = 0
+\begin{DoxyCompactList}\small\item\em Low. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classVertex_a6e8dd99e4d0d0f5083b2fb64743a8953}{Mutable\+Priority\+Queue$<$ Vertex $>$}}
+\begin{DoxyCompactList}\small\item\em Orders the adjacent edges of a vertex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a vertex in the graph. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classVertex_a4ad72b646dd28d50537cf1555f1a8363}\label{classVertex_a4ad72b646dd28d50537cf1555f1a8363}} 
+\index{Vertex@{Vertex}!Vertex@{Vertex}}
+\index{Vertex@{Vertex}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{Vertex()}{Vertex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Vertex\+::\+Vertex (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{double}]{intitude,  }\item[{double}]{latitude }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \mbox{\hyperlink{classVertex}{Vertex}} with the given ID, longitude, and latitude. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. \\
+\hline
+{\em intitude} & Longitude of the vertex. \\
+\hline
+{\em latitude} & Latitude of the vertex. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_af2d4681f3cb6deeeed264950bf2d4a9e}\label{classVertex_af2d4681f3cb6deeeed264950bf2d4a9e}} 
+\index{Vertex@{Vertex}!Vertex@{Vertex}}
+\index{Vertex@{Vertex}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{Vertex()}{Vertex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Vertex\+::\+Vertex (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \mbox{\hyperlink{classVertex}{Vertex}} with the given ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classVertex_a7b4a88e60059faef38f44729873ee6cc}\label{classVertex_a7b4a88e60059faef38f44729873ee6cc}} 
+\index{Vertex@{Vertex}!addAdjEdge@{addAdjEdge}}
+\index{addAdjEdge@{addAdjEdge}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{addAdjEdge()}{addAdjEdge()}}
+{\footnotesize\ttfamily void Vertex\+::add\+Adj\+Edge (\begin{DoxyParamCaption}\item[{int}]{edge\+Id,  }\item[{\mbox{\hyperlink{classEdge}{Edge}} $\ast$}]{edge }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds an adjacent edge to the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em edge} & Pointer to the edge. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_af00d3d6101082e7c92b2079e8066315f}\label{classVertex_af00d3d6101082e7c92b2079e8066315f}} 
+\index{Vertex@{Vertex}!addIncEdge@{addIncEdge}}
+\index{addIncEdge@{addIncEdge}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{addIncEdge()}{addIncEdge()}}
+{\footnotesize\ttfamily void Vertex\+::add\+Inc\+Edge (\begin{DoxyParamCaption}\item[{int}]{edge\+Id,  }\item[{\mbox{\hyperlink{classEdge}{Edge}} $\ast$}]{edge }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds an incoming edge to the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em edge} & Pointer to the edge. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_acd4454a0f9a828536600459b9a03a87b}\label{classVertex_acd4454a0f9a828536600459b9a03a87b}} 
+\index{Vertex@{Vertex}!deleteAdjEdge@{deleteAdjEdge}}
+\index{deleteAdjEdge@{deleteAdjEdge}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{deleteAdjEdge()}{deleteAdjEdge()}}
+{\footnotesize\ttfamily void Vertex\+::delete\+Adj\+Edge (\begin{DoxyParamCaption}\item[{int}]{edge\+Id }\end{DoxyParamCaption})}
+
+
+
+Deletes an adjacent edge from the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. @complexity O(\+E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a133cd706a1799e316888324f14193dd2}\label{classVertex_a133cd706a1799e316888324f14193dd2}} 
+\index{Vertex@{Vertex}!deleteIncEdge@{deleteIncEdge}}
+\index{deleteIncEdge@{deleteIncEdge}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{deleteIncEdge()}{deleteIncEdge()}}
+{\footnotesize\ttfamily void Vertex\+::delete\+Inc\+Edge (\begin{DoxyParamCaption}\item[{int}]{edge\+Id }\end{DoxyParamCaption})}
+
+
+
+Deletes an incoming edge from the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. @complexity O(\+E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}\label{classVertex_a9858f2aa388d2bfb49d9df8f4504b5a0}} 
+\index{Vertex@{Vertex}!getAdj@{getAdj}}
+\index{getAdj@{getAdj}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getAdj()}{getAdj()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ Vertex\+::get\+Adj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the adjacent edges of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Adjacent edges. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a16309448211a55f97cdee17aee714c40}\label{classVertex_a16309448211a55f97cdee17aee714c40}} 
+\index{Vertex@{Vertex}!getDegree@{getDegree}}
+\index{getDegree@{getDegree}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getDegree()}{getDegree()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Degree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the degree of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Degree. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_aa36ca926de23a6e7283be42e2930957c}\label{classVertex_aa36ca926de23a6e7283be42e2930957c}} 
+\index{Vertex@{Vertex}!getDist@{getDist}}
+\index{getDist@{getDist}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getDist()}{getDist()}}
+{\footnotesize\ttfamily double Vertex\+::get\+Dist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the distance of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Distance. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}\label{classVertex_a75b6b4a4afc26affea59fdae48aa30b1}} 
+\index{Vertex@{Vertex}!getId@{getId}}
+\index{getId@{getId}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the ID of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a63b37d32a7cfac1405d38b1100aaee63}\label{classVertex_a63b37d32a7cfac1405d38b1100aaee63}} 
+\index{Vertex@{Vertex}!getInc@{getInc}}
+\index{getInc@{getInc}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getInc()}{getInc()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ Vertex\+::get\+Inc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the incoming edges of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Incoming edges. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_afd1d78d4b08162c2c470db5c7b1386f6}\label{classVertex_afd1d78d4b08162c2c470db5c7b1386f6}} 
+\index{Vertex@{Vertex}!getIndegree@{getIndegree}}
+\index{getIndegree@{getIndegree}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getIndegree()}{getIndegree()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Indegree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the longitude of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Longitude. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a7455a09de51b274867edae2254cef38d}\label{classVertex_a7455a09de51b274867edae2254cef38d}} 
+\index{Vertex@{Vertex}!getLatitude@{getLatitude}}
+\index{getLatitude@{getLatitude}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getLatitude()}{getLatitude()}}
+{\footnotesize\ttfamily double Vertex\+::get\+Latitude (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the latitude of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Latitude. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_af1a2bee6c38f511cbfea082eb7149537}\label{classVertex_af1a2bee6c38f511cbfea082eb7149537}} 
+\index{Vertex@{Vertex}!getLongitude@{getLongitude}}
+\index{getLongitude@{getLongitude}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getLongitude()}{getLongitude()}}
+{\footnotesize\ttfamily double Vertex\+::get\+Longitude (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the longitude of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Longitude. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a7acb7c0857c03cf23db677ad3618a04e}\label{classVertex_a7acb7c0857c03cf23db677ad3618a04e}} 
+\index{Vertex@{Vertex}!getLow@{getLow}}
+\index{getLow@{getLow}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getLow()}{getLow()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Low (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the low of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Low. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_af65c843649e89097b38e8d108327c34a}\label{classVertex_af65c843649e89097b38e8d108327c34a}} 
+\index{Vertex@{Vertex}!getNum@{getNum}}
+\index{getNum@{getNum}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getNum()}{getNum()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Num (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the number of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_aa3e3936a9656094749dd4716ef790e46}\label{classVertex_aa3e3936a9656094749dd4716ef790e46}} 
+\index{Vertex@{Vertex}!getOutdegree@{getOutdegree}}
+\index{getOutdegree@{getOutdegree}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getOutdegree()}{getOutdegree()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Outdegree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the latitude of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Latitude. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a6e120e57da6af94892fae44e05868794}\label{classVertex_a6e120e57da6af94892fae44e05868794}} 
+\index{Vertex@{Vertex}!getPath@{getPath}}
+\index{getPath@{getPath}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getPath()}{getPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classEdge}{Edge}} $\ast$ Vertex\+::get\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the path of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Path. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a7da007553567fcca206c5b0cef680a12}\label{classVertex_a7da007553567fcca206c5b0cef680a12}} 
+\index{Vertex@{Vertex}!getTentativas@{getTentativas}}
+\index{getTentativas@{getTentativas}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{getTentativas()}{getTentativas()}}
+{\footnotesize\ttfamily int Vertex\+::get\+Tentativas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the tentativas of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tentativas. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a126e306f0534b99cd97aa864fdb243d4}\label{classVertex_a126e306f0534b99cd97aa864fdb243d4}} 
+\index{Vertex@{Vertex}!isProcessing@{isProcessing}}
+\index{isProcessing@{isProcessing}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{isProcessing()}{isProcessing()}}
+{\footnotesize\ttfamily bool Vertex\+::is\+Processing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the processing status of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertex is processing, false otherwise. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_aa4bd82105b85ee53a917391f4811cd8a}\label{classVertex_aa4bd82105b85ee53a917391f4811cd8a}} 
+\index{Vertex@{Vertex}!isVisited@{isVisited}}
+\index{isVisited@{isVisited}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{isVisited()}{isVisited()}}
+{\footnotesize\ttfamily bool Vertex\+::is\+Visited (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the visited status of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertex is visited, false otherwise. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_ad4ccd48170a1530ec1db5eb306357a74}\label{classVertex_ad4ccd48170a1530ec1db5eb306357a74}} 
+\index{Vertex@{Vertex}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily bool Vertex\+::operator$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertex}{Vertex}} \&}]{vertex }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Updates the indegree and outdegree of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a395cfa7824806a13581872e329651d09}\label{classVertex_a395cfa7824806a13581872e329651d09}} 
+\index{Vertex@{Vertex}!operator==@{operator==}}
+\index{operator==@{operator==}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Vertex\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertex}{Vertex}} \&}]{vertex }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Compares two vertices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vertex} & \mbox{\hyperlink{classVertex}{Vertex}} to compare. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertices are equal, false otherwise. @complexity O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVertex_a5d2eade4dc1f1c7bcf0c49f2c0053b03}\label{classVertex_a5d2eade4dc1f1c7bcf0c49f2c0053b03}} 
+\index{Vertex@{Vertex}!orderEdges@{orderEdges}}
+\index{orderEdges@{orderEdges}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{orderEdges()}{orderEdges()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ Vertex\+::order\+Edges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Orders the adjacent edges of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(\+E log E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a9f3eb3b75eafb790880f4a510c341828}\label{classVertex_a9f3eb3b75eafb790880f4a510c341828}} 
+\index{Vertex@{Vertex}!setAdj@{setAdj}}
+\index{setAdj@{setAdj}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setAdj()}{setAdj()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Adj (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$}]{new\+Adj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the adjacent edges of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Adj} & New adjacent edges. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a9fb0f2482cb3b96e39f417baa7a956d7}\label{classVertex_a9fb0f2482cb3b96e39f417baa7a956d7}} 
+\index{Vertex@{Vertex}!setDist@{setDist}}
+\index{setDist@{setDist}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setDist()}{setDist()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Dist (\begin{DoxyParamCaption}\item[{double}]{new\+Dist }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the distance of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Dist} & New distance. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a022e5d3151c7525ca5663b9fcd62ea52}\label{classVertex_a022e5d3151c7525ca5663b9fcd62ea52}} 
+\index{Vertex@{Vertex}!setId@{setId}}
+\index{setId@{setId}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Id (\begin{DoxyParamCaption}\item[{int}]{new\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the visited status of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visited} & New visited status. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a15d5d88e6de6faccfa17d8c02753072f}\label{classVertex_a15d5d88e6de6faccfa17d8c02753072f}} 
+\index{Vertex@{Vertex}!setIndegree@{setIndegree}}
+\index{setIndegree@{setIndegree}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setIndegree()}{setIndegree()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Indegree (\begin{DoxyParamCaption}\item[{int}]{indegree }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the outdegree of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em outdegree} & New outdegree. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_adcd2536ea7b83e8823bb601c26e6da9a}\label{classVertex_adcd2536ea7b83e8823bb601c26e6da9a}} 
+\index{Vertex@{Vertex}!setintitude@{setintitude}}
+\index{setintitude@{setintitude}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setintitude()}{setintitude()}}
+{\footnotesize\ttfamily void Vertex\+::setintitude (\begin{DoxyParamCaption}\item[{double}]{newintitude }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the longitude of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Longitude} & New longitude. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a8144db72e16f01cc0953f0bcf8fafba6}\label{classVertex_a8144db72e16f01cc0953f0bcf8fafba6}} 
+\index{Vertex@{Vertex}!setLatitude@{setLatitude}}
+\index{setLatitude@{setLatitude}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setLatitude()}{setLatitude()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Latitude (\begin{DoxyParamCaption}\item[{double}]{new\+Latitude }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the latitude of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Latitude} & New latitude. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_afd9743c1b5b705d6324faf779b27cb89}\label{classVertex_afd9743c1b5b705d6324faf779b27cb89}} 
+\index{Vertex@{Vertex}!setLow@{setLow}}
+\index{setLow@{setLow}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setLow()}{setLow()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Low (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the low of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & New low. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_ab02fd1a0a7ad1d18f3834e4d0842dc65}\label{classVertex_ab02fd1a0a7ad1d18f3834e4d0842dc65}} 
+\index{Vertex@{Vertex}!setNum@{setNum}}
+\index{setNum@{setNum}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setNum()}{setNum()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Num (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the number of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & New number. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a08766d56f48e9b2d3e19c2f648e916dc}\label{classVertex_a08766d56f48e9b2d3e19c2f648e916dc}} 
+\index{Vertex@{Vertex}!setOutdegree@{setOutdegree}}
+\index{setOutdegree@{setOutdegree}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setOutdegree()}{setOutdegree()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Outdegree (\begin{DoxyParamCaption}\item[{int}]{outdegree }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the indegree of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em indegree} & New indegree. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a0b59a1ae0392cdf016c99bc3882a4763}\label{classVertex_a0b59a1ae0392cdf016c99bc3882a4763}} 
+\index{Vertex@{Vertex}!setPath@{setPath}}
+\index{setPath@{setPath}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setPath()}{setPath()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classEdge}{Edge}} $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the path of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Pointer to the edge. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_af6cdb3adcda7600d235b1f7a827373de}\label{classVertex_af6cdb3adcda7600d235b1f7a827373de}} 
+\index{Vertex@{Vertex}!setProcessing@{setProcessing}}
+\index{setProcessing@{setProcessing}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setProcessing()}{setProcessing()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Processing (\begin{DoxyParamCaption}\item[{const bool \&}]{\+\_\+processing }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the processing status of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+processing} & New processing status. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a6999bad0d12b2f55b7d3ce06df21d6b1}\label{classVertex_a6999bad0d12b2f55b7d3ce06df21d6b1}} 
+\index{Vertex@{Vertex}!setTentativas@{setTentativas}}
+\index{setTentativas@{setTentativas}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setTentativas()}{setTentativas()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Tentativas (\begin{DoxyParamCaption}\item[{int}]{new\+Tentativas }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the tentativas of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Tentativas} & New tentativas. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_a15eeabbbb6d517af746ae137c6d5b595}\label{classVertex_a15eeabbbb6d517af746ae137c6d5b595}} 
+\index{Vertex@{Vertex}!setVisited@{setVisited}}
+\index{setVisited@{setVisited}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{setVisited()}{setVisited()}}
+{\footnotesize\ttfamily void Vertex\+::set\+Visited (\begin{DoxyParamCaption}\item[{bool}]{visited }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the visited status of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em visited} & New visited status. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classVertex_aec13348815c681445e81d76505ea13c8}\label{classVertex_aec13348815c681445e81d76505ea13c8}} 
+\index{Vertex@{Vertex}!updateDegrees@{updateDegrees}}
+\index{updateDegrees@{updateDegrees}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{updateDegrees()}{updateDegrees()}}
+{\footnotesize\ttfamily void Vertex\+::update\+Degrees (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Orders the adjacent edges of the vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(\+E log E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classVertex_a6e8dd99e4d0d0f5083b2fb64743a8953}\label{classVertex_a6e8dd99e4d0d0f5083b2fb64743a8953}} 
+\index{Vertex@{Vertex}!MutablePriorityQueue$<$ Vertex $>$@{MutablePriorityQueue$<$ Vertex $>$}}
+\index{MutablePriorityQueue$<$ Vertex $>$@{MutablePriorityQueue$<$ Vertex $>$}!Vertex@{Vertex}}
+\doxysubsubsection{\texorpdfstring{MutablePriorityQueue$<$ Vertex $>$}{MutablePriorityQueue< Vertex >}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classMutablePriorityQueue}{Mutable\+Priority\+Queue}}$<$ \mbox{\hyperlink{classVertex}{Vertex}} $>$\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Orders the adjacent edges of a vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Pointer to the vertex. @complexity O(\+E log E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\mbox{\hyperlink{Graph_8h}{Graph.\+h}}\end{DoxyCompactItemize}

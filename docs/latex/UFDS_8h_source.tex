@@ -1,0 +1,24 @@
+\hypertarget{UFDS_8h_source}{}\doxysection{UFDS.\+h}
+\label{UFDS_8h_source}\index{/home/jose-\/costa/Documents/Uni/DA/Projeto2/data\_structures/UFDS.h@{/home/jose-\/costa/Documents/Uni/DA/Projeto2/data\_structures/UFDS.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#ifndef DA\_TP\_CLASSES\_UFDS}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#define DA\_TP\_CLASSES\_UFDS}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classUFDS}{UFDS}} \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{15     \mbox{\hyperlink{classUFDS_a9daac3830c0769f08aceb6236f407248}{UFDS}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} N);}
+\DoxyCodeLine{21     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \mbox{\hyperlink{classUFDS_afe161413e4cd6702b2ca2f475eddeca0}{findSet}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i);}
+\DoxyCodeLine{28     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classUFDS_a793b0e0337223456401318c652f0cdd0}{isSameSet}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} j);}
+\DoxyCodeLine{34     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUFDS_a0955e92d417b1bfbba94dc8c660f86d3}{linkSets}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} j);}
+\DoxyCodeLine{35 \textcolor{keyword}{private}:}
+\DoxyCodeLine{36     std::vector<unsigned int> path; \textcolor{comment}{// Ancestor of node i (which can be itself). It is used to determine if two nodes are part of the same set.}}
+\DoxyCodeLine{37     std::vector<unsigned int> rank; \textcolor{comment}{// Upper bound for the height of a tree whose root is node i.}}
+\DoxyCodeLine{38 \};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//DA\_TP\_CLASSES\_UFDS}}
+
+\end{DoxyCode}

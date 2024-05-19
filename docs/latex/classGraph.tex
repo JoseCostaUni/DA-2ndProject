@@ -1,0 +1,501 @@
+\hypertarget{classGraph}{}\doxysection{Graph Class Reference}
+\label{classGraph}\index{Graph@{Graph}}
+
+
+Represents a graph consisting of vertices and edges.  
+
+
+
+
+{\ttfamily \#include $<$Graph.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGraph_a902c5b3eacb66d60752525ab23297a95}{$\sim$\+Graph}} ()
+\begin{DoxyCompactList}\small\item\em Destructor to clean up the graph. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classEdge}{Edge}} $\ast$ \mbox{\hyperlink{classGraph_afb430401620ecaec70b18b252f55a220}{find\+Edge}} (int source\+Id, int dest\+Id) const
+\begin{DoxyCompactList}\small\item\em Finds a vertex with the given ID. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVertex}{Vertex}} $\ast$ \mbox{\hyperlink{classGraph_a05c45e4efdf867792139ddf3628c0b60}{find\+Vertex}} (int id) const
+\begin{DoxyCompactList}\small\item\em Finds a vertex with the given ID. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGraph_a480675e98227b5cea4d990d301d43eee}{add\+Vertex}} (int id, double longitude, double latitude)
+\begin{DoxyCompactList}\small\item\em Adds a vertex to the graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGraph_a88e2a04e9f0974b36d6ac8cdd6f9fc28}{remove\+Vertex}} (int id)
+\begin{DoxyCompactList}\small\item\em Removes a vertex from the graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGraph_ad2acf070646765e317847a9ae7e540d7}{add\+Edge}} (int source\+Id, int dest\+Id, int edge\+Id, double weight)
+\begin{DoxyCompactList}\small\item\em Adds an edge to the graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGraph_a27e490b6976d8da44cf9b7bb004e03d0}{remove\+Edge}} (int source\+Id, int dest\+Id) const
+\begin{DoxyCompactList}\small\item\em Removes an edge from the graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGraph_af3d3c367ccf2ef6d852481a5b3bffcc9}{add\+Bidirectional\+Edge}} (int source\+Id, int dest\+Id, int edge\+Id, double weight)
+\begin{DoxyCompactList}\small\item\em Adds a bidirectional edge to the graph. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}{get\+Num\+Vertex}} () const
+\begin{DoxyCompactList}\small\item\em Returns the size of the Vertex\+Set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classClock}{Clock}} \mbox{\hyperlink{classGraph_ad5160609c45eb367a9db50a0dd5f286c}{get\+Clock}} ()
+\begin{DoxyCompactList}\small\item\em Returns the clock. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ int, \mbox{\hyperlink{classVertex}{Vertex}} $\ast$ $>$ \mbox{\hyperlink{classGraph_a34dc8268e703217705d6ba9ac8b02170}{get\+Vertex\+Set}} () const
+\begin{DoxyCompactList}\small\item\em Returns the vertex set. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ int, \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{classGraph_ab5dd6c3f53e38ecd198d59a8a92bda54}{get\+Edge\+Set}} () const
+\begin{DoxyCompactList}\small\item\em Returns the edge set. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classGraph_a7c8895e24312d578e1c8c5f8767c8513}{Harverstein}} (double longitude1, double latitude1, double longitude2, double latitude2) const
+\begin{DoxyCompactList}\small\item\em Returns Harverstein distance between two nodes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGraph_ac6192a41101102ca8aa6acca607c84f3}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the graph. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGraph_aa60b060b106945913be46eb9cc11d698}{print\+Nodes\+Contente}} () const
+\begin{DoxyCompactList}\small\item\em Prints the content of the nodes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGraph_a557582628bd7cf460de68e954ed47a87}{print\+Graph\+Info}} () const
+\begin{DoxyCompactList}\small\item\em Prints the graph information. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGraph_a43037a326921adde0f94320aa161740a}{populate\+\_\+in\+\_\+and\+\_\+out\+\_\+degree}} ()
+\begin{DoxyCompactList}\small\item\em Populates the indegree and outdegree of the vertices. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGraph_a19737b754b3384221e533111ba3b126b}{make\+Fully\+Connected}} ()
+\begin{DoxyCompactList}\small\item\em Orders the adjacent edges of a vertex. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGraph_a3b67d4aae0ec29037ede078c3c88999d}{order\+Vertex\+Adj}} (\mbox{\hyperlink{classVertex}{Vertex}} $\ast$v)
+\begin{DoxyCompactList}\small\item\em Orders the adjacent edges of a vertex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a graph consisting of vertices and edges. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classGraph_a902c5b3eacb66d60752525ab23297a95}\label{classGraph_a902c5b3eacb66d60752525ab23297a95}} 
+\index{Graph@{Graph}!````~Graph@{$\sim$Graph}}
+\index{````~Graph@{$\sim$Graph}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{$\sim$Graph()}{~Graph()}}
+{\footnotesize\ttfamily Graph\+::$\sim$\+Graph (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destructor to clean up the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classGraph_af3d3c367ccf2ef6d852481a5b3bffcc9}\label{classGraph_af3d3c367ccf2ef6d852481a5b3bffcc9}} 
+\index{Graph@{Graph}!addBidirectionalEdge@{addBidirectionalEdge}}
+\index{addBidirectionalEdge@{addBidirectionalEdge}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{addBidirectionalEdge()}{addBidirectionalEdge()}}
+{\footnotesize\ttfamily bool Graph\+::add\+Bidirectional\+Edge (\begin{DoxyParamCaption}\item[{int}]{source\+Id,  }\item[{int}]{dest\+Id,  }\item[{int}]{edge\+Id,  }\item[{double}]{weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a bidirectional edge to the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. \\
+\hline
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em weight} & Weight of the edge. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge was added, false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. \\
+\hline
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em weight} & Weight of the edge. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge was added, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_ad2acf070646765e317847a9ae7e540d7}\label{classGraph_ad2acf070646765e317847a9ae7e540d7}} 
+\index{Graph@{Graph}!addEdge@{addEdge}}
+\index{addEdge@{addEdge}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{addEdge()}{addEdge()}}
+{\footnotesize\ttfamily bool Graph\+::add\+Edge (\begin{DoxyParamCaption}\item[{int}]{source\+Id,  }\item[{int}]{dest\+Id,  }\item[{int}]{edge\+Id,  }\item[{double}]{weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds an edge to the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. \\
+\hline
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em weight} & Weight of the edge. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge was added, false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. \\
+\hline
+{\em edge\+Id} & \mbox{\hyperlink{classEdge}{Edge}} ID. \\
+\hline
+{\em weight} & Weight of the edge. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge was added, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_a480675e98227b5cea4d990d301d43eee}\label{classGraph_a480675e98227b5cea4d990d301d43eee}} 
+\index{Graph@{Graph}!addVertex@{addVertex}}
+\index{addVertex@{addVertex}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{addVertex()}{addVertex()}}
+{\footnotesize\ttfamily bool Graph\+::add\+Vertex (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{double}]{longitude,  }\item[{double}]{latitude }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a vertex to the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. \\
+\hline
+{\em longitude} & Longitude of the vertex. \\
+\hline
+{\em latitude} & Latitude of the vertex. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertex was added, false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. \\
+\hline
+{\em longitude} & Longitude of the vertex. \\
+\hline
+{\em latitude} & Latitude of the vertex. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertex was added, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_ac6192a41101102ca8aa6acca607c84f3}\label{classGraph_ac6192a41101102ca8aa6acca607c84f3}} 
+\index{Graph@{Graph}!clear@{clear}}
+\index{clear@{clear}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Graph\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Clears the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraph_afb430401620ecaec70b18b252f55a220}\label{classGraph_afb430401620ecaec70b18b252f55a220}} 
+\index{Graph@{Graph}!findEdge@{findEdge}}
+\index{findEdge@{findEdge}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{findEdge()}{findEdge()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classEdge}{Edge}} $\ast$ Graph\+::find\+Edge (\begin{DoxyParamCaption}\item[{int}]{source\+Id,  }\item[{int}]{dest\+Id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Finds a vertex with the given ID. 
+
+Finds an edge between two vertices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(\+E) , where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the vertex if found, nullptr otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. @complexity O(\+E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the edge if found, nullptr otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_a05c45e4efdf867792139ddf3628c0b60}\label{classGraph_a05c45e4efdf867792139ddf3628c0b60}} 
+\index{Graph@{Graph}!findVertex@{findVertex}}
+\index{findVertex@{findVertex}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{findVertex()}{findVertex()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVertex}{Vertex}} $\ast$ Graph\+::find\+Vertex (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Finds a vertex with the given ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the vertex if found, nullptr otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the vertex if found, nullptr otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_ad5160609c45eb367a9db50a0dd5f286c}\label{classGraph_ad5160609c45eb367a9db50a0dd5f286c}} 
+\index{Graph@{Graph}!getClock@{getClock}}
+\index{getClock@{getClock}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{getClock()}{getClock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classClock}{Clock}} Graph\+::get\+Clock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the clock. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the clock. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_ab5dd6c3f53e38ecd198d59a8a92bda54}\label{classGraph_ab5dd6c3f53e38ecd198d59a8a92bda54}} 
+\index{Graph@{Graph}!getEdgeSet@{getEdgeSet}}
+\index{getEdgeSet@{getEdgeSet}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{getEdgeSet()}{getEdgeSet()}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$ int, \mbox{\hyperlink{classEdge}{Edge}} $\ast$ $>$ Graph\+::get\+Edge\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the edge set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the edge set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}\label{classGraph_abb5e0517e2979c54eebdafc2a9875e8f}} 
+\index{Graph@{Graph}!getNumVertex@{getNumVertex}}
+\index{getNumVertex@{getNumVertex}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{getNumVertex()}{getNumVertex()}}
+{\footnotesize\ttfamily int Graph\+::get\+Num\+Vertex (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the size of the Vertex\+Set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an integer holding the size of the vertex\+Set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_a34dc8268e703217705d6ba9ac8b02170}\label{classGraph_a34dc8268e703217705d6ba9ac8b02170}} 
+\index{Graph@{Graph}!getVertexSet@{getVertexSet}}
+\index{getVertexSet@{getVertexSet}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{getVertexSet()}{getVertexSet()}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$ int, \mbox{\hyperlink{classVertex}{Vertex}} $\ast$ $>$ Graph\+::get\+Vertex\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the vertex set. 
+
+Finds a vertex with the given ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the vertex set.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the vertex if found, nullptr otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_a7c8895e24312d578e1c8c5f8767c8513}\label{classGraph_a7c8895e24312d578e1c8c5f8767c8513}} 
+\index{Graph@{Graph}!Harverstein@{Harverstein}}
+\index{Harverstein@{Harverstein}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{Harverstein()}{Harverstein()}}
+{\footnotesize\ttfamily double Graph\+::\+Harverstein (\begin{DoxyParamCaption}\item[{double}]{longitude1,  }\item[{double}]{latitude1,  }\item[{double}]{longitude2,  }\item[{double}]{latitude2 }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns Harverstein distance between two nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em longitude1} & the longitude of the first node. \\
+\hline
+{\em latitude1} & the latitude of the first node. \\
+\hline
+{\em longitude2} & the longitude of the second node. \\
+\hline
+{\em latitude2} & the latitude of the second node. @complexity O(log\+N) , where N is the number whose square root is calculated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the edge set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_a19737b754b3384221e533111ba3b126b}\label{classGraph_a19737b754b3384221e533111ba3b126b}} 
+\index{Graph@{Graph}!makeFullyConnected@{makeFullyConnected}}
+\index{makeFullyConnected@{makeFullyConnected}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{makeFullyConnected()}{makeFullyConnected()}}
+{\footnotesize\ttfamily bool Graph\+::make\+Fully\+Connected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Orders the adjacent edges of a vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Pointer to the vertex. @complexity O(V²), where V is the number of vertexes. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraph_a3b67d4aae0ec29037ede078c3c88999d}\label{classGraph_a3b67d4aae0ec29037ede078c3c88999d}} 
+\index{Graph@{Graph}!orderVertexAdj@{orderVertexAdj}}
+\index{orderVertexAdj@{orderVertexAdj}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{orderVertexAdj()}{orderVertexAdj()}}
+{\footnotesize\ttfamily void Graph\+::order\+Vertex\+Adj (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVertex}{Vertex}} $\ast$}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Orders the adjacent edges of a vertex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & Pointer to the vertex. @complexity O(\+E log E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraph_a43037a326921adde0f94320aa161740a}\label{classGraph_a43037a326921adde0f94320aa161740a}} 
+\index{Graph@{Graph}!populate\_in\_and\_out\_degree@{populate\_in\_and\_out\_degree}}
+\index{populate\_in\_and\_out\_degree@{populate\_in\_and\_out\_degree}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{populate\_in\_and\_out\_degree()}{populate\_in\_and\_out\_degree()}}
+{\footnotesize\ttfamily void Graph\+::populate\+\_\+in\+\_\+and\+\_\+out\+\_\+degree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Populates the indegree and outdegree of the vertices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraph_a557582628bd7cf460de68e954ed47a87}\label{classGraph_a557582628bd7cf460de68e954ed47a87}} 
+\index{Graph@{Graph}!printGraphInfo@{printGraphInfo}}
+\index{printGraphInfo@{printGraphInfo}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{printGraphInfo()}{printGraphInfo()}}
+{\footnotesize\ttfamily void Graph\+::print\+Graph\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prints the graph information. 
+
+Print the Number of nodes and Number of Edges .
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraph_aa60b060b106945913be46eb9cc11d698}\label{classGraph_aa60b060b106945913be46eb9cc11d698}} 
+\index{Graph@{Graph}!printNodesContente@{printNodesContente}}
+\index{printNodesContente@{printNodesContente}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{printNodesContente()}{printNodesContente()}}
+{\footnotesize\ttfamily void Graph\+::print\+Nodes\+Contente (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prints the content of the nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em none.} & @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraph_a27e490b6976d8da44cf9b7bb004e03d0}\label{classGraph_a27e490b6976d8da44cf9b7bb004e03d0}} 
+\index{Graph@{Graph}!removeEdge@{removeEdge}}
+\index{removeEdge@{removeEdge}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{removeEdge()}{removeEdge()}}
+{\footnotesize\ttfamily bool Graph\+::remove\+Edge (\begin{DoxyParamCaption}\item[{int}]{source\+Id,  }\item[{int}]{dest\+Id }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Removes an edge from the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. @complexity O(\+E) , where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge was removed, false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em source\+Id} & Source vertex ID. \\
+\hline
+{\em dest\+Id} & Destination vertex ID. @complexity O(\+E), where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the edge was removed, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraph_a88e2a04e9f0974b36d6ac8cdd6f9fc28}\label{classGraph_a88e2a04e9f0974b36d6ac8cdd6f9fc28}} 
+\index{Graph@{Graph}!removeVertex@{removeVertex}}
+\index{removeVertex@{removeVertex}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{removeVertex()}{removeVertex()}}
+{\footnotesize\ttfamily bool Graph\+::remove\+Vertex (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Removes a vertex from the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(\+E) , where E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertex was removed, false otherwise.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & \mbox{\hyperlink{classVertex}{Vertex}} ID. @complexity O(1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the vertex was removed, false otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\mbox{\hyperlink{Graph_8h}{Graph.\+h}}\end{DoxyCompactItemize}

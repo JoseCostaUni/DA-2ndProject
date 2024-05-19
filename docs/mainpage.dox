@@ -1,0 +1,43 @@
+/** \mainpage TSP Solver Tool
+  *
+  * This project is a simple terminal-based application used for solving the TSP problem using diverse algorithms.
+  *
+  * ## Features
+  *
+  * - Read and parse data from csv files and load it into optimized data structures
+  * - Calculate and list statistics of the graph.
+  * - Calculate the best route for smaller graphs.
+  * - Approximate the best route for bigger , complete and incomplete  graphs.
+  *
+  * ## Installation Guide:
+  *
+  * 1. Clone the repository to your local machine: git clone https://github.com/JoseCostaUni/DA-1st-Project.git
+  * 2. Open it on your IDE application (Made using Clion)
+  * 3. Load the Graphs to the Graphs folder
+  * 4. Create cmake and compile project
+  * 5. Enjoy your program
+  *
+  * ## Contributing
+  *
+  * Constructive critics are always welcome, but if you wish to be more proactive and make your own changes to the program:
+  *
+  * 1. Fork the repository
+  * 2. Create your feature branch, preferably with your Github username.
+  * 3. Commit your changes
+  * 4. Push to the branch
+  * 5. Submit a pull request so we can review your changes.
+  *
+  * ## Creators
+  *
+  * Created by:
+  *
+  * - José Costa
+  * - Ângelo Oliveira
+  * - Bruno Fortes
+  *
+  * For "Desenho de Algoritmos" class
+  *
+  * ## Contact
+  *
+  * If you have any questions or suggestions about this project, please feel free to reach out to the project creators by any means possible to you.
+  */

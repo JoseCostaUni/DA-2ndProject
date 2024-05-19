@@ -1,0 +1,36 @@
+\hypertarget{Clock_8h_source}{}\doxysection{Clock.\+h}
+\label{Clock_8h_source}\index{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/Clock.h@{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/Clock.h}}
+\mbox{\hyperlink{Clock_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#ifndef PROJETO2\_CLOCK\_H}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#define PROJETO2\_CLOCK\_H}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}../stdafx.h"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{classClock}{Clock}} \{}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{24     \mbox{\hyperlink{classClock_ab2954ecf7ba64e8ee715a7d980867d6b}{Clock}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{classClock_a8a050959dcff11c85d695989e9099a8c}{start}}() \{}
+\DoxyCodeLine{32         startTime = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} \mbox{\hyperlink{classClock_a7b921bfc7d2d21a0a9b9e2da61b2b6a6}{elapsed}}() \{}
+\DoxyCodeLine{41         \textcolor{keyword}{auto} endTime = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{42         std::chrono::duration<double> elapsedSeconds = endTime -\/ startTime;}
+\DoxyCodeLine{43         std::cout << \textcolor{stringliteral}{"{}Elapsed time: "{}} << elapsedSeconds.count() << \textcolor{stringliteral}{"{} seconds"{}} << std::endl;}
+\DoxyCodeLine{44     \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{keyword}{private}:}
+\DoxyCodeLine{47     std::chrono::high\_resolution\_clock::time\_point startTime;}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//PROJETO2\_CLOCK\_H}}
+
+\end{DoxyCode}

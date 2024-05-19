@@ -1,0 +1,129 @@
+\hypertarget{classUFDS}{}\doxysection{UFDS Class Reference}
+\label{classUFDS}\index{UFDS@{UFDS}}
+
+
+Union-\/\+Find Disjoint Set (\mbox{\hyperlink{classUFDS}{UFDS}}) data structure.  
+
+
+
+
+{\ttfamily \#include $<$UFDS.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classUFDS_a9daac3830c0769f08aceb6236f407248}{UFDS}} (unsigned int N)
+\begin{DoxyCompactList}\small\item\em Constructor to create \mbox{\hyperlink{classUFDS}{UFDS}} object with specified number of elements. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{classUFDS_afe161413e4cd6702b2ca2f475eddeca0}{find\+Set}} (unsigned int i)
+\begin{DoxyCompactList}\small\item\em Find the representative element of the set that contains element i. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classUFDS_a793b0e0337223456401318c652f0cdd0}{is\+Same\+Set}} (unsigned int i, unsigned int j)
+\begin{DoxyCompactList}\small\item\em Check if two elements belong to the same set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUFDS_a0955e92d417b1bfbba94dc8c660f86d3}{link\+Sets}} (unsigned int i, unsigned int j)
+\begin{DoxyCompactList}\small\item\em Link two sets together. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Union-\/\+Find Disjoint Set (\mbox{\hyperlink{classUFDS}{UFDS}}) data structure. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classUFDS_a9daac3830c0769f08aceb6236f407248}\label{classUFDS_a9daac3830c0769f08aceb6236f407248}} 
+\index{UFDS@{UFDS}!UFDS@{UFDS}}
+\index{UFDS@{UFDS}!UFDS@{UFDS}}
+\doxysubsubsection{\texorpdfstring{UFDS()}{UFDS()}}
+{\footnotesize\ttfamily UFDS\+::\+UFDS (\begin{DoxyParamCaption}\item[{unsigned int}]{N }\end{DoxyParamCaption})}
+
+
+
+Constructor to create \mbox{\hyperlink{classUFDS}{UFDS}} object with specified number of elements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N} & Number of elements in the \mbox{\hyperlink{classUFDS}{UFDS}}. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classUFDS_afe161413e4cd6702b2ca2f475eddeca0}\label{classUFDS_afe161413e4cd6702b2ca2f475eddeca0}} 
+\index{UFDS@{UFDS}!findSet@{findSet}}
+\index{findSet@{findSet}!UFDS@{UFDS}}
+\doxysubsubsection{\texorpdfstring{findSet()}{findSet()}}
+{\footnotesize\ttfamily unsigned long UFDS\+::find\+Set (\begin{DoxyParamCaption}\item[{unsigned int}]{i }\end{DoxyParamCaption})}
+
+
+
+Find the representative element of the set that contains element i. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Element whose representative is to be found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The representative element of the set containing i.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Element whose representative is to be found. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The representative element of the set containing i.
+\end{DoxyReturn}
+Time Complexity\+: O(log N) on average, where N is the number of elements in the \mbox{\hyperlink{classUFDS}{UFDS}}. \mbox{\Hypertarget{classUFDS_a793b0e0337223456401318c652f0cdd0}\label{classUFDS_a793b0e0337223456401318c652f0cdd0}} 
+\index{UFDS@{UFDS}!isSameSet@{isSameSet}}
+\index{isSameSet@{isSameSet}!UFDS@{UFDS}}
+\doxysubsubsection{\texorpdfstring{isSameSet()}{isSameSet()}}
+{\footnotesize\ttfamily bool UFDS\+::is\+Same\+Set (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{unsigned int}]{j }\end{DoxyParamCaption})}
+
+
+
+Check if two elements belong to the same set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & First element. \\
+\hline
+{\em j} & Second element. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if i and j belong to the same set, otherwise false.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em i} & First element. \\
+\hline
+{\em j} & Second element. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if i and j belong to the same set, otherwise false.
+\end{DoxyReturn}
+Time Complexity\+: O(log N) on average, where N is the number of elements in the \mbox{\hyperlink{classUFDS}{UFDS}}. \mbox{\Hypertarget{classUFDS_a0955e92d417b1bfbba94dc8c660f86d3}\label{classUFDS_a0955e92d417b1bfbba94dc8c660f86d3}} 
+\index{UFDS@{UFDS}!linkSets@{linkSets}}
+\index{linkSets@{linkSets}!UFDS@{UFDS}}
+\doxysubsubsection{\texorpdfstring{linkSets()}{linkSets()}}
+{\footnotesize\ttfamily void UFDS\+::link\+Sets (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{unsigned int}]{j }\end{DoxyParamCaption})}
+
+
+
+Link two sets together. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Element from the first set. \\
+\hline
+{\em j} & Element from the second set.\\
+\hline
+{\em i} & Element from the first set. \\
+\hline
+{\em j} & Element from the second set.\\
+\hline
+\end{DoxyParams}
+Time Complexity\+: O(log N) on average, where N is the number of elements in the \mbox{\hyperlink{classUFDS}{UFDS}}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/data\+\_\+structures/UFDS.\+h\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/data\+\_\+structures/UFDS.\+cpp\end{DoxyCompactItemize}

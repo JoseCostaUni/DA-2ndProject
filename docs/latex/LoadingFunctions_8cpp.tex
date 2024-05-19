@@ -1,0 +1,146 @@
+\hypertarget{LoadingFunctions_8cpp}{}\doxysection{/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/\+Logic/\+Loading\+Functions.cpp File Reference}
+\label{LoadingFunctions_8cpp}\index{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/LoadingFunctions.cpp@{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Logic/LoadingFunctions.cpp}}
+
+
+Implementation of all loading Functions used during the Project.  
+
+
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include \char`\"{}../stdafx.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Loading\+Functions.\+h\char`\"{}}\newline
+Include dependency graph for Loading\+Functions.\+cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{LoadingFunctions_8cpp_ab71afa9ae22b10ecf4b79f34cf208cc5}\label{LoadingFunctions_8cpp_ab71afa9ae22b10ecf4b79f34cf208cc5}} 
+double {\bfseries To\+Radians} (double degrees)
+\item 
+void \mbox{\hyperlink{LoadingFunctions_8cpp_a06acaf3fa6b898126108d73f9188399f}{Remove\+\_\+terminations}} (std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Removes termination characters (e.\+g., \textquotesingle{}\textbackslash{}r\textquotesingle{}, \textquotesingle{}~\newline
+\textquotesingle{}, \textquotesingle{}\textbackslash{}0\textquotesingle{}) from the given string. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{LoadingFunctions_8cpp_a20e40963a82881d2e7492d51879b87e6}{extract\+Letters}} (const std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Extracts the letters between the underscore and the period in the filename. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{LoadingFunctions_8cpp_a4496494a81f2ab79a2aad8d598e2767f}{Load\+Toy\+Graphs}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g, const std\+::string \&path, const int \&graph)
+\begin{DoxyCompactList}\small\item\em Loads toy graphs from CSV files into the provided graph object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{LoadingFunctions_8cpp_af4e6b881a4e46f343770126024bbccc1}{Load\+Real\+World\+Graphs}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g, const std\+::string \&path, const int \&graph)
+\begin{DoxyCompactList}\small\item\em Loads real-\/world graphs from CSV files into the provided graph object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{LoadingFunctions_8cpp_af53b6177d4bbc14dc390f39ce7c191dc}{Load\+Medium\+Graphs}} (\mbox{\hyperlink{classGraph}{Graph}} $\ast$g, const std\+::string \&path, const int \&graph)
+\begin{DoxyCompactList}\small\item\em Loads medium-\/sized graphs from CSV files into the provided graph object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{LoadingFunctions_8cpp_a3a027f8b776aa9f9197830da2adbee5d}\label{LoadingFunctions_8cpp_a3a027f8b776aa9f9197830da2adbee5d}} 
+std\+::vector$<$ \mbox{\hyperlink{classVertex}{Vertex}} $>$ {\bfseries Vertexes}
+\item 
+\mbox{\Hypertarget{LoadingFunctions_8cpp_ac30ea52d2ee0d58644f3e09f01c2889a}\label{LoadingFunctions_8cpp_ac30ea52d2ee0d58644f3e09f01c2889a}} 
+std\+::vector$<$ \mbox{\hyperlink{classEdge}{Edge}} $>$ {\bfseries Edges}
+\item 
+\mbox{\Hypertarget{LoadingFunctions_8cpp_ad7d686aa1c9007cf5a8440c9702624cf}\label{LoadingFunctions_8cpp_ad7d686aa1c9007cf5a8440c9702624cf}} 
+constexpr double {\bfseries k\+Earth\+Radius\+Km} = 6371.\+0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of all loading Functions used during the Project. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{LoadingFunctions_8cpp_a20e40963a82881d2e7492d51879b87e6}\label{LoadingFunctions_8cpp_a20e40963a82881d2e7492d51879b87e6}} 
+\index{LoadingFunctions.cpp@{LoadingFunctions.cpp}!extractLetters@{extractLetters}}
+\index{extractLetters@{extractLetters}!LoadingFunctions.cpp@{LoadingFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{extractLetters()}{extractLetters()}}
+{\footnotesize\ttfamily std\+::string extract\+Letters (\begin{DoxyParamCaption}\item[{const std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Extracts the letters between the underscore and the period in the filename. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The filename from which to extract letters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string containing the extracted letters. @complexity O(n), where n is the length of the filename. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{LoadingFunctions_8cpp_af53b6177d4bbc14dc390f39ce7c191dc}\label{LoadingFunctions_8cpp_af53b6177d4bbc14dc390f39ce7c191dc}} 
+\index{LoadingFunctions.cpp@{LoadingFunctions.cpp}!LoadMediumGraphs@{LoadMediumGraphs}}
+\index{LoadMediumGraphs@{LoadMediumGraphs}!LoadingFunctions.cpp@{LoadingFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{LoadMediumGraphs()}{LoadMediumGraphs()}}
+{\footnotesize\ttfamily void Load\+Medium\+Graphs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g,  }\item[{const std\+::string \&}]{path,  }\item[{const int \&}]{graph }\end{DoxyParamCaption})}
+
+
+
+Loads medium-\/sized graphs from CSV files into the provided graph object. 
+
+Loads water reservoirs data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph object. \\
+\hline
+{\em path} & The path to the directory containing the CSV files. \\
+\hline
+{\em graph} & The identifier for selecting the specific graph to load. @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{LoadingFunctions_8cpp_af4e6b881a4e46f343770126024bbccc1}\label{LoadingFunctions_8cpp_af4e6b881a4e46f343770126024bbccc1}} 
+\index{LoadingFunctions.cpp@{LoadingFunctions.cpp}!LoadRealWorldGraphs@{LoadRealWorldGraphs}}
+\index{LoadRealWorldGraphs@{LoadRealWorldGraphs}!LoadingFunctions.cpp@{LoadingFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{LoadRealWorldGraphs()}{LoadRealWorldGraphs()}}
+{\footnotesize\ttfamily void Load\+Real\+World\+Graphs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g,  }\item[{const std\+::string \&}]{path,  }\item[{const int \&}]{graph }\end{DoxyParamCaption})}
+
+
+
+Loads real-\/world graphs from CSV files into the provided graph object. 
+
+Loads pipes data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph object. \\
+\hline
+{\em path} & The path to the directory containing the CSV files. \\
+\hline
+{\em graph} & The identifier for selecting the specific graph to load. @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{LoadingFunctions_8cpp_a4496494a81f2ab79a2aad8d598e2767f}\label{LoadingFunctions_8cpp_a4496494a81f2ab79a2aad8d598e2767f}} 
+\index{LoadingFunctions.cpp@{LoadingFunctions.cpp}!LoadToyGraphs@{LoadToyGraphs}}
+\index{LoadToyGraphs@{LoadToyGraphs}!LoadingFunctions.cpp@{LoadingFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{LoadToyGraphs()}{LoadToyGraphs()}}
+{\footnotesize\ttfamily void Load\+Toy\+Graphs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}} $\ast$}]{g,  }\item[{const std\+::string \&}]{path,  }\item[{const int \&}]{graph }\end{DoxyParamCaption})}
+
+
+
+Loads toy graphs from CSV files into the provided graph object. 
+
+Loads cities data from a CSV file. @complexity O(n), where n is the number of lines in the CSV file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Pointer to the graph object. \\
+\hline
+{\em path} & The path to the directory containing the CSV files. \\
+\hline
+{\em graph} & The identifier for selecting the specific graph to load. @complexity O(V + E), where V is the number of vertices and E is the number of edges. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{LoadingFunctions_8cpp_a06acaf3fa6b898126108d73f9188399f}\label{LoadingFunctions_8cpp_a06acaf3fa6b898126108d73f9188399f}} 
+\index{LoadingFunctions.cpp@{LoadingFunctions.cpp}!Remove\_terminations@{Remove\_terminations}}
+\index{Remove\_terminations@{Remove\_terminations}!LoadingFunctions.cpp@{LoadingFunctions.cpp}}
+\doxysubsubsection{\texorpdfstring{Remove\_terminations()}{Remove\_terminations()}}
+{\footnotesize\ttfamily void Remove\+\_\+terminations (\begin{DoxyParamCaption}\item[{std\+::string \&}]{str }\end{DoxyParamCaption})}
+
+
+
+Removes termination characters (e.\+g., \textquotesingle{}\textbackslash{}r\textquotesingle{}, \textquotesingle{}~\newline
+\textquotesingle{}, \textquotesingle{}\textbackslash{}0\textquotesingle{}) from the given string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string from which to remove termination characters. @complexity O(n), where n is the length of the string. \\
+\hline
+\end{DoxyParams}

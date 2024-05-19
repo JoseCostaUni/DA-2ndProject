@@ -1,0 +1,105 @@
+\hypertarget{classMutablePriorityQueue}{}\doxysection{Mutable\+Priority\+Queue\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classMutablePriorityQueue}\index{MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}}
+
+
+A simple implementation of mutable priority queues.  
+
+
+
+
+{\ttfamily \#include $<$Mutable\+Priority\+Queue.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMutablePriorityQueue_aba8ebedcbe659f2680bac229cfaca526}\label{classMutablePriorityQueue_aba8ebedcbe659f2680bac229cfaca526}} 
+{\bfseries Mutable\+Priority\+Queue} ()
+\begin{DoxyCompactList}\small\item\em Default constructor to create a \mbox{\hyperlink{classMutablePriorityQueue}{Mutable\+Priority\+Queue}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMutablePriorityQueue_a058fc182052af82e10cc3719e448b62d}{insert}} (T $\ast$x)
+\begin{DoxyCompactList}\small\item\em Insert an element into the priority queue. \end{DoxyCompactList}\item 
+T $\ast$ \mbox{\hyperlink{classMutablePriorityQueue_a3880874d7364279ac0d6d31302b28853}{extract\+Min}} ()
+\begin{DoxyCompactList}\small\item\em Extract the minimum element from the priority queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMutablePriorityQueue_a0878839cc1d2dba2b8ab2e589ecc6405}{decrease\+Key}} (T $\ast$x)
+\begin{DoxyCompactList}\small\item\em Decrease the key of an element in the priority queue. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMutablePriorityQueue_a2edbb1f4a6fa3ff735700dfcebebe8d4}{empty}} ()
+\begin{DoxyCompactList}\small\item\em Check if the priority queue is empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class Mutable\+Priority\+Queue$<$ T $>$}
+A simple implementation of mutable priority queues. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of elements stored in the priority queue. class T must have\+: (i) accessible field int queue\+Index; (ii) operator\texorpdfstring{$<$}{<} defined. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMutablePriorityQueue_a0878839cc1d2dba2b8ab2e589ecc6405}\label{classMutablePriorityQueue_a0878839cc1d2dba2b8ab2e589ecc6405}} 
+\index{MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}!decreaseKey@{decreaseKey}}
+\index{decreaseKey@{decreaseKey}!MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{decreaseKey()}{decreaseKey()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classMutablePriorityQueue}{Mutable\+Priority\+Queue}}$<$ T $>$\+::decrease\+Key (\begin{DoxyParamCaption}\item[{T $\ast$}]{x }\end{DoxyParamCaption})}
+
+
+
+Decrease the key of an element in the priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Pointer to the element whose key needs to be decreased. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classMutablePriorityQueue_a2edbb1f4a6fa3ff735700dfcebebe8d4}\label{classMutablePriorityQueue_a2edbb1f4a6fa3ff735700dfcebebe8d4}} 
+\index{MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}!empty@{empty}}
+\index{empty@{empty}!MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{classMutablePriorityQueue}{Mutable\+Priority\+Queue}}$<$ T $>$\+::empty}
+
+
+
+Check if the priority queue is empty. 
+
+\begin{DoxyReturn}{Returns}
+True if the priority queue is empty, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMutablePriorityQueue_a3880874d7364279ac0d6d31302b28853}\label{classMutablePriorityQueue_a3880874d7364279ac0d6d31302b28853}} 
+\index{MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}!extractMin@{extractMin}}
+\index{extractMin@{extractMin}!MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{extractMin()}{extractMin()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T $\ast$ \mbox{\hyperlink{classMutablePriorityQueue}{Mutable\+Priority\+Queue}}$<$ T $>$\+::extract\+Min}
+
+
+
+Extract the minimum element from the priority queue. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the minimum element. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMutablePriorityQueue_a058fc182052af82e10cc3719e448b62d}\label{classMutablePriorityQueue_a058fc182052af82e10cc3719e448b62d}} 
+\index{MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}!insert@{insert}}
+\index{insert@{insert}!MutablePriorityQueue$<$ T $>$@{MutablePriorityQueue$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classMutablePriorityQueue}{Mutable\+Priority\+Queue}}$<$ T $>$\+::insert (\begin{DoxyParamCaption}\item[{T $\ast$}]{x }\end{DoxyParamCaption})}
+
+
+
+Insert an element into the priority queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Pointer to the element to be inserted. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/jose-\/costa/\+Documents/\+Uni/\+DA/\+Projeto2/data\+\_\+structures/Mutable\+Priority\+Queue.\+h\end{DoxyCompactItemize}

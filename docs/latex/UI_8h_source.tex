@@ -1,0 +1,46 @@
+\hypertarget{UI_8h_source}{}\doxysection{UI.\+h}
+\label{UI_8h_source}\index{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Interface/UI.h@{/home/jose-\/costa/Documents/Uni/DA/Projeto2/Interface/UI.h}}
+\mbox{\hyperlink{UI_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef PROJETO\_UI\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define PROJETO\_UI\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}../Logic/LoadingFunctions.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}../stdafx.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}../Graph.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{12  \textcolor{keyword}{class }\mbox{\hyperlink{classUI}{UI}} \{}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \mbox{\hyperlink{classUI_a675985a56b5e87ebdc8e5884b9f2ee09}{UI}}();}
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_aa4f5f0000b864a5019c797b8a7da8891}{menu\_start}}();}
+\DoxyCodeLine{25     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a298d81ef3106436a00bed98330d4c5a8}{clear\_screen}}();}
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a19639c490c34c5b0c66684c2670b7076}{loading\_stuff}}(\mbox{\hyperlink{classUI}{UI}} \&ui);}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a9fb619daf6b6c6cea7888622f7d3a40a}{changeDataSet}}();}
+\DoxyCodeLine{49     \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classUI_a83fba9739cde5eda8391c2020ab3dcff}{validate\_input}}(\textcolor{keywordtype}{char} \&op, \textcolor{keyword}{const} \textcolor{keywordtype}{char} lower\_bound, \textcolor{keyword}{const} \textcolor{keywordtype}{char} upper\_bound);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a7b1b994477bd9b6feb8668aede1d7cda}{GraphOptionsMenu}}();}
+\DoxyCodeLine{52     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a18740cf7515ae0c7530de0c9cb916e52}{BackTrackMenu}}();}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{61     \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classUI_ad24beddee815f5f1feeadd7084ae0bf8}{validate\_int\_input}}(\textcolor{keywordtype}{int} \&index);}
+\DoxyCodeLine{68     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_ae6e6f8381ec34388c4bd8811c4e86e1c}{main\_menu}}();}
+\DoxyCodeLine{75     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a7400f4d4e0b03b04121de9208070aa6b}{back\_menu}}();}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a397e0a110cc341b9060d8868cdf6df68}{back\_menu\_GraphOptions}}();}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{91     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a4212469fffb76e4d920ce0886ab57877}{back\_menu\_BacktrackingOptions}}();}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{99     \mbox{\hyperlink{classGraph}{Graph}} \mbox{\hyperlink{classUI_a6d289b0fadefcf26386f7d8b6723fa1c}{getGraph}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{100     \textcolor{keywordtype}{void} \mbox{\hyperlink{classUI_a286d85cc02e152ae284a4428efb0a942}{pathSelector}}();}
+\DoxyCodeLine{101 \textcolor{keyword}{private}:}
+\DoxyCodeLine{102     \mbox{\hyperlink{classGraph}{Graph}} g;}
+\DoxyCodeLine{103     std::vector<Edge *> TSP;}
+\DoxyCodeLine{104     std::string file\_path;}
+\DoxyCodeLine{105     \textcolor{keywordtype}{bool} fullyConnected = \textcolor{keyword}{false};}
+\DoxyCodeLine{106 \};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//PROJETO\_UI\_H}}
+
+\end{DoxyCode}
