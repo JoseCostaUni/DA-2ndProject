@@ -270,9 +270,8 @@ void UI::changeDataSet(){
                       << "A. shipping.csv" << std::endl
                       << "B. stadiums.csv" << std::endl
                       << "C. tourism.csv" << std::endl
-                      << "D. myGraph.csv" << std::endl
                       << "Insert the letter: " ;
-            validate_input(secondOp,'A','D');
+            validate_input(secondOp,'A','C');
             switch (secondOp) {
                 case 'A':
                     LoadToyGraphs(&g , path , 0);
@@ -285,10 +284,6 @@ void UI::changeDataSet(){
                 case 'C':
                     LoadToyGraphs(&g , path , 2);
                     file_path = path + "/tourism.csv";
-                    break;
-                case 'D':
-                    LoadToyGraphs(&g , path , 3);
-                    file_path = path + "/myGraph.csv";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -534,7 +529,7 @@ void UI::main_menu(){
               << "D. Calculate TSP with Triangular Approximation (Beware that this will make the graph fully connected which may take some time)" << std::endl
               << "E. Calculate TSP with Nearest Neighbour algorithm (Beware that this will make the graph fully connected which may take some time)" << std::endl
               << "F. Calculate TSP for incomplete Graphs" << std::endl
-             << "G Exit the program" << std::endl
+             << "G. Exit the program" << std::endl
              << "Insert your choice:";
 
     validate_input(op, 'A', 'G');
@@ -545,6 +540,8 @@ void UI::main_menu(){
     Vertex * source;
     Vertex * dest;
     bool isFullyConnected = false;
+    int numVertices = g.getNumVertex();
+    int expectedEdges = numVertices * (numVertices - 1);
     switch(op){
         case 'A':
             changeDataSet();
@@ -566,11 +563,15 @@ void UI::main_menu(){
         case 'D':
             source = g.findVertex(0);
 
-            if(g.makeFullyConnected()){
+            if (g.getEdgeSet().size() == expectedEdges || g.getEdgeSet().size() == expectedEdges / 2) {
                 isFullyConnected = true;
-            }else {
-                std::cout << "Not possible to make fully connected\n";
-                back_menu();
+            }else{
+                if(g.makeFullyConnected()){
+                    isFullyConnected = true;
+                }else {
+                    std::cout << "Not possible to make fully connected\n";
+                    back_menu();
+                }
             }
 
             TSP = TriangularApproximationHeuristic(&g , source , nullptr);
