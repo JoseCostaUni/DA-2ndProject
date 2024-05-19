@@ -118,9 +118,8 @@ void UI::loading_stuff(UI &ui) {
                 << "A. shipping.csv" << std::endl
                 << "B. stadiums.csv" << std::endl
                 << "C. tourism.csv" << std::endl
-                << "D. myGraph.csv" << std::endl
                 << "Insert the letter: " ;
-            validate_input(secondOp,'A','D');
+            validate_input(secondOp,'A','C');
             switch (secondOp) {
                 case 'A':
                     LoadToyGraphs(&g , path , 0);
@@ -133,10 +132,6 @@ void UI::loading_stuff(UI &ui) {
                 case 'C':
                     LoadToyGraphs(&g , path , 2);
                     file_path = path + "/tourism.csv";
-                    break;
-                case 'D':
-                    LoadToyGraphs(&g , path , 3);
-                    file_path = path + "/myGraph.csv";
                     break;
                 default:
                     std::cerr << "Invalid Input";
@@ -561,18 +556,34 @@ void UI::main_menu(){
             back_menu();
             break;
         case 'D':
-            source = g.findVertex(0);
+            char op2;
+            std::cout << "Do you wish to make the graph fully connected?" << std::endl
+                      << "A. Yes" << std::endl
+                      << "B. No" << std::endl
+                      << "Insert your choice:";
+            validate_input(op2, 'A', 'B');
 
-            if (g.getEdgeSet().size() == expectedEdges || g.getEdgeSet().size() == expectedEdges / 2) {
-                isFullyConnected = true;
-            }else{
-                if(g.makeFullyConnected()){
-                    isFullyConnected = true;
-                }else {
-                    std::cout << "Not possible to make fully connected\n";
-                    back_menu();
-                }
+            switch (op2) {
+                case 'A':
+                    if (g.getEdgeSet().size() == expectedEdges || g.getEdgeSet().size() == expectedEdges / 2) {
+                        isFullyConnected = true;
+                    } else {
+                        if (g.makeFullyConnected()) {
+                            isFullyConnected = true;
+                        } else {
+                            std::cout << "Not possible to make fully connected\n";
+                            back_menu();
+                        }
+                    }
+                    break;
+                case 'B':
+                    isFullyConnected = false;
+                    break;
+                default:
+                    std::cerr << "Error";
             }
+
+            source = g.findVertex(0);
 
             TSP = TriangularApproximationHeuristic(&g , source , nullptr);
             std::cout << source->getId() ;
