@@ -276,31 +276,6 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
     return path;
 }
 
-
-
-/* A heurística de "Vizinho Mais Próximo" (N.N - Nearest Neighbor) é
-   um algoritmo de busca heurística utilizado para encontrar um caminho aproximadamente mais curto em um grafo, especialmente em problemas de TSP (Traveling Salesman Problem). A ideia básica do algoritmo é começar de um nó inicial e, em cada etapa, selecionar o nó mais próximo que ainda não foi visitado.
-
-    Aqui está uma descrição geral do algoritmo:
-
-    Escolha um nó inicial como o nó atual.
-    Enquanto houver nós não visitados:
-    a. Encontre o vizinho mais próximo do nó atual que ainda não foi visitado.
-    b. Adicione esse vizinho ao caminho.
-    c. Marque o vizinho como visitado e faça dele o nó atual.
-    Retorne ao nó inicial para completar o ciclo.
- */
-
-/*Triangulolar inequality : the least distance path to reach a vertex j from i is always to reach j directly from i
-   rather than go through some vertex k.
-   dist(i, j ) <= dist(i,k) + dist(k , j)
-   1. Algorithm: select a root vertex
-   2. Find a minimum spanning tree
-   3. Do preorder walk of T. and return Hamilton Cycle
- *
- *
-*/
-
 /**
  * @brief Solves the TSP using the Triangular Approximation Heuristic.
  * @param graph Pointer to the graph representing the cities and paths.
@@ -455,49 +430,6 @@ void tspBacktrackingBruteForce(Graph* g,Vertex* curr,double curr_cost,int n_visi
         }
     }
 }
-/*
-double twoOpt(std::vector<Vertex*>& path, Graph* g, int max_iterations) {
-    int n = path.size();
-    bool improvement = true;
-    double total_cost = 0.0;
-    int iteration_count = 0;
-
-    while (improvement && iteration_count < max_iterations) {
-        improvement = false;
-        for (int i = 0; i < n - 2; ++i) {
-            for (int j = i + 2; j < n; ++j) {
-                Edge* edge_1 = g->findEdge(path[i]->getId(), path[j]->getId());
-                Edge* edge_2 = g->findEdge(path[i + 1]->getId(), path[(j + 1) % n]->getId());
-                Edge* edge_3 = g->findEdge(path[i]->getId(), path[i + 1]->getId());
-                Edge* edge_4 = g->findEdge(path[j]->getId(), path[(j + 1) % n]->getId());
-
-                if (edge_1 && edge_2 && edge_3 && edge_4) {
-                    double delta = (edge_1->getWeight() + edge_2->getWeight()) - (edge_3->getWeight() + edge_4->getWeight());
-
-                    if (delta < 0) {
-                        std::reverse(path.begin() + i + 1, path.begin() + j + 1);
-                        improvement = true;
-                        break;
-                    }
-                }
-            }
-            if (improvement) break;
-        }
-        iteration_count++;
-    }
-
-    for (int i = 0; i < n - 1; ++i) {
-        int edge_cost = g->findEdge(path[i]->getId(), path[i + 1]->getId())->getWeight();
-        std::cout << path[i]->getId() << " - " << path[i + 1]->getId() << " : " << edge_cost << std::endl;
-        total_cost += edge_cost;
-    }
-
-
-    total_cost += g->findEdge(path[n - 1]->getId(), path[0]->getId())->getWeight();
-    std::cout << path[n - 1]->getId() << " - " << path[0]->getId() << " : " << g->findEdge(path[n - 1]->getId(), path[0]->getId())->getWeight() << std::endl;
-
-    return total_cost;
-}*/
 
 /**
  * @brief Performs a 2-opt swap on the path.
@@ -656,8 +588,6 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
         }
     }
 
-    //twoOpt(hamiltonian , 10 , edgeMatrix);
-
     std::set<uint32_t> set;
     double cost = 0;
     Vertex * prev = nullptr;
@@ -722,7 +652,7 @@ bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * 
         }
     }
 
-    twoOpt(hamiltonian , 1000 , edgeMatrix);
+    twoOpt(hamiltonian , 10 , edgeMatrix);
 
     std::set<uint32_t> set;
     double cost = 0;
