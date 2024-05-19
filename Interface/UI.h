@@ -29,6 +29,13 @@ public:
      */
     void loading_stuff(UI &ui);
 
+
+    /**
+     * @brief Displays the options to change the data set.
+     * @return none.
+     * @param none.
+     * @complexity O(1).
+     */
     void changeDataSet();
      /**
     * @brief Validates user input within a specified range.
@@ -43,18 +50,51 @@ public:
     void GraphOptionsMenu();
     void BackTrackMenu();
 
+    /**
+     * @brief Validates user input as an integer.
+     *
+     * @param index Reference to the input integer to be validated.
+     * @return True if input is valid, False otherwise.
+     */
+
     static bool validate_int_input(int &index);
      /**
      * @brief Displays the main menu options.
+     * @return none.
+     * @param none.
+     * @complexity O(1).
      */
     void main_menu();
      /**
-     * @brief Executes the max flow algorithm.
+     * @brief Displays the back menu options.
+     * @param none.
+     * @return none.
+     * @complexity O(1).
      */
     void back_menu();
+
+    /**
+    * @brief Displays the Graph Options menu options.
+    * @param none.
+    * @return none.
+    * @complexity O(1).
+    */
     void back_menu_GraphOptions();
+
+     /**
+     * @brief Displays the BackTracking Options menu options.
+     * @param none.
+     * @return none.
+     * @complexity O(1).
+     */
     void back_menu_BacktrackingOptions();
 
+    /**
+     * @brief returns the graph.
+     * @param none.
+     * @return the graph.
+     * @complexity O(1).
+     */
     Graph getGraph() const;
     void pathSelector();
 private:

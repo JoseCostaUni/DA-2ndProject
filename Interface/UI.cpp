@@ -1,5 +1,4 @@
 #include "UI.h"
-#include "../Logic/Logic.h"
 #include "../Logic/Algorithms.h"
 #include <thread>
 #include <chrono>

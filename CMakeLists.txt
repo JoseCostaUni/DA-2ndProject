@@ -9,7 +9,6 @@ add_executable(Projeto2 main.cpp
         Interface/UI.h
         Interface/UI.cpp
         Logic/Algorithms.cpp
-        Logic/Logic.cpp
         Logic/Algorithms.h
         Logic/Clock.h
 )
