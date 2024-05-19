@@ -33,9 +33,9 @@ If you are having troubles with running the project:
 
 If you have any trouble loading the csv files, please make sure that the csv files match the attached picture. If you trouble persists, please contact me us:
 
-- [Email](up202207871@up.pt)
-- [Email](up202207798@up.pt)
-- [Email](up202209739@up.pt)
+- up202207871@up.pt
+- up202207798@up.pt
+- up202209739@up.pt
 
 ## Authors
 
