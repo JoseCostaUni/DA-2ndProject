@@ -24,7 +24,6 @@ void dfsAux(Graph & graph , Vertex * current , std::vector<Vertex *> &path){
 
     for(Edge * e : current->getAdj()){
 
-
         if(!e->getDestination()->isVisited()){
             Vertex *nextVertex = e->getDestination();
             dfsAux(graph, nextVertex, path);
@@ -76,12 +75,12 @@ std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
         }
     }
 
-    Vertex * curr = startVertex;
-    curr->setVisited(true);
+    Vertex * currentVertex = startVertex;
+    currentVertex->setVisited(true);
 
     while (true){
         std::vector<Edge *> edgesV;
-        for(Edge * e : curr->getAdj()){
+        for(Edge * e : currentVertex->getAdj()){
             edgesV.push_back(e);
         }
 
@@ -90,26 +89,25 @@ std::vector<Edge * > NearestNeighbour(Graph * graph , Vertex * startVertex) {
             return e1->getWeight() < e2->getWeight();
         });
 
-        bool found = false;
+        bool foundEdge = false;
 
-        for(Edge * e : edgesV){
-            if(!e->getDestination()->isVisited()){
-                optimalPath.push_back(e);
-                e->getDestination()->setVisited(true);
-                curr = e->getDestination();
-                found = true;
+        for(Edge * edge : edgesV){
+            if(!edge->getDestination()->isVisited()){
+                edge->getDestination()->setVisited(true);
+                optimalPath.push_back(edge);
+                currentVertex = edge->getDestination();
+                foundEdge = true;
                 break;
             }
         }
 
-        if(!found){
+        if(!foundEdge){
             break;
         }
     }
 
     if(!optimalPath.empty()){
         Edge * last = findEdgeTo(optimalPath.back()->getDestination() , startVertex);
-
         optimalPath.push_back(last);
     }
 
@@ -183,7 +181,6 @@ void preOrderDFSAux(const Graph * graph , Vertex * current , std::vector<Vertex 
     current->setVisited(true);
 
     for(Edge * e : current->getAdj()){
-
         if(!e->getDestination()->isVisited() && e->isSelected()){
             Vertex *nextVertex = e->getDestination();
             preOrderDFSAux(graph, nextVertex, path);
@@ -201,6 +198,7 @@ void preOrderDFSAux(const Graph * graph , Vertex * current , std::vector<Vertex 
  * @complexity O(V + E), where V is the number of vertices and E is the number of edges.
  */
 void preOrder(const Graph * graph , Vertex * source , std::vector<Vertex *>& path){
+
     std::unordered_map<int, Vertex *> vertexSet = graph->getVertexSet();
     for(std::pair<int , Vertex *> pair : vertexSet){
         Vertex * v = pair.second;
@@ -218,7 +216,6 @@ void preOrder(const Graph * graph , Vertex * source , std::vector<Vertex *>& pat
  * @return Vector of vertices representing the MST path.
  * @complexity O(E log V), where V is the number of vertices and E is the number of edges.
  */
-
 std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
 
     Clock clock1;
@@ -245,34 +242,35 @@ std::vector<Vertex * > PrimMst(const Graph* graph , Vertex * sourceVertex){
 
     while (!vertexQueue.empty()){
         Vertex * curr = vertexQueue.extractMin();
-        if (curr->isVisited()) continue;
+
+        if (curr->isVisited())
+            continue;
+
         curr->setVisited(true);
         path.push_back(curr);
-        // Update distances and paths to adjacent vertices
 
         for(Edge * e : curr->getAdj()){
-            Vertex * neighbor = e->getDestination();
+            Vertex * neighbour = e->getDestination();
 
-            if(neighbor->isVisited()){
+            if(neighbour->isVisited()){
                 continue;
-            }else if(neighbor->getDist() == DBL_MAX){
+            }else if(neighbour->getDist() == DBL_MAX){
                 e->setSelected(true);
-                neighbor->setPath(e);
-                neighbor->setDist(e->getWeight());
-                vertexQueue.insert(neighbor);
-            } else if(e->getWeight() < neighbor->getDist()){
+                neighbour->setPath(e);
+                neighbour->setDist(e->getWeight());
+                vertexQueue.insert(neighbour);
+            } else if(e->getWeight() < neighbour->getDist()){
                 e->setSelected(true);
-                neighbor->getPath()->setSelected(false);
-                neighbor->setPath(e);
-                neighbor->setDist(e->getWeight());
-                vertexQueue.decreaseKey(neighbor);
+                neighbour->getPath()->setSelected(false);
+                neighbour->setPath(e);
+                neighbour->setDist(e->getWeight());
+                vertexQueue.decreaseKey(neighbour);
             }
         }
     }
 
     clock1.elapsed();
 
-    std::cout << "Prim took " << time << "second" << std::endl;
     return path;
 }
 
@@ -297,9 +295,10 @@ std::vector<Edge *> TriangularApproximationHeuristic(Graph * graph , Vertex * so
         return {};
     }
 
-   preOrder( graph , source, optimalRoute );
+   preOrder(graph , source, optimalRoute );
 
-    for(int i = 0 ; i < optimalRoute.size() -1 ; i++){
+    for(int i = 0 ; i < optimalRoute.size() - 1 ; i++){
+
         Vertex * v = optimalRoute[i];
         Vertex * nextV = optimalRoute[i+1];
 
@@ -476,7 +475,8 @@ void twoOpt(std::vector<Vertex *> &path, int maxIterations , std::vector<std::ve
         double current_improvement = 0.0;
         for (int i = 0; i < n - 1; ++i) {
             for (int k = i + 1; k < n; ++k) {
-                if(k == n - 1 || i == 0) continue; // Skip the first and last vertices (they are the same in a TSP tour
+                if(k == n - 1 || i == 0)
+                    continue;
                 double delta = calculateCostDifference(path[i], path[i + 1], path[k], path[(k + 1) % n], edgeMatrix);
                 if (delta < 0) {
                     twoOptSwap(path, i + 1, k);
@@ -499,7 +499,9 @@ void twoOpt(std::vector<Vertex *> &path, int maxIterations , std::vector<std::ve
  */
 void orderEdges(Vertex * v) {
 
-    auto comp = [] (Edge * e1, Edge * e2){
+    std::vector<Edge *> edges = v->getAdj();
+
+    std::sort(edges.begin(), edges.end(), [] (Edge * e1, Edge * e2){
         if (e1->getDestination()->getDegree() < e2->getDestination()->getDegree()) {
             return true;
         }
@@ -507,11 +509,7 @@ void orderEdges(Vertex * v) {
             return true;
         }
         return false;
-    };
-
-    std::vector<Edge *> edges = v->getAdj();
-
-    std::sort(edges.begin(), edges.end(), comp);
+    });
 
     v->setAdj(edges);
 }
@@ -526,14 +524,22 @@ void orderEdges(Vertex * v) {
  * @complexity O(V!), where V is the number of vertices.
  */
 bool nn_backtracking(int & size , Vertex * s, Vertex * d, std::vector<Vertex *>& path) {
+
+    if (path.size() == size){
+        if (s->getId() == d->getId()){
+            path.push_back(d);
+            return true;
+        }
+        return false;
+    }
+
     s->setVisited(true);
     path.push_back(s);
     for (Edge * e : s->getAdj()){
         if (!e->getDestination()->isVisited()){
             if (nn_backtracking(size , e->getDestination(), d, path)) return true;
         }
-        else if (path.size() == size){ /// Check if the vertex is connected to the destination
-
+        else if (path.size() == size){
             if (e->getDestination()->getId() == d->getId()){
                 path.push_back(d);
                 return true;
@@ -550,11 +556,11 @@ bool nn_backtracking(int & size , Vertex * s, Vertex * d, std::vector<Vertex *>&
  * @brief Finds a Hamiltonian path using nearest neighbor with backtracking.
  * @param g Pointer to the graph representing the cities and paths.
  * @param s Pointer to the start vertex.
- * @param hamiltonian Reference to the vector storing the Hamiltonian path.
+ * @param optimalRoute Reference to the vector storing the Hamiltonian path.
  * @return True if a Hamiltonian path is found, false otherwise.
  * @complexity O(V!), where V is the number of vertices.
  */
-bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamiltonian) {
+bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &optimalRoute) {
 
     std::vector<Vertex *>  mst = PrimMst(g , s);
 
@@ -571,13 +577,11 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
     Clock clock1 = Clock();
     clock1.start();
 
-    hamiltonian.clear();
-    std::cout << "Enter\n";
-    int size = g->getVertexSet().size();
-    if (!nn_backtracking( size ,  s, s, hamiltonian))
-        return false;
+    optimalRoute.clear();
 
-    std::cout << "Left\n";
+    int size = g->getVertexSet().size();
+    if (!nn_backtracking( size ,  s, s, optimalRoute))
+        return false;
 
     std::vector<std::vector<double>> edgeMatrix(size, std::vector<double>(size, DBL_MAX));
 
@@ -588,10 +592,11 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
         }
     }
 
-    std::set<uint32_t> set;
+    std::set<int> set;
     double cost = 0;
     Vertex * prev = nullptr;
-    for (Vertex * x : hamiltonian){
+
+    for (Vertex * x : optimalRoute){
         std::cout << x->getId() << " - ";
         set.insert(x->getId());
         if(prev != nullptr){
@@ -615,12 +620,12 @@ bool nn_with_backtracking(Graph * g , Vertex * s, std::vector<Vertex * > &hamilt
  * @brief Finds a Hamiltonian path using nearest neighbor with backtracking and 2-opt optimization.
  * @param g Pointer to the graph representing the cities and paths.
  * @param s Pointer to the start vertex.
- * @param hamiltonian Reference to the vector storing the Hamiltonian path.
+ * @param optimalRoute Reference to the vector storing the Hamiltonian path.
  * @return True if a Hamiltonian path is found, false otherwise.
  * @complexity O(V! + V^2 * maxIterations), where V is the number of vertices.
  */
-bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * > &hamiltonian){
-    std::vector<Vertex *>  mst = PrimMst(g , s);
+bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * > &optimalRoute){
+    std::vector<Vertex *> mst = PrimMst(g , s);
 
     g->populate_in_and_out_degree();
 
@@ -630,18 +635,14 @@ bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * 
         v->setVisited(false);
     }
 
-    std::cout << "VertexSize : " << g->getVertexSet().size() << std::endl;
-
     Clock clock1 = Clock();
     clock1.start();
 
-    hamiltonian.clear();
-    std::cout << "Enter\n";
-    int size = g->getVertexSet().size();
-    if (!nn_backtracking( size ,  s, s, hamiltonian))
-        return false;
+    optimalRoute.clear();
 
-    std::cout << "Left\n";
+    int size = g->getVertexSet().size();
+    if (!nn_backtracking(size , s , s , optimalRoute))
+        return false;
 
     std::vector<std::vector<double>> edgeMatrix(size, std::vector<double>(size, DBL_MAX));
 
@@ -652,12 +653,14 @@ bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * 
         }
     }
 
-    twoOpt(hamiltonian , 10 , edgeMatrix);
+    twoOpt(optimalRoute , 10 , edgeMatrix);
 
-    std::set<uint32_t> set;
+    std::set<int> set;
+
     double cost = 0;
     Vertex * prev = nullptr;
-    for (Vertex * x : hamiltonian){
+
+    for (Vertex * x : optimalRoute){
         std::cout << x->getId() << " - ";
         set.insert(x->getId());
         if(prev != nullptr){
@@ -670,7 +673,7 @@ bool nn_with_backtrackingAndTwoOpt(Graph * g , Vertex * s, std::vector<Vertex * 
         }
         prev = x;
     }
-    std::cout << "\nSet size: " << set.size() << "\n";
+
     clock1.elapsed();
     std::cout.imbue(std::locale(""));
     std::cout << "Cost: " << std::fixed << std::setprecision(2) << cost << "\n";
