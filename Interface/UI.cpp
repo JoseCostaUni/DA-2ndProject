@@ -521,7 +521,7 @@ void UI::main_menu(){
     std::cout << "A. Switch Data Set" <<std::endl
               << "B. Graph Information Options" << std::endl
               << "C. Calculate TSP with Backtracking Brute Force" << std::endl
-              << "D. Calculate TSP with Triangular Approximation (Beware that this will make the graph fully connected which may take some time)" << std::endl
+              << "D. Calculate TSP with Triangular Approximation" << std::endl
               << "E. Calculate TSP with Nearest Neighbour algorithm (Beware that this will make the graph fully connected which may take some time)" << std::endl
               << "F. Calculate TSP for incomplete Graphs" << std::endl
              << "G. Exit the program" << std::endl
@@ -604,10 +604,12 @@ void UI::main_menu(){
             break;
         case 'E':
 
-            if(!fullyConnected){
-                if(g.makeFullyConnected()){
-                    fullyConnected = true;
-                }else {
+            if (g.getEdgeSet().size() == expectedEdges || g.getEdgeSet().size() == expectedEdges / 2) {
+                isFullyConnected = true;
+            } else {
+                if (g.makeFullyConnected()) {
+                    isFullyConnected = true;
+                } else {
                     std::cout << "Not possible to make fully connected\n";
                     back_menu();
                 }
