@@ -363,7 +363,7 @@ void tspBruteForce(Graph* g){
     if (!path.empty()) {
         auto it = path.begin();
         for (; it != path.end() - 1; ++it) {
-            std::cout << (*it)->getId() << " - ";
+            std::cout << (*it)->getId() << "->";
         }
         std::cout << (*it)->getId();
     }

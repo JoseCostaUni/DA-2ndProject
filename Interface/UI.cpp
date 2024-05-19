@@ -587,12 +587,12 @@ void UI::main_menu(){
 
             TSP = TriangularApproximationHeuristic(&g , source , nullptr);
             std::cout << source->getId() ;
-            std::cout << " -------> ";
+            std::cout << " -> ";
             for(Edge * e : TSP){
                 weight += e->getWeight();
                 std::cout << e->getDestination()->getId() ;
                 if(e->getDestination()->getId() != 0){
-                    std::cout << "-------> ";
+                    std::cout << "-> ";
                 }
             }
             std::cout << std::endl;
@@ -620,12 +620,12 @@ void UI::main_menu(){
             TSP = NearestNeighbour(&g , source);
 
             std::cout << source->getId() ;
-            std::cout << " -------> ";
+            std::cout << " -> ";
             for(Edge * e : TSP){
                 weight += e->getWeight();
                 std::cout << e->getDestination()->getId() ;
                 if(e->getDestination()->getId() != 0){
-                    std::cout << "-------> ";
+                    std::cout << "-> ";
                 }
             }
             std::cout << std::endl;
