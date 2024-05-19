@@ -8,6 +8,7 @@
 
 /**
  * @class Clock
+ * @file Clock.h
  * @brief A simple clock class to measure elapsed time.
  *
  * The Clock class provides functionality to start a timer and measure the elapsed time

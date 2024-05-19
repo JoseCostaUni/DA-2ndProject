@@ -6,6 +6,7 @@
 #include "../Graph.h"
 
 /**
+ * @file UI.h
  * @brief User Interface class for managing interaction with the water distribution system.
  */
  class UI {

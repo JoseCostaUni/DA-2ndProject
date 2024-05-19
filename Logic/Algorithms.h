@@ -1,5 +1,7 @@
 /**
  * @file Algorithms.h
+ * @details This file contains the declarations of various graph algorithms including Depth-First Search (DFS), Nearest Neighbour heuristic for TSP, Prim's algorithm for MST, and others.
+ * @class Algorithms
  * @brief This file contains the declarations of various graph algorithms including Depth-First Search (DFS), Nearest Neighbour heuristic for TSP, Prim's algorithm for MST, and others.
  */
 
