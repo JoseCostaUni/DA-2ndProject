@@ -440,7 +440,6 @@ void UI::menu_start() {
                  << "Bruno Fortes    || 202209730" << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2)); // Espera 2 segundos antes de fechar o terminal
             exit(0);
-
     }
 }
 
