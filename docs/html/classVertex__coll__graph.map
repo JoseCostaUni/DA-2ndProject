@@ -1,0 +1,4 @@
+<map id="Vertex" name="Vertex">
+<area shape="rect" id="node1" title="Represents a vertex in the graph." alt="" coords="5,95,69,121"/>
+<area shape="rect" id="node2" href="$classEdge.html" title="Represents an edge in the graph." alt="" coords="10,5,65,32"/>
+</map>

@@ -11,7 +11,7 @@
   *
   * ## Installation Guide:
   *
-  * 1. Clone the repository to your local machine: git clone https://github.com/JoseCostaUni/DA-1st-Project.git
+  * 1. Clone the repository to your local machine: git clone https://github.com/JoseCostaUni/DA-2ndProject.git
   * 2. Open it on your IDE application (Made using Clion)
   * 3. Load the Graphs to the Graphs folder
   * 4. Create cmake and compile project
